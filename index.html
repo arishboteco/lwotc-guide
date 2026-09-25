@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v7</title>
+<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v8</title>
 <style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
@@ -73,42 +73,152 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 .details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
 .v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
 @media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
 </style>
 </head>
-<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><div class="brand">LWOTC 1.2 Reference v7</div><a class="quickjump" href="#missiondecision">Mission?</a></div>
+<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><a class="brand" href="#homehub">LWOTC Guide v8</a><button aria-label="Search guide" id="topSearchBtn">⌕</button></div>
+<nav class="context-dock" id="contextDock" aria-label="Context navigation"><div class="context-scroll" id="contextScroll"></div></nav>
 <div class="layout">
 <aside class="sidebar">
 <h1>LWOTC Stable 1.2.3 Guide</h1>
-<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v7</div>
+<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v8</div>
 <input class="search" id="search" placeholder="Search… e.g. Predator, Jailbreak, Gunner"/>
-<nav class="nav">
-<a href="#versionmodel">Version &amp; source model</a><a href="#quick">Quick rules</a>
-<a href="#timeline">Month-by-month plan</a><a href="#researchroadmap">Research thresholds &amp; costs</a><a href="#masterorders">Build / research / cost orders</a>
-<a href="#purchases">Priority purchases</a><a href="#andyorders">Andy build / research / PG orders</a>
-<a href="#strategy">Regions, havens &amp; expansion</a><a href="#personnel">Stats, fatigue &amp; promotions</a><a href="#covert">Covert Ops &amp; Golden Path</a><a href="#autopsies">Autopsy priorities</a><a href="#missiondecision">Mission decision matrix</a>
+<nav class="nav" aria-label="Guide navigation">
+<details class="navgroup" open>
+<summary>START HERE</summary>
+<div class="navlinks">
+<a href="#homehub">Guide home</a>
+<a href="#quick">Quick rules</a>
+<a href="#timeline">Campaign timeline</a>
+<a href="#researchroadmap">Research roadmap</a>
+<a href="#missiondecision">Should I take this mission?</a>
+<a href="#warnings">Campaign warnings</a>
+</div>
+</details>
+<details class="navgroup" open>
+<summary>CAMPAIGN</summary>
+<div class="navlinks">
+<a href="#masterorders">Build / research / cost orders</a>
+<a href="#andyorders">Andy build / research / PG orders</a>
+<a href="#purchases">Priority purchases</a>
+<a href="#strategy">Regions, havens &amp; expansion</a>
+<a href="#covert">Covert Ops &amp; Golden Path</a>
+<a href="#autopsies">Autopsy priorities</a>
+<a href="#liberation">Liberation chain</a>
+</div>
+</details>
+<details class="navgroup" open>
+<summary>MISSIONS</summary>
+<div class="navlinks">
+<a href="#missiondecision">Mission decision matrix</a>
 <a href="#missionsquads">Squads by mission</a>
 <a href="#missions">Mission playbook</a>
-<a href="#tactics">Tactical operating procedure</a><a href="#reinforcements">RNF / hidden timer rules</a>
+<a href="#tactics">Tactical operating procedure</a>
+<a href="#reinforcements">Reinforcements / hidden timers</a>
+</div>
+</details>
+<details class="navgroup" open>
+<summary>SOLDIERS</summary>
+<div class="navlinks">
+<a href="#personnel">Stats, fatigue &amp; promotions</a>
 <a href="#equipment">Equipment by class</a>
-<a href="#builds">Class builds — Casey vs Andy</a>
+<a href="#builds">Class builds</a>
 <a href="#squads">Squads, officers &amp; bonds</a>
-<a href="#liberation">Liberation chain</a>
+</div>
+</details>
+<details class="navgroup" open>
+<summary>ENEMIES &amp; REFERENCE</summary>
+<div class="navlinks">
 <a href="#chosen">Chosen &amp; Alien Rulers</a>
-<a href="#enemies">Enemy reference</a><a href="#legacy-notes">v1.1 notes / edge cases</a>
-<a href="#warnings">Campaign-ending warnings</a>
+<a href="#enemies">Enemy reference</a>
+<a href="#legacy-notes">Historical / edge notes</a>
 <a href="#checklists">Checklists</a>
-<a href="#coverage">Casey + Andy coverage audit</a>
+<a href="#versionmodel">Version &amp; source model</a>
+<a href="#coverage">Coverage audit</a>
 <a href="#sources">Sources</a>
 <a href="#images">Source images</a>
+</div>
+</details>
 </nav>
 </aside>
 <main class="main" id="content">
-<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v7</span><span class="pill">Stable 1.2.3</span>
+<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v8</span><span class="pill">Stable 1.2.3</span>
 
-<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v7</h1>
+<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v8</h1>
 <p>Merged campaign companion built from Casey’s XCOM Commander’s Journal, Andy’s LWotC 1.2.2 Legend/Honestman notes, and current stable LWOTC 1.2.3 mechanics. The goal is not to crown one author “correct,” but to preserve their useful differences and turn them into decisions you can make during a live campaign.</p>
 <div class="callout gold"><b>Version rule:</b> official stable 1.2.3 mechanics override 1.2.2/older advice when they conflict. Andy's 1.2.2 SPARK build is explicitly treated as historical because he himself flags the 1.2.3 SPARK rework. The experimental 1.2.4 branch is not used unless a note is explicitly labelled experimental.</div>
-<p class="small"><b>Mobile version:</b> use the bottom bar for Timeline, Mission Decision, Squads and Warnings. Tables scroll sideways; the first column stays visible.</p><div class="callout good"><b>Coverage standard:</b> “Incorporated” now means the useful decision point is actually present in the relevant section. Where Casey has not revised a class for 1.2, the guide keeps the older concept but marks it as legacy.</div></div>
+<p class="small"><b>Mobile version:</b> start from the Guide Home cards or the five-item bottom bar. The menu is grouped by task, and the slim contextual strip changes as you move between Campaign, Missions, Soldiers and Reference.</p><div class="callout good"><b>Coverage standard:</b> “Incorporated” now means the useful decision point is actually present in the relevant section. Where Casey has not revised a class for 1.2, the guide keeps the older concept but marks it as legacy.</div></div>
+
+<section id="homehub" class="guide-home">
+<div class="home-head">
+<div><span class="pill">START HERE</span><h2>What are you trying to do?</h2><p class="muted">Jump straight to the decision you need during a campaign. The full reference is still available from the grouped menu.</p></div>
+</div>
+<div class="home-grid">
+<a class="home-card" href="#timeline"><span class="home-icon">◷</span><b>Campaign Timeline</b><small>What should I be doing this month?</small></a>
+<a class="home-card" href="#researchroadmap"><span class="home-icon">⌁</span><b>What Should I Research?</b><small>Research order, RP costs and resource gates.</small></a>
+<a class="home-card" href="#missiondecision"><span class="home-icon">◆</span><b>Should I Take This Mission?</b><small>Use the mission decision matrix.</small></a>
+<a class="home-card" href="#missionsquads"><span class="home-icon">▦</span><b>Build My Squad</b><small>Mission-specific squads and class roles.</small></a>
+<a class="home-card" href="#purchases"><span class="home-icon">$</span><b>What Should I Buy?</b><small>Purchases, equipment and economy priorities.</small></a>
+<a class="home-card danger-card" href="#warnings"><span class="home-icon">!</span><b>I’m in Trouble</b><small>Campaign-ending warnings and recovery checks.</small></a>
+</div>
+<div class="phase-jump">
+<div class="phase-jump-label"><b>Jump to campaign phase</b><span class="small">Month targets are flexible.</span></div>
+<div class="phase-chips">
+<a href="#month-march" data-month-key="march">March</a>
+<a href="#month-april" data-month-key="april">April</a>
+<a href="#month-may" data-month-key="may">May</a>
+<a href="#month-june" data-month-key="june">June</a>
+<a href="#month-july" data-month-key="july">July</a>
+<a href="#month-aug-sep" data-month-key="aug-sep">Aug–Sep</a>
+<a href="#month-late" data-month-key="late">Late</a>
+</div>
+</div>
+<div class="home-secondary"><a href="#builds">Class builds</a><a href="#liberation">Liberation</a><a href="#covert">Golden Path</a><a href="#enemies">Enemy reference</a><a href="#checklists">Checklists</a></div>
+</section>
 <section class="searchable" id="versionmodel">
 <h2>0. Version &amp; source model <span class="v6flag">NEW IN v6</span></h2>
 <div class="source-legend"><span class="src-badge src-official">OFFICIAL</span><span class="src-badge src-casey">CASEY</span><span class="src-badge src-andy">ANDY</span><span class="src-badge src-synth">SYNTHESIS</span><span class="src-badge src-legacy">LEGACY</span></div>
@@ -139,7 +249,11 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <section class="searchable" id="timeline">
 <h2>2. Month-by-month campaign plan</h2>
 <div class="callout"><b>Important:</b> months are targets, not deadlines. Mission RNG, difficulty, Chosen activity and starting faction will shift timing. This schedule combines Casey's priorities into an operating sequence.</div>
-<table>
+<nav class="month-strip" aria-label="Campaign month navigation">
+<a href="#month-march" data-month-key="march">March</a><a href="#month-april" data-month-key="april">April</a><a href="#month-may" data-month-key="may">May</a><a href="#month-june" data-month-key="june">June</a><a href="#month-july" data-month-key="july">July</a><a href="#month-aug-sep" data-month-key="aug-sep">Aug–Sep</a><a href="#month-late" data-month-key="late">Late</a>
+</nav>
+<div id="mobileMonthCards" class="mobile-month-cards" aria-label="Campaign month cards"></div>
+<table class="campaign-table" id="campaignTimelineTable">
 <tr><th>Month / phase</th><th>Main objectives</th><th>What to buy/build</th><th>Map / region target</th><th>Danger signal</th></tr>
 <tr><td><b>March</b></td><td>Survive, get promotions, create two usable squads, start officer pipeline.</td><td>GTS first + one upgrade; early engineer/scientist when affordable; plating/nanoscale; flashbang/grenade stock; Wet Work when it does not delay survival purchases.</td><td>All starting rebels on Intel; assign Haven Advisor; research Resistance Comms early; prepare first adjacent contact.</td><td>Taking 4-man fights you could avoid; sending Assault/Shinobi into fog; no spare soldiers because every mission uses the same team.</td></tr>
 <tr><td><b>April</b></td><td>Reach the first meaningful weapon/control breakpoints.</td><td>Psi Lab if following Casey's Psi route; Workshop optional; Proving Ground; AP rounds; Vulture as soon as you can reasonably afford it; continue engineer priority.</td><td><b>First expansion should be active or imminent.</b> Do not wait for the starting region to reach Strength 5.</td><td>Spending Intel on routine boosts; staying in one region while Vigilance and Strength climb.</td></tr>
@@ -1393,6 +1507,123 @@ if(menuToggle){
   sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sidebar.classList.remove('open')));
 }
 
+
+const topSearchBtn=document.getElementById('topSearchBtn');
+const mobileSearchBtn=document.getElementById('mobileSearchBtn');
+function openGuideSearch(){
+  if(sidebar) sidebar.classList.add('open');
+  window.setTimeout(()=>{ if(q){ q.focus(); q.select(); } },60);
+}
+if(topSearchBtn) topSearchBtn.addEventListener('click',openGuideSearch);
+if(mobileSearchBtn) mobileSearchBtn.addEventListener('click',openGuideSearch);
+
+function setNavGroupState(){
+  const mobile=window.matchMedia('(max-width:950px)').matches;
+  document.querySelectorAll('.navgroup').forEach((group,index)=>{
+    if(mobile){
+      if(index===0) group.setAttribute('open','');
+      else group.removeAttribute('open');
+    }else{
+      group.setAttribute('open','');
+    }
+  });
+}
+setNavGroupState();
+let navResizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(navResizeTimer);
+  navResizeTimer=setTimeout(setNavGroupState,150);
+});
+
+// Build mobile campaign cards from the canonical timeline table so content is maintained in one place.
+(function buildMonthCards(){
+  const table=document.getElementById('campaignTimelineTable');
+  const target=document.getElementById('mobileMonthCards');
+  if(!table||!target) return;
+  const keys=['march','april','may','june','july','aug-sep','late'];
+  const labels=['Main objectives','What to buy/build','Map / region target','Danger signal'];
+  const rows=[...table.querySelectorAll('tr')].slice(1);
+  rows.forEach((row,index)=>{
+    const cells=[...row.querySelectorAll('td')];
+    if(cells.length<5) return;
+    const key=keys[index]||('phase-'+index);
+    row.id='month-'+key;
+    const card=document.createElement('article');
+    card.className='mobile-month-card';
+    card.id='mobile-month-'+key;
+    const title=document.createElement('h3');
+    title.innerHTML=cells[0].innerHTML;
+    card.appendChild(title);
+    for(let i=1;i<5;i++){
+      const field=document.createElement('div');
+      field.className='month-field';
+      field.innerHTML='<b>'+labels[i-1]+'</b>'+cells[i].innerHTML;
+      card.appendChild(field);
+    }
+    target.appendChild(card);
+  });
+  document.body.classList.add('monthcards-ready');
+})();
+
+document.querySelectorAll('[data-month-key]').forEach(link=>{
+  link.addEventListener('click',ev=>{
+    if(!window.matchMedia('(max-width:950px)').matches) return;
+    const key=link.getAttribute('data-month-key');
+    const card=document.getElementById('mobile-month-'+key);
+    if(card){
+      ev.preventDefault();
+      card.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+});
+
+// Contextual navigation changes with the section currently being read.
+const contextGroups={
+  campaign:{
+    ids:['timeline','researchroadmap','masterorders','andyorders','purchases','strategy','covert','autopsies','liberation'],
+    links:[['Timeline','timeline'],['Research','researchroadmap'],['Build/Cost','masterorders'],['Buy','purchases'],['Regions','strategy'],['Liberation','liberation'],['Golden Path','covert']]
+  },
+  missions:{
+    ids:['missiondecision','missionsquads','missions','tactics','reinforcements'],
+    links:[['Decide','missiondecision'],['Squads','missionsquads'],['Playbook','missions'],['Tactics','tactics'],['RNF','reinforcements']]
+  },
+  soldiers:{
+    ids:['personnel','equipment','builds','squads'],
+    links:[['Personnel','personnel'],['Equipment','equipment'],['Builds','builds'],['Squads/Bonds','squads']]
+  },
+  reference:{
+    ids:['chosen','enemies','legacy-notes','warnings','checklists','versionmodel','quick','coverage','images','sources'],
+    links:[['Warnings','warnings'],['Chosen','chosen'],['Enemies','enemies'],['Checklists','checklists'],['Sources','sources']]
+  }
+};
+const contextScroll=document.getElementById('contextScroll');
+let contextKey='';
+function currentContext(){
+  const sections=[...document.querySelectorAll('main section[id]')];
+  let current=sections[0];
+  sections.forEach(s=>{if(s.getBoundingClientRect().top<=125) current=s;});
+  const id=current?current.id:'homehub';
+  for(const [key,group] of Object.entries(contextGroups)){
+    if(group.ids.includes(id)) return {key,id,group};
+  }
+  return {key:'home',id,group:{links:[['Home','homehub'],['Timeline','timeline'],['Mission','missiondecision'],['Builds','builds'],['Warnings','warnings']]}};
+}
+function renderContext(){
+  if(!contextScroll) return;
+  const state=currentContext();
+  if(state.key===contextKey && contextScroll.dataset.active===state.id) return;
+  contextKey=state.key;
+  contextScroll.dataset.active=state.id;
+  contextScroll.innerHTML=state.group.links.map(([label,id])=>'<a href="#'+id+'" class="'+(id===state.id?'active':'')+'">'+label+'</a>').join('');
+}
+renderContext();
+let contextTick=false;
+window.addEventListener('scroll',()=>{
+  if(contextTick) return;
+  contextTick=true;
+  requestAnimationFrame(()=>{renderContext();contextTick=false;});
+},{passive:true});
+
 function evaluateMission(){
   const stage=document.getElementById('dStage').value;
   const type=document.getElementById('dType').value;
@@ -1453,11 +1684,12 @@ function evaluateMission(){
   box.innerHTML='<div class="kpi">'+verdict+' <span class="small">(decision score '+score+')</span></div><ul>'+reasons.map(r=>'<li>'+r+'</li>').join('')+'</ul><div class="small"><b>Override the score</b> for hard campaign requirements, unusual mission mechanics, or a reward that directly fixes your current bottleneck.</div>';
 }
 </script>
-<nav aria-label="Mobile quick navigation" class="mobile-tabs">
-<a href="#masterorders"><span>≡</span> Orders</a>
-<a href="#missiondecision"><span>◆</span>Decide</a>
-<a href="#missionsquads"><span>▦</span>Squads</a>
-<a href="#warnings"><span>!</span>Warnings</a>
+<nav aria-label="Mobile primary navigation" class="mobile-tabs">
+<a href="#homehub"><span>⌂</span>Home</a>
+<a href="#timeline"><span>◷</span>Timeline</a>
+<a href="#missiondecision"><span>◆</span>Mission</a>
+<a href="#builds"><span>♙</span>Soldiers</a>
+<button type="button" id="mobileSearchBtn"><span>⌕</span>Search</button>
 </nav><script>
 (function(){
  const ids=['fac','staff','wet','plating','vest','ap','laser','spark','soldier','vulture'];
