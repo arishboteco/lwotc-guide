@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v6</title>
+<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v7</title>
 <style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
@@ -75,15 +75,15 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 @media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
 </style>
 </head>
-<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><div class="brand">LWOTC 1.2 Reference v5</div><a class="quickjump" href="#missiondecision">Mission?</a></div>
+<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><div class="brand">LWOTC 1.2 Reference v7</div><a class="quickjump" href="#missiondecision">Mission?</a></div>
 <div class="layout">
 <aside class="sidebar">
 <h1>LWOTC Stable 1.2.3 Guide</h1>
-<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v6</div>
+<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v7</div>
 <input class="search" id="search" placeholder="Search… e.g. Predator, Jailbreak, Gunner"/>
 <nav class="nav">
 <a href="#versionmodel">Version &amp; source model</a><a href="#quick">Quick rules</a>
-<a href="#timeline">Month-by-month plan</a><a href="#masterorders">Build / research / cost orders</a>
+<a href="#timeline">Month-by-month plan</a><a href="#researchroadmap">Research thresholds &amp; costs</a><a href="#masterorders">Build / research / cost orders</a>
 <a href="#purchases">Priority purchases</a><a href="#andyorders">Andy build / research / PG orders</a>
 <a href="#strategy">Regions, havens &amp; expansion</a><a href="#personnel">Stats, fatigue &amp; promotions</a><a href="#covert">Covert Ops &amp; Golden Path</a><a href="#autopsies">Autopsy priorities</a><a href="#missiondecision">Mission decision matrix</a>
 <a href="#missionsquads">Squads by mission</a>
@@ -103,9 +103,9 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </nav>
 </aside>
 <main class="main" id="content">
-<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v6</span><span class="pill">Stable 1.2.3</span>
+<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v7</span><span class="pill">Stable 1.2.3</span>
 
-<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v6</h1>
+<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v7</h1>
 <p>Merged campaign companion built from Casey’s XCOM Commander’s Journal, Andy’s LWotC 1.2.2 Legend/Honestman notes, and current stable LWOTC 1.2.3 mechanics. The goal is not to crown one author “correct,” but to preserve their useful differences and turn them into decisions you can make during a live campaign.</p>
 <div class="callout gold"><b>Version rule:</b> official stable 1.2.3 mechanics override 1.2.2/older advice when they conflict. Andy's 1.2.2 SPARK build is explicitly treated as historical because he himself flags the 1.2.3 SPARK rework. The experimental 1.2.4 branch is not used unless a note is explicitly labelled experimental.</div>
 <p class="small"><b>Mobile version:</b> use the bottom bar for Timeline, Mission Decision, Squads and Warnings. Tables scroll sideways; the first column stays visible.</p><div class="callout good"><b>Coverage standard:</b> “Incorporated” now means the useful decision point is actually present in the relevant section. Where Casey has not revised a class for 1.2, the guide keeps the older concept but marks it as legacy.</div></div>
@@ -149,7 +149,55 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td><b>Aug–Sep</b></td><td>Golden Path, Mag/Coil progression, stronger control, Chosen stronghold race.</td><td>Mag → Adv Mag; Elerium preparation; Lab when power/scientist count makes it worthwhile; Defense Matrix if UFO/Chosen threat is near.</td><td>Expand along the Blacksite route even if continent bonuses tempt you elsewhere.</td><td>No Intel reserve for a multi-region Blacksite route; fewer than 3 soldiers being pushed toward MSGT.</td></tr>
 <tr><td><b>Late campaign</b></td><td>Strongholds, Blacksite/Forge/Psi Gate, Shadow Chamber, Coil/Plasma.</td><td>Shadow Chamber on a power conduit; Coil/Adv Coil; Powered Armor; Plasma sequence; mission-specific boss gear.</td><td>After each Golden Path objective, continue opening the next required region rather than farming indefinitely.</td><td>Campaign has stabilized but Golden Path has stopped moving; Chosen has found Avenger and Stronghold reveal is still far away.</td></tr>
 </table>
-</section><section class="searchable" id="masterorders">
+</section>
+<section class="searchable" id="researchroadmap">
+<h2>2A. Research thresholds, exact costs &amp; acquisition playbook <span class="v6flag">NEW IN v7</span></h2>
+<div class="callout gold"><b>How to use this section:</b> the month is a planning target, not a hard deadline. The <b>RP budget</b> is the research-point cost of the projects listed for that phase. Resource costs are what you must have available to start the project. On Commander and Legend, research takes longer even though the RP/material price is unchanged.</div>
+
+<h3>Research speed — turn RP into calendar days</h3>
+<p>LWOTC research is linear: Tygan contributes <b>10 RP/hour</b>; each normal, research-available Scientist contributes <b>5 RP/hour</b>; a Scientist staffed in the Laboratory contributes <b>10 RP/hour</b>; Scientists staffed elsewhere contribute no normal research output. Each completed Basic Research adds another <b>5 RP/hour</b>.</p>
+<p class="formula"><b>Base research days = RP cost ÷ [(10 + 5×unassigned Scientists + 10×Lab Scientists + 5×Basic Research completions) × 24]</b></p>
+<table class="tight"><thead><tr><th>Research setup</th><th>RP / hour</th><th>Days per 1,000 RP</th><th>Legend equivalent</th></tr></thead><tbody>
+<tr><td>Tygan only</td><td>10</td><td>4.17</td><td>5.21</td></tr>
+<tr><td>Tygan + 1 Scientist</td><td>15</td><td>2.78</td><td>3.47</td></tr>
+<tr><td>Tygan + 2 Scientists</td><td>20</td><td>2.08</td><td>2.60</td></tr>
+<tr><td>Tygan + 3 Scientists</td><td>25</td><td>1.67</td><td>2.08</td></tr>
+<tr><td>Tygan + 4 Scientists</td><td>30</td><td>1.39</td><td>1.74</td></tr>
+<tr><td>Tygan + 4 Scientists in Lab</td><td>50</td><td>0.83</td><td>1.04</td></tr>
+</tbody></table>
+<div class="callout"><b>Difficulty scalar:</b> Rookie/Veteran = 100%, Commander = 110%, Legend = 125% research time. If you are on Legend, multiply the base-day estimate by 1.25.</div>
+
+<h3>Month-by-month research budget and resource gates</h3>
+<div class="table-scroll"><table><thead><tr><th>Phase</th><th>Research target</th><th>RP budget</th><th>Prerequisites / resource cost</th><th>What you should secure before the threshold</th></tr></thead><tbody>
+<tr><td><b>March</b></td><td><b>Resistance Communications → Modular Weapons → Alien Biotech.</b><br><span class="small">Psi route add-on: Sectoid Autopsy → Psionics.</span></td><td><b>3,310 RP core</b><br>+6,700 RP Psi route<br><b>= 10,010 RP</b> with Psi</td><td>Resistance Comms: <b>20 Intel</b>.<br>Sectoid Autopsy: <b>1 Sectoid corpse</b>.<br>Psionics: <b>30 Supplies + 2 Scientists</b> (1.2 threshold).</td><td>Prioritize early Scientist/Engineer mission rewards. Preserve a Sectoid corpse if possible. Buy an early Scientist from the Black Market when that purchase is what unlocks Psionics rather than spending those supplies on marginal gear.</td></tr>
+<tr><td><b>April</b></td><td><b>ADVENT Trooper Autopsy → Hybrid Materials → Laser Weapons → Advanced Laser Weapons.</b></td><td><b>12,000 RP</b></td><td>Trooper: <b>1 Trooper corpse</b>.<br>Hybrid: <b>5 Alloys + 3 Elerium</b>.<br>Laser: <b>2 Alloys + 5 Elerium</b>.<br>Adv Laser: <b>2 Alloys + 10 Elerium</b>.<br>Alloy Plating PG gate: <b>2 Engineers</b>.</td><td>Do not sell early Alloys/Elerium blindly. Take full-salvage opportunities you can safely complete and use Smash N Grab caches to patch resource shortages. If your Psi route consumed April, let Advanced Lasers spill into May rather than skipping prerequisites.</td></tr>
+<tr><td><b>May</b></td><td><b>ADVENT Officer Autopsy → ADVENT Robotics → Magnetic Weapons.</b><br><span class="small">Interrupt for Stun Lancer / Purifier only when you have the corpse and will immediately use the unlock.</span></td><td><b>16,500 RP core</b><br>+2,000 RP per common interrupt</td><td>Officer: Trooper Autopsy + <b>1 Officer corpse</b>.<br>Robotics: Hybrid + Trooper + <b>3 Drone wrecks</b>.<br>Magnetic: Hybrid + Officer + <b>50 Supplies + 10 Alloys</b>.<br>Casey 1.2 SPARK threshold: <b>3 Scientists + 3 Engineers</b>.</td><td>Target missions that award staff and full salvage. Drone wrecks are easy to accidentally miss because most evac missions do not return corpses/wrecks. Do not let low-value autopsies postpone Magnetic Weapons.</td></tr>
+<tr><td><b>June</b></td><td><b>Combat Armor → Battle Armor → Advanced Magnetic Weaponry.</b></td><td><b>21,500 RP</b></td><td>Combat Armor: Hybrid + <b>50 Supplies + 15 Alloys</b>.<br>Battle Armor: Combat + <b>50 Supplies + 10 Alloys + 1 Core</b>.<br>Adv Mag: Magnetic + <b>50 Supplies + 10 Alloys</b>.</td><td>This is the first major Alloy squeeze. Start treating Alloys as a strategic reserve. Buy them at the Black Market or render genuinely surplus corpses only when that immediately unlocks Predator/EXO or weapon progression.</td></tr>
+<tr><td><b>July</b></td><td><b>Resistance Radio when needed → Elerium → Alien Encryption when Golden Path trigger exists.</b></td><td><b>17,580 RP</b> if all three are done</td><td>Radio: <b>60 Intel</b>.<br>Elerium: Hybrid + Adv Mag + Combat Armor; <b>50 Supplies + 50 Elerium + 5 Cores</b>.<br>Alien Encryption: Blacksite Vial or Codex Brain + <b>40 Intel</b>.</td><td><b>Stop routine Core sales by June/July.</b> Casey specifically expects an Elerium shortage here. Buy an Elerium stack when needed; rendering a Core yields 8 Elerium after Hybrid Materials, but do not render yourself below the 5-Core Elerium-tech requirement.</td></tr>
+<tr><td><b>Aug–Sep</b></td><td><b>Coilguns → Advanced Coilguns → Powered Armor</b>, while inserting required Shadow Chamber projects.</td><td><b>46,500 RP</b> for the three core techs, plus storyline projects</td><td>Coil: Adv Mag + Elerium; <b>100 Supplies + 15 Alloys + 15 Elerium</b>.<br>Adv Coil: <b>50 Supplies + 10 Alloys</b>.<br>Powered Armor: Combat + Elerium; <b>100 Supplies + 20 Alloys + 20 Elerium + 2 Cores</b>.</td><td>This is where a staffed Laboratory pays off. Keep a reserve of Alloys/Elerium rather than buying every unlocked weapon. Shadow Chamber research pauses normal research, so schedule story projects when they advance the campaign rather than during an urgent weapon-tier race.</td></tr>
+<tr><td><b>Late campaign</b></td><td><b>Plasma Rifle → the plasma branch your squads actually need → Battlesuits.</b></td><td><b>51,000 RP</b> for Plasma Rifle + one 15k branch + Battlesuits</td><td>Plasma Rifle: Adv Lasers + Adv Coil; <b>150 Supplies + 20 Alloys + 30 Elerium + 3 Cores</b>.<br>Beam Cannon / Plasma Lance / Storm Gun: each <b>100 Supplies + 10 Alloys + 15 Elerium + 1 Core</b>.<br>Battlesuits: Powered + Battle Armor; <b>100 Supplies + 20 Alloys + 20 Elerium + 2 Cores</b>.</td><td>Do not research all plasma branches just because they exist. Finish the branch used by your strongest squads first, then spend lab time on the remaining branch only if the campaign will actually benefit before Waterworld.</td></tr>
+</tbody></table></div>
+
+<h3>Staff thresholds — what to acquire and when</h3>
+<table><thead><tr><th>Threshold</th><th>Why it matters</th><th>Acquisition rule</th></tr></thead><tbody>
+<tr><td><b>2 Scientists</b></td><td>Psionics requirement in Casey’s 1.2 notes.</td><td>March–April: Scientist reward missions &gt; early Black Market purchase when affordable. Do not tie up both Scientists as haven advisers / facility staff before starting the gated research.</td></tr>
+<tr><td><b>2 Engineers</b></td><td>Alloy Plating requirement in Casey’s 1.2 notes.</td><td>Engineer reward missions are premium early rewards. The Black Market is justified when the purchase immediately unlocks plating, excavation or a critical facility.</td></tr>
+<tr><td><b>3 Scientists + 3 Engineers</b></td><td>SPARK staffing threshold called out for 1.2.</td><td>Target by late April/May if SPARK is part of your plan. <b>SPARK project details are version-sensitive after the 1.2.3 rework</b>, so use the current in-game Proving Ground card for the final material price.</td></tr>
+<tr><td><b>~6 Scientists</b></td><td>Casey’s point where a serious Laboratory becomes attractive: roughly 4 in Lab + 2 available elsewhere.</td><td>Midgame: once early Black Market Scientist prices rise and power is available, invest in the Laboratory instead of endlessly buying scientists. Do not build it so early that it starves weapon/armor purchases.</td></tr>
+</tbody></table>
+
+<h3>How to acquire the bottleneck resources</h3>
+<div class="grid">
+<div class="card"><h4>Corpses &amp; wrecks</h4><p>Most evac missions do <b>not</b> recover bodies. Prioritize full-salvage missions such as Troop Maneuvers / troop-column ambushes, Supply Line Raids, regional HQ assaults and other full-salvage fights when you need a specific autopsy corpse. Explosive killing blows can destroy recoverable materiel, so preserve key targets when practical.</p></div>
+<div class="card"><h4>Alloys / Elerium / Cores</h4><p>Full-salvage missions are the cleanest source. Smash N Grab resource caches can also yield Supplies, Alloys, Elerium or Cores even though they do not return corpses. Use the Black Market to bridge a breakpoint, not to erase every shortage.</p></div>
+<div class="card"><h4>Intel</h4><p>Keep enough for Resistance Communications/Radio and Golden Path research before spending it on routine mission boosts. Save datapads/caches when a large contact or Shadow Chamber bill is approaching.</p></div>
+<div class="card"><h4>Research capacity</h4><p>A Scientist produces value every day you acquire them early. Once you can support a mature Lab, lab staffing doubles each staffed Scientist’s research contribution from 5 to 10 RP/hour. Do not over-tech so far ahead that you cannot afford the equipment you just unlocked.</p></div>
+</div>
+
+<div class="callout purple"><b>Decision rule when you miss a monthly threshold:</b> protect the next <b>weapon/armor breakpoint</b>, then the Golden Path requirement, then convenience research. A delayed Purifier/Viper/Faceless autopsy is usually recoverable; entering a new force-level band while a full weapon tier behind is much harder to recover from.</div>
+<div class="source-note">Mechanics/cost references: <a href="https://www.ufopaedia.org/Research_%28LWOTC%29" target="_blank">LWOTC Research</a>, <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">LWOTC Missions / full salvage</a>, <a href="https://www.ufopaedia.org/Difficulty_Levels_%28LWOTC%29" target="_blank">LWOTC difficulty scalars</a>, and Casey’s <a href="https://xcom.substack.com/p/lwotc-version-12-notes" target="_blank">version 1.2 notes</a> + <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy" target="_blank">mid/late strategy</a>.</div>
+</section>
+<section class="searchable" id="masterorders">
 <h2>2A. Casey's explicit build order, research order &amp; cost plan</h2>
 <div class="callout gold"><b>This section is intentionally literal.</b> Earlier versions of this guide summarized these decisions too aggressively. Casey's opening below is his <b>Psi-rush route</b>; it is a recommended path, not a rule that every LWOTC campaign must follow.</div>
 <h3>Facility build order — early game</h3>
