@@ -1509,13 +1509,15 @@ if(menuToggle){
 
 
 const topSearchBtn=document.getElementById('topSearchBtn');
-const mobileSearchBtn=document.getElementById('mobileSearchBtn');
 function openGuideSearch(){
   if(sidebar) sidebar.classList.add('open');
   window.setTimeout(()=>{ if(q){ q.focus(); q.select(); } },60);
 }
 if(topSearchBtn) topSearchBtn.addEventListener('click',openGuideSearch);
-if(mobileSearchBtn) mobileSearchBtn.addEventListener('click',openGuideSearch);
+window.addEventListener('DOMContentLoaded',()=>{
+  const mobileSearchBtn=document.getElementById('mobileSearchBtn');
+  if(mobileSearchBtn) mobileSearchBtn.addEventListener('click',openGuideSearch);
+});
 
 function setNavGroupState(){
   const mobile=window.matchMedia('(max-width:950px)').matches;
