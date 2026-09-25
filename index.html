@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v8</title>
+<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v9</title>
 <style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
@@ -118,14 +118,22 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
   .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
 }
 
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
-<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><a class="brand" href="#homehub">LWOTC Guide v8</a><button aria-label="Search guide" id="topSearchBtn">⌕</button></div>
+<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><a class="brand" href="#homehub">LWOTC Guide v9</a><button aria-label="Search guide" id="topSearchBtn">⌕</button></div>
 <nav class="context-dock" id="contextDock" aria-label="Context navigation"><div class="context-scroll" id="contextScroll"></div></nav>
 <div class="layout">
 <aside class="sidebar">
 <h1>LWOTC Stable 1.2.3 Guide</h1>
-<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v8</div>
+<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v9</div>
 <input class="search" id="search" placeholder="Search… e.g. Predator, Jailbreak, Gunner"/>
 <nav class="nav" aria-label="Guide navigation">
 <details class="navgroup" open>
@@ -133,6 +141,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="navlinks">
 <a href="#homehub">Guide home</a>
 <a href="#quick">Quick rules</a>
+<a href="#newplayer">New-player essentials</a>
 <a href="#timeline">Campaign timeline</a>
 <a href="#researchroadmap">Research roadmap</a>
 <a href="#missiondecision">Should I take this mission?</a>
@@ -167,7 +176,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <a href="#personnel">Stats, fatigue &amp; promotions</a>
 <a href="#equipment">Equipment by class</a>
 <a href="#builds">Class builds</a>
-<a href="#squads">Squads, officers &amp; bonds</a>
+<a href="#officers">Officer perks &amp; progression</a>
+<a href="#squads">Squads &amp; bonds</a>
 </div>
 </details>
 <details class="navgroup" open>
@@ -186,9 +196,9 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </nav>
 </aside>
 <main class="main" id="content">
-<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v8</span><span class="pill">Stable 1.2.3</span>
+<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v9</span><span class="pill">Stable 1.2.3</span>
 
-<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v8</h1>
+<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v9</h1>
 <p>Merged campaign companion built from Casey’s XCOM Commander’s Journal, Andy’s LWotC 1.2.2 Legend/Honestman notes, and current stable LWOTC 1.2.3 mechanics. The goal is not to crown one author “correct,” but to preserve their useful differences and turn them into decisions you can make during a live campaign.</p>
 <div class="callout gold"><b>Version rule:</b> official stable 1.2.3 mechanics override 1.2.2/older advice when they conflict. Andy's 1.2.2 SPARK build is explicitly treated as historical because he himself flags the 1.2.3 SPARK rework. The experimental 1.2.4 branch is not used unless a note is explicitly labelled experimental.</div>
 <p class="small"><b>Mobile version:</b> start from the Guide Home cards or the five-item bottom bar. The menu is grouped by task, and the slim contextual strip changes as you move between Campaign, Missions, Soldiers and Reference.</p><div class="callout good"><b>Coverage standard:</b> “Incorporated” now means the useful decision point is actually present in the relevant section. Where Casey has not revised a class for 1.2, the guide keeps the older concept but marks it as legacy.</div></div>
@@ -217,7 +227,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <a href="#month-late" data-month-key="late">Late</a>
 </div>
 </div>
-<div class="home-secondary"><a href="#builds">Class builds</a><a href="#liberation">Liberation</a><a href="#covert">Golden Path</a><a href="#enemies">Enemy reference</a><a href="#checklists">Checklists</a></div>
+<div class="home-secondary"><a href="#newplayer">New player</a><a href="#officers">Officers</a><a href="#builds">Class builds</a><a href="#liberation">Liberation</a><a href="#covert">Golden Path</a><a href="#enemies">Enemy reference</a><a href="#checklists">Checklists</a></div>
 </section>
 <section class="searchable" id="versionmodel">
 <h2>0. Version &amp; source model <span class="v6flag">NEW IN v6</span></h2>
@@ -245,6 +255,40 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 
 <h3>Andy setup / mechanics notes worth knowing</h3>
 <ul><li><b>Do not use Avenger-reskin mods</b> in Andy’s setup; he reports they can break the game.</li><li>Resistance Orders are disabled by default in LWOTC stable 1.2.x.</li><li>Lost do not use vanilla Headshot chaining.</li><li>Training Center AP can buy eligible XCOM-row abilities beyond the soldier’s current rank.</li><li>Hero classes can bank a promotion by not selecting a perk immediately.</li><li>Laser sights in LWOTC increase crit chance without the vanilla distance falloff assumption Andy warns about.</li></ul>
+</section>
+
+<section class="searchable" id="newplayer">
+<h2>1A. New-player essentials — the mechanics most likely to surprise you <span class="v6flag">NEW IN v9</span></h2>
+<div class="callout good"><b>Source rule for this section:</b> current stable LWOTC mechanics come first from UFOpaedia and the stable mod files. Andy, Casey and DerAva are used for strategy and explanation. Older LW2 / LWOTC 1.1 guides are useful for concepts, but their numbers are not copied unless they still match current mechanics.</div>
+
+<h3>Six systems to understand before a serious campaign</h3>
+<div class="grid">
+<div class="card"><h4>1. Missions must be discovered</h4><p>Most opportunities already exist in the region; your haven has to <b>detect</b> them. Rebels on Intel generate detection, Avenger scanning is worth roughly <b>4 basic Intel workers</b>, and a Scientist adviser adds a <b>20% haven-wide Intel bonus</b>. More detection usually means you find missions earlier and get longer infiltration windows.</p><p class="small"><a href="#strategy">Haven &amp; expansion details →</a></p></div>
+<div class="card"><h4>2. Strength ≠ Force ≠ Vigilance</h4><p><b>Strength</b> is regional ADVENT troop quantity and drives mission enemy counts. <b>Force</b> is global enemy quality/tech progression. <b>Vigilance</b> is ADVENT's alarm level caused mainly by XCOM activity; when Vigilance outruns Strength, ADVENT tends to move more Strength into the region.</p><p class="small"><a href="#strategy">Regional operating rules →</a></p></div>
+<div class="card"><h4>3. 100% infiltration removes major penalties</h4><p>Below 100%, you can face more dangerous reinforcement queues, larger detection radii, slower evac and other mission pressure. Above 100% can improve several of those factors. Andy's beginner rule is sound: <b>plan around 100% and skip missions that cannot justify under-infiltration.</b></p><p class="small"><a href="#missiondecision">Mission decision tool →</a></p></div>
+<div class="card"><h4>4. Call evac before you need it</h4><p>The Skyranger is not immediate. Base evac delay is difficulty-dependent, and low infiltration / large squads can add turns. Throwing the flare <b>breaks concealment</b>; moving an existing evac zone adds arrival time. Once evac has arrived, it waits for you.</p><p class="small"><a href="#reinforcements">Evac &amp; reinforcement rules →</a></p></div>
+<div class="card"><h4>5. Corpses are not normally recovered</h4><p>Most guerrilla missions end by evacuation, so bodies stay behind. Look for <b>Full Salvage</b> missions such as Supply Raids, Troop Maneuvers/Columns, HQ assaults, landed UFOs and invasions when an autopsy or Proving Ground project needs a corpse.</p><p class="small"><a href="#autopsies">Autopsy priorities →</a></p></div>
+<div class="card"><h4>6. You are expected to decline missions</h4><p>A dark event or mediocre reward is often cheaper than a squad wipe. Andy's onboarding advice is to prefer missions that can infiltrate a useful <b>5+ soldier team</b>, cancel an infiltration when a more important mission appears, and reserve Intel boosts mainly for campaign-critical or unusually valuable missions.</p><p class="small"><a href="#missiondecision">Should I take this mission? →</a></p></div>
+</div>
+
+<h3>Havens — beginner operating rules</h3>
+<table><thead><tr><th>Situation</th><th>Default</th><th>Why</th></tr></thead><tbody>
+<tr><td>Active unliberated region</td><td><b>Almost everyone on Intel</b></td><td>Mission discovery is your main economic engine; discovered missions provide personnel, Intel and resources.</td></tr>
+<tr><td>Region needs to cool</td><td><b>Mostly Hide</b></td><td>Reduces active rebel pressure while regional Vigilance decays.</td></tr>
+<tr><td>Liberated region</td><td><b>Supplies + Engineer adviser</b></td><td>No normal missions need detecting; liberated jobs receive an efficiency bonus.</td></tr>
+<tr><td>Haven adviser</td><td><b>Use a good, rested soldier</b></td><td>Soldier advisers recruit and reveal Faceless; higher combat/officer rank improves detection. Swap them out when needed for a mission.</td></tr>
+<tr><td>Recruiting new rebels</td><td>Remember the <b>16% base Faceless chance</b></td><td>Faceless quietly reduce haven output until detected.</td></tr>
+</tbody></table>
+
+<h3>How to use Andy's recommended external guides</h3>
+<table><thead><tr><th>Resource</th><th>Best use</th><th>How this guide treats it</th></tr></thead><tbody>
+<tr><td><b>UFOpaedia LWOTC</b></td><td>Current mechanics, formulas, mission rules, classes, items</td><td><span class="status-full">PRIMARY MECHANICS REFERENCE</span></td></tr>
+<tr><td><b>inukealot LWOTC Guide</b> (written before 1.2)</td><td>Excellent plain-language explanation of Mission Detection, havens, infiltration, alert, officers and tactical systems</td><td>Concept map / gap finder. Version-sensitive numbers are rechecked before inclusion.</td></tr>
+<tr><td><b>Casey's guides</b></td><td>Campaign structure, tactics, liberation, class reasoning</td><td>Primary strategy source, with version caveats.</td></tr>
+<tr><td><b>DerAva tutorials</b></td><td>Seeing strategy-layer decisions and mission execution in practice</td><td>Recommended visual companion, especially for new players.</td></tr>
+<tr><td><b>LW2 Unofficial Compendium</b></td><td>Legacy compact tips for the original LW2</td><td><span class="status-legacy">LEGACY ONLY</span> — the old Drive resource is currently unavailable and predates LWOTC; do not use it to override current mechanics.</td></tr>
+</tbody></table>
+<div class="source-note">Current mechanics: <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">Missions</a>, <a href="https://www.ufopaedia.org/Infiltration_%28LWOTC%29" target="_blank">Infiltration</a>, <a href="https://www.ufopaedia.org/Haven_Management_%28LWOTC%29" target="_blank">Haven Management</a>, <a href="https://www.ufopaedia.org/ADVENT%27s_Agenda_%28LWOTC%29" target="_blank">ADVENT's Agenda</a>, <a href="https://www.ufopaedia.org/Evac_%28LWOTC%29" target="_blank">Evac</a>. Andy source: <a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a>. Mechanics explainer: <a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot guide</a>.</div>
 </section>
 <section class="searchable" id="timeline">
 <h2>2. Month-by-month campaign plan</h2>
@@ -312,7 +356,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="source-note">Mechanics/cost references: <a href="https://www.ufopaedia.org/Research_%28LWOTC%29" target="_blank">LWOTC Research</a>, <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">LWOTC Missions / full salvage</a>, <a href="https://www.ufopaedia.org/Difficulty_Levels_%28LWOTC%29" target="_blank">LWOTC difficulty scalars</a>, and Casey’s <a href="https://xcom.substack.com/p/lwotc-version-12-notes" target="_blank">version 1.2 notes</a> + <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy" target="_blank">mid/late strategy</a>.</div>
 </section>
 <section class="searchable" id="masterorders">
-<h2>2A. Casey's explicit build order, research order &amp; cost plan</h2>
+<h2>2B. Casey's facility &amp; cost plan — deltas from the research roadmap</h2>
 <div class="callout gold"><b>This section is intentionally literal.</b> Earlier versions of this guide summarized these decisions too aggressively. Casey's opening below is his <b>Psi-rush route</b>; it is a recommended path, not a rule that every LWOTC campaign must follow.</div>
 <h3>Facility build order — early game</h3>
 <table><thead><tr><th>#</th><th>Facility / upgrade</th><th>Power impact Casey quotes</th><th>Reason</th></tr></thead><tbody>
@@ -334,43 +378,17 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>5</td><td><b>Shadow Chamber</b></td><td>-8 / -14</td><td>Required to keep the Golden Path moving. Casey wants it on a <b>Power Conduit</b>.</td></tr>
 <tr><td>6</td><td><b>Resistance Communications</b></td><td>-4 / -7</td><td>Can often be delayed because Covert Ops and POIs add contacts.</td></tr>
 </tbody></table>
-<h3>Research order — early game</h3>
-<table><thead><tr><th>#</th><th>Research</th><th>Purpose / condition</th></tr></thead><tbody>
-<tr><td>1</td><td><b>Resistance Communications</b></td><td>Contact an adjacent region before the starting region becomes too hot.</td></tr>
-<tr><td>2</td><td><b>Modular Weapons</b></td><td>Early Scopes / Stocks; Casey specifically values Stock on early Sharpshooter.</td></tr>
-<tr><td>3</td><td><b>Alien Biotech</b></td><td>Psi route and AP ammunition access.</td></tr>
-<tr><td>4</td><td><b>Sectoid Autopsy</b></td><td>Psi prerequisite.</td></tr>
-<tr><td>5</td><td><b>Psionics</b></td><td>Starts the long Psi training clock.</td></tr>
-<tr><td>6</td><td><b>ADVENT Trooper Autopsy</b></td><td>Proving Ground / Alloy Plating route.</td></tr>
-<tr><td>7</td><td><b>Hybrid Materials</b></td><td>Nanoscale survivability. Move this and Trooper Autopsy earlier for a safer opening.</td></tr>
-<tr><td>8</td><td><b>Laser Weapons</b></td><td>First large damage breakpoint.</td></tr>
-<tr><td>9</td><td><b>Advanced Laser Weapons</b></td><td>Complete laser tier.</td></tr>
-<tr><td>10</td><td><b>ADVENT Officer Autopsy</b></td><td>Skulljack + Talon Rounds.</td></tr>
-<tr><td>Interrupt</td><td><b>ADVENT Robotics</b></td><td>Do after Advanced Lasers when you have roughly <b>4 Drone corpses</b> and can exploit the unlock.</td></tr>
-<tr><td>Interrupt</td><td><b>Purifier Autopsy</b></td><td>Do when you have roughly <b>2 corpses</b>; Incendiary Grenade is a major control breakpoint.</td></tr>
-<tr><td>Interrupt</td><td><b>Stun Lancer Autopsy</b></td><td>Do when you have roughly <b>2 corpses</b>; Arc Blade/Axe unlock.</td></tr>
-<tr><td>Later</td><td><b>Basic Research</b></td><td>Casey no longer recommends rushing it; use it when core tech is blocked by prerequisites/resources.</td></tr>
-</tbody></table>
-<h3>Research order — mid / late game</h3>
-<table><thead><tr><th>#</th><th>Research</th><th>Notes</th></tr></thead><tbody>
-<tr><td>1</td><td><b>Combat Armor</b></td><td>Predator Armor; prepare for the Alloy shortage.</td></tr>
-<tr><td>2</td><td><b>Battle Armor</b></td><td>E.X.O. suit and heavy weapon package.</td></tr>
-<tr><td>3</td><td><b>Magnetic Weapons</b></td><td>Major Chosen / boss damage breakpoint.</td></tr>
-<tr><td>4</td><td><b>Advanced Magnetic Weapons</b></td><td>Complete Mag tier.</td></tr>
-<tr><td>5</td><td><b>Resistance Radio</b></td><td>Relays for long Golden Path contact chains.</td></tr>
-<tr><td>6</td><td><b>Elerium</b></td><td>Advanced Psi Amp + Coil route. Casey quotes <b>50 Elerium + 5 cores</b>.</td></tr>
-<tr><td>7</td><td><b>Alien Encryption</b></td><td>Shadow Chamber.</td></tr>
-<tr><td>8</td><td><b>Coilguns</b></td><td>Next weapon tier.</td></tr>
-<tr><td>9</td><td><b>Advanced Coilguns</b></td><td>Complete Coil tier.</td></tr>
-<tr><td>10</td><td><b>Any available Shadow Chamber project</b></td><td>Blacksite Vial, Codex Brain, Encrypted Data, Psionic Gate, Recovered ADVENT Stasis Suit, Avatar Autopsy.</td></tr>
-<tr><td>11</td><td><b>Powered Armor</b></td><td>Late armor.</td></tr>
-<tr><td>12</td><td><b>Plasma Rifle</b></td><td>Start plasma sequence.</td></tr>
-<tr><td>13</td><td><b>Storm Gun</b></td><td>Shotgun tier.</td></tr>
-<tr><td>14</td><td><b>Plasma Lance</b></td><td>Sniper tier.</td></tr>
-<tr><td>15</td><td><b>Beam Cannon</b></td><td>Cannon tier.</td></tr>
-<tr><td>16</td><td><b>Battlesuits</b></td><td>Late heavy armor; Casey skips Mobile Armor and Shadow Armor in this route.</td></tr>
-</tbody></table>
-<div class="callout purple"><b>Autopsy interrupt rule:</b> interrupt this queue for Casey's 5/5 and 4/5 autopsies when the corpses exist and the unlock is immediately useful. See <a href="#autopsies">the complete rating table</a>.</div>
+
+<h3>Casey-specific research notes — differences from the canonical roadmap</h3>
+<div class="callout"><b>The full month-by-month research sequence, RP cost and material gates now live only in <a href="#researchroadmap">Research Roadmap</a>.</b> This section keeps Casey-specific judgement calls instead of repeating the same queue.</div>
+<ul>
+<li><b>Psi rush is a route, not a universal opener:</b> Casey front-loads Alien Biotech → Sectoid Autopsy → Psionics because Psi training itself is slow.</li>
+<li><b>Safer opener:</b> move Trooper Autopsy / Hybrid Materials earlier when Nanoscale and plating matter more than accelerating Psi.</li>
+<li><b>Autopsies are interrupts, not the spine of the queue:</b> Robotics, Purifier and Stun Lancer are worth inserting when you have enough corpses and can immediately exploit the unlock.</li>
+<li><b>Basic Research is filler:</b> Casey no longer wants it rushed ahead of weapon/armor progression.</li>
+<li><b>Mid/late bottlenecks:</b> Combat/Battle Armor, Magnetic tier, Elerium, Coil and Golden Path projects should not be delayed by low-impact research.</li>
+</ul>
+<div class="callout purple"><b>Autopsy interrupt rule:</b> use <a href="#autopsies">the complete autopsy table</a> and only interrupt the main path when the corpse exists and the unlock solves a current problem.</div>
 <h3>Casey's early-game cost calculation</h3>
 <div class="callout warn"><b>Published arithmetic:</b> Casey gives the urgent facility/upgrade package as a combined <b>785 supplies</b>. He does not publish a reliable per-facility supply split in this article, so this guide does not invent one.</div>
 <table><thead><tr><th>Purchase</th><th>Estimate</th><th>Running total</th></tr></thead><tbody>
@@ -411,7 +429,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="source-note">Sources: <a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</div>
 </section>
 <section class="searchable" id="andyorders">
-<h2>2B. Andy’s build, research, economy &amp; Proving Ground orders <span class="v6flag">NEW IN v6</span></h2>
+<h2>2C. Andy’s facility, economy &amp; Proving Ground deltas</h2>
 <div class="callout gold"><span class="src-badge src-andy">ANDY</span> These are Andy’s 1.2.2 Legend/Honestman operating priorities. They are deliberately shown beside, not substituted for, Casey’s sequence.</div>
 <h3>Early Avenger order — light Psi route</h3>
 <table><tr><th>Order</th><th>Facility</th><th>Why Andy puts it here</th><th>Decision rule</th></tr>
@@ -431,27 +449,18 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>6</td><td><b>Infirmary</b></td><td>Andy sees this as defensive/catch-up infrastructure and delays unless wounds/traits demand it.</td></tr>
 <tr><td>7</td><td><b>Shadow Chamber</b></td><td>Golden Path requirement once the campaign can support its large power draw.</td></tr></table>
 <div class="callout good"><b>Power-coil rule:</b> Andy prefers placing the <b>Lab and Shadow Chamber</b> on exposed power coils because avoiding their large power draw saves more than the extra output of a Relay on the coil.</div>
-<h3>First-three-month research route</h3>
-<div class="table-scroll"><table><tr><th>#</th><th>Research</th><th>Purpose / condition</th></tr>
-<tr><td>1</td><td>Resistance Communications</td><td>Region #2 ASAP.</td></tr>
-<tr><td>2</td><td>Modular Weapons</td><td>Weapon upgrades.</td></tr>
-<tr><td>3</td><td>Alien Biotech</td><td>Psi path + AP-round progression.</td></tr>
-<tr><td>4</td><td>Sectoid Autopsy</td><td>Psi path; preserve enough corpses.</td></tr>
-<tr><td>5</td><td>Psionics</td><td>Psi Lab; Andy’s preference, not mandatory.</td></tr>
-<tr><td>6</td><td>ADVENT Trooper Autopsy</td><td>Proving Ground / Alloy Plating.</td></tr>
-<tr><td>7</td><td>Laser Weapons</td><td>Primary offensive spike.</td></tr>
-<tr><td>8</td><td>Advanced Laser Weapons</td><td>Finish laser tier.</td></tr>
-<tr><td>9</td><td>Hybrid Materials</td><td>Nanoscale vest.</td></tr>
-<tr><td>10</td><td>Stun Lancer Autopsy</td><td>Delay if you cannot also use the unlock.</td></tr>
-<tr><td>11</td><td>ADVENT Officer Autopsy</td><td>Skulljack / Talon.</td></tr>
-<tr><td>12</td><td>ADVENT Robotics</td><td>Delay until enough Drone wrecks.</td></tr>
-<tr><td>13</td><td>Purifier Autopsy</td><td>Incendiary Grenades; requires usable corpse stock.</td></tr>
-<tr><td>14</td><td>Magnetic Weapons</td><td>Begin next weapon tier even if it spills past month 3.</td></tr>
-<tr><td>15</td><td>Experimental Weapons</td><td>Optional; Andy likes Frost Bomb.</td></tr></table></div>
-<div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> If you do not want an early Psi Lab, pull <b>Laser Weapons / Advanced Lasers</b> earlier and keep the rest of the conditional-autopsy logic. Both Casey and Andy agree that weapon progression must not drown in low-value autopsies.</div>
-<h3>Later research route</h3>
-<p><b>Advanced Magnetic → Combat Armor → Battle Armor → Resistance Radio when actually needed → Elerium → Coilguns → Advanced Coilguns → Alien Encryption → Shadow Chamber projects → Powered Armor → Plasma weapon branches → Battlesuits.</b></p>
-<ul><li>Andy delays Resistance Radio when POIs / covert contacts let expansion continue without it.</li><li><b>Weapons are king:</b> do not let inspired/autopsy distractions postpone a weapon tier you can afford.</li><li>Do an autopsy when you have enough corpses to both <b>perform it and build the useful unlock</b>; often this means at least two corpses.</li><li>Andy considers Basic Research / Basic Engineering poor uses of lab time.</li><li>Inspiration is a modest acceleration, not a reason to research something irrelevant.</li></ul>
+
+<h3>Andy-specific research differences</h3>
+<div class="callout"><b>The complete research queue is centralized in <a href="#researchroadmap">Research Roadmap</a>.</b> Keep these Andy-specific deviations in mind:</div>
+<ul>
+<li>He likes a <b>light Psi rush</b>, but treats it as optional; if skipping Psi, move Laser / Advanced Laser earlier.</li>
+<li>His offensive bias can put <b>Laser before Hybrid Materials</b>; Hybrid is still valuable once survivability becomes the bottleneck.</li>
+<li>He delays Stun Lancer / Robotics / Purifier until corpse stock and the resulting item justify the lab time.</li>
+<li>After Lasers he wants <b>Magnetic progression</b> rather than getting distracted by minor autopsies or inspirations.</li>
+<li><b>Resistance Radio is demand-driven:</b> delay it when POIs or covert actions are supplying enough contacts.</li>
+<li>He considers Basic Research / Basic Engineering poor uses of lab time while a meaningful tech is available.</li>
+</ul>
+<div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> Casey and Andy disagree on some local ordering, but agree on the important principle: <b>do not let optional research push you a full weapon tier behind the alien Force curve.</b></div>
 <h3>Proving Ground priority + costs</h3>
 <div class="table-scroll"><table><tr><th>Priority</th><th>Project</th><th>Approx. cost / requirement in Andy’s notes</th><th>Role</th></tr>
 <tr><td>1</td><td>SPARK #1 <span class="src-badge src-legacy">1.2.2</span></td><td>$100 + 1 Core + 3 Eng + 3 Sci</td><td>Version-sensitive; Andy valued it enormously in 1.2.2.</td></tr>
@@ -1166,7 +1175,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <p><b>Shredder, Field Medic, Paramedic, Holo Targeting, Run and Gun</b> are his headline examples. The broader rule is more important: inspect the randomized row <b>at Squaddie</b>, because a perk you cannot afford until later may still change which normal-class perk you should select now.</p>
 </section>
 <section class="searchable" id="squads">
-<h2>11. Squad construction, officers &amp; bonds</h2>
+<h2>11. Squad construction &amp; bonds</h2>
 <h3>Role order</h3>
 <table><tr><th>Approx. priority</th><th>Role</th><th>Examples</th></tr>
 <tr><td>1</td><td>Killer</td><td>Assault, Shinobi, Ranger, Skirmisher</td></tr>
@@ -1185,8 +1194,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="card"><h4>Mid/Late Squad 1</h4><p><b>Shinobi + Ranger · Assault + Specialist · Grenadier + Reaper</b></p><p>Healer, cover destruction, control, strong killing.</p></div>
 <div class="card"><h4>Mid/Late Squad 2</h4><p><b>Shinobi + Gunner · Skirmisher + Psi · Sharpshooter · SPARK</b></p><p>Tank, shooters, control, boss killing.</p></div>
 </div>
-<h3>Officer update for 1.2</h3>
-<p>Legacy Casey preferred Shinobi officers because they could Command while staying hidden. His 1.2 Specialist page reverses this preference: <b>Specialist is now his best officer candidate</b> because Scanner handles information while the Shinobi fights.</p>
+<div class="callout"><b>Officers moved:</b> the complete training requirements, standard abilities, seven-rank perk tree and Casey/Andy build differences are now in <a href="#officers">Officer perks &amp; progression</a>.</div>
 <h3>Bonds</h3>
 <ul>
 <li><b>Good classic pairings:</b> Shinobi + Ranger/Gunner/Assault; Specialist + Ranger/Gunner/Assault; Grenadier + Reaper/Templar; Skirmisher + Ranger/Gunner.</li>
@@ -1196,25 +1204,70 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </ul>
 <h3>Power-level targets</h3>
 <ul><li>Get several soldiers to <b>SGT quickly</b>: faction influence/contact options and Trial by Fire depend on it.</li><li>Reserve frequent mission slots for classes that explode in value at high rank: Casey highlights Reaper, Assault, Grenadier and Psi in the older squad guide.</li><li>Push <b>three soldiers to MSGT</b> in time to reveal and assault Chosen Strongholds before Avenger Defense becomes unavoidable.</li></ul>
-<h3>Officer perk choices Casey actually makes</h3>
-<table><tr><th>Decision</th><th>Casey preference</th><th>Reason</th></tr>
-<tr><td>Focus Fire vs Oscar Mike</td><td><b>No hard winner</b></td><td>Casey considers this the one officer-rank choice where preference is genuinely close/situational.</td></tr>
-<tr><td>Trial by Fire vs Jammer</td><td><b>Trial by Fire</b> while the barracks still needs ranks</td><td>Jammer can become reasonable after essentially everyone important is already SGT+.</td></tr>
-<tr><td>Lead By Example vs Collector</td><td><b>Lead By Example</b> on high-Aim officer; otherwise <b>Collector</b></td><td>Officer's actual stats determine whether the squad-wide stat copy is valuable.</td></tr></table>
-<h3>Exact Casey mid/late squad examples</h3>
-<div class="grid"><div class="card"><b>Squad 1</b><p>Shinobi + Ranger<br/>Assault + Specialist<br/>Grenadier + Reaper</p><p class="small">Healer + cover destruction; two killers; strong control; hacker and boss-killer capacity.</p></div>
-<div class="card"><b>Squad 2</b><p>Shinobi + Gunner<br/>Skirmisher + Psi Operative<br/>Sharpshooter<br/>SPARK</p><p class="small">Tankier and more ranged, with control, hacker utility and a strong Gunner boss-killer.</p></div>
-<div class="card"><b>Covert-op pair</b><p>Technical + Assault / Ranger / Gunner</p><p class="small">Two-soldier operations benefit from a Technical's guaranteed explosive power plus a direct killer/shooter.</p></div></div>
+
 <h3>Bond logic beyond compatibility score</h3>
 <ul><li>Casey is willing to force a lower-compatibility bond when the <b>role pairing</b> makes the squad easier to build.</li><li><b>Shinobi + shooter</b> remains excellent because the shooter converts an extra action into reliable damage while the Shinobi may have spare actions when scouting.</li><li><b>Grenadier + Specialist</b> is explicitly reaffirmed in 1.2: Airdrop and Bluescreen Bomb → Hack create direct mechanical synergy.</li><li>Shooter pairs gain value from bond Aim and Advanced Teamwork because they can almost always spend the extra action productively.</li><li>1.2 Technical is no longer a bad bondmate: Fire in the Hole makes one-action rockets practical, so the class can give or receive bond actions without becoming inert.</li></ul>
 
 <h3>Andy squad-role minimums <span class="v6flag">v6</span></h3>
 <table><tr><th>Need</th><th>Typical classes</th></tr><tr><td>Scout</td><td>Shinobi / Reaper</td></tr><tr><td>Control</td><td>Technical / Gunner / Electroshock Assault / Templar / Grenadier</td></tr><tr><td>Ranged hack for hack missions</td><td>Specialist / SPARK</td></tr><tr><td>Guaranteed damage</td><td>Psi / Shinobi / Assault / Technical / Grenadier / Combat Protocol / Templar</td></tr><tr><td>Repeatable shooter</td><td>Ranger / Sharpshooter / Gunner / Reaper / Skirmisher</td></tr></table>
 <div class="callout"><span class="src-badge src-andy">ANDY</span> He has increasingly stopped using rigid permanent squads because the infiltration bonus is modest and mission-specific role coverage matters more. <span class="src-badge src-synth">SYNTHESIS</span> Keep named squads for officer familiarity / organization if you like them, but build the deployed team around the mission.</div>
-<h3>Andy officer doctrine</h3>
-<p><b>Shinobi officer almost exclusively:</b> Focus Fire → Get Some → Trial By Fire → Collector → Defilade → Infiltrator → Scavenger early / Combined Arms late. Command lets a concealed scout contribute without breaking cover. Andy wants an officer on essentially every mission except Chosen Strongholds.</p>
 <h3>Andy bond logic</h3>
 <div class="compare4"><div class="card"><h4>Givers</h4><p>Shinobi, Specialist, Grenadier, Gunner, Technical.</p></div><div class="card"><h4>Takers</h4><p>Ranger, Gunner, Assault, Reaper, Templar.</p></div><div class="card"><h4>Neutral</h4><p>Sharpshooter and Psi often consume exactly two useful actions and are less natural bond engines.</p></div><div class="card"><h4>Tier value</h4><p>Tier 1 Teamwork provides much of the practical value. Tier 2 lagging pairs can become excellent Covert Op teams because of reduced duration.</p></div></div>
+</section>
+
+<section class="searchable" id="officers">
+<h2>11A. Officers — full progression, perks &amp; practical builds <span class="v6flag">EXPANDED v9</span></h2>
+<div class="callout good"><b>Verified against the stable LWOTC officer config.</b> This replaces the previous abbreviated officer notes. Only the <b>leading officer</b> on a mission gets officer abilities; the game chooses the highest officer rank, then combat rank, then Will for ties. SPARKs cannot train as officers, and Command cannot target robotic allies such as SPARKs.</div>
+
+<h3>Officer training progression</h3>
+<table><thead><tr><th>Officer rank</th><th>Minimum soldier rank</th><th>Base training time</th><th>Command charges</th><th>Choice</th></tr></thead><tbody>
+<tr><td><b>2nd Lieutenant</b></td><td>Lance Corporal</td><td>6 days</td><td>1</td><td>Oscar Mike / Focus Fire</td></tr>
+<tr><td><b>1st Lieutenant</b></td><td>Corporal</td><td>6 days</td><td>1</td><td>Incoming! / Get Some</td></tr>
+<tr><td><b>Captain</b></td><td>Sergeant</td><td>8 days</td><td>2</td><td>Trial By Fire / Jammer</td></tr>
+<tr><td><b>Major</b></td><td>Staff Sergeant</td><td>8 days</td><td>2</td><td>Lead By Example / Collector</td></tr>
+<tr><td><b>Lieutenant Colonel</b></td><td>Tech Sergeant</td><td>8 days</td><td>3</td><td>Fire Discipline / Defilade</td></tr>
+<tr><td><b>Colonel</b></td><td>Gunnery Sergeant</td><td>10 days</td><td>3</td><td>Air Controller / Infiltrator</td></tr>
+<tr><td><b>Field Commander</b></td><td>Master Sergeant</td><td>12 days</td><td>4</td><td>Combined Arms / Scavenger</td></tr>
+</tbody></table>
+<div class="small">Command Range starts at roughly 8 tiles and grows by one tile per officer rank (Rookie has a larger range multiplier). Quick Study can reduce officer training time when available.</div>
+
+<h3>Standard officer abilities — every officer gets these</h3>
+<table><thead><tr><th>Ability</th><th>What it does</th><th>Use it for</th></tr></thead><tbody>
+<tr><td><b>Leadership</b></td><td>Successful missions under that officer build persistent bonuses for participating soldiers: +1 Will per mission (cap +40), +0.5 Dodge (cap +10), and a 0.75% infiltration-time improvement per mission (cap 25%).</td><td>A small long-term benefit for soldiers who repeatedly deploy under the same officer. Useful, but too slow to justify bad squad composition.</td></tr>
+<tr><td><b>Command</b></td><td>Ends the officer's turn and grants a visible eligible ally a bonus action. Charges rise from 1 → 4 as the officer ranks up.</td><td>Give an action to the soldier whose action is worth more: a killer, objective hacker, control unit or wounded soldier who needs to escape.</td></tr>
+<tr><td><b>Intervention</b></td><td>Spend <b>10 Intel</b> and one non-turn-ending action to add <b>2 turns</b> to a compatible mission timer.</td><td>Emergency timer insurance. Intel is precious, so treat it as a rescue tool rather than routine tempo.</td></tr>
+<tr><td><b>Commissar</b></td><td>Pistol shot against a mind-controlled ally; the special shot is designed as a desperation option.</td><td>Last-resort prevention of a disastrous enemy-controlled turn.</td></tr>
+<tr><td><b>Take This</b></td><td>Can hand a conventional pistol to an adjacent civilian ally when the officer is carrying one.</td><td>Rare edge-case utility; not a reason to select an officer candidate.</td></tr>
+</tbody></table>
+
+<h3>Full officer perk tree</h3>
+<div class="table-scroll"><table><thead><tr><th>Rank</th><th>Left perk</th><th>Right perk</th><th>Practical decision</th></tr></thead><tbody>
+<tr><td><b>2LT</b></td><td><b>Oscar Mike</b> — spend an action; all allies in Command Range gain <b>+5 Mobility</b> for the turn; 1 use/mission.</td><td><b>Focus Fire</b> — mark one target; attacks gain <b>+1 armor piercing</b>, and each successive direct attack adds <b>+5 Aim</b>; 3-turn cooldown.</td><td><span class="src-badge src-andy">ANDY</span> Focus Fire. <span class="src-badge src-casey">CASEY</span> calls this close/situational. Focus Fire is the safer general pick; Oscar Mike is excellent for evac/objective movement.</td></tr>
+<tr><td><b>1LT</b></td><td><b>Incoming!</b> — free action; allies in Command Range get <b>4 explosive damage resistance</b> through the next alien turn; 5-turn cooldown.</td><td><b>Get Some</b> — spend an action to give allies in Command Range <b>+20 Crit</b> for the turn; 2 uses/mission.</td><td><span class="src-badge src-andy">ANDY</span> Get Some for offensive tempo. Incoming is stronger when explosives are the immediate threat.</td></tr>
+<tr><td><b>Captain</b></td><td><b>Trial By Fire</b> — after a successful mission, participating soldiers below Sergeant are automatically promoted.</td><td><b>Jammer</b> — once per battle, delay inbound reinforcements by 1 turn.</td><td>Trial By Fire is a major barracks accelerator while you still have low-rank soldiers. Jammer becomes more attractive once the roster is mature or RNF timing is the bigger problem.</td></tr>
+<tr><td><b>Major</b></td><td><b>Lead By Example</b> — allies in Command Range gain half the positive difference between the officer's Aim/Will/Hack and theirs.</td><td><b>Collector</b> — non-human squad kills have a <b>33%</b> chance for +1 Intel, capped at <b>10 Intel/mission</b>, while the officer is healthy.</td><td>High-stat / high-Aim officer: Lead By Example can be excellent. Low-Aim scout officer: Collector gives reliable strategic value without asking the officer to shoot.</td></tr>
+<tr><td><b>Lt. Colonel</b></td><td><b>Fire Discipline</b> — allies in Command Range gain <b>+10 Aim on reaction fire</b>.</td><td><b>Defilade</b> — allies in Command Range gain <b>+5 defense from cover</b>.</td><td><span class="src-badge src-andy">ANDY</span> Defilade. Fire Discipline is the specialized choice for overwatch/reaction-fire squads.</td></tr>
+<tr><td><b>Colonel</b></td><td><b>Air Controller</b> — Skyranger arrives <b>2 turns sooner</b>, subject to minimum evac delay.</td><td><b>Infiltrator</b> — applies a <b>0.85 squad infiltration multiplier</b> (about 15% faster infiltration).</td><td><span class="src-badge src-andy">ANDY</span> Infiltrator. It compounds across almost every infiltrated mission; Air Controller is strongest for evac-heavy or stealth-objective play.</td></tr>
+<tr><td><b>Field Commander</b></td><td><b>Combined Arms</b> — allies in Command Range deal <b>+1 damage</b> on successful attacks.</td><td><b>Scavenger</b> — successful missions gain <b>+30%</b> Supplies/Alloys/Elerium rewards plus a chance for additional Alloy/Elerium recovery.</td><td><span class="src-badge src-andy">ANDY</span> Scavenger earlier when the economy still matters; Combined Arms once late-game combat power is more valuable than additional resources.</td></tr>
+</tbody></table></div>
+
+<h3>Who should become the officer?</h3>
+<div class="compare4">
+<div class="card andybox"><span class="src-badge src-andy">ANDY</span><h4>Shinobi officer</h4><p>Andy trains essentially every Shinobi as an officer. A concealed scout often has spare tactical actions, so spending those actions on Command / Focus Fire / Get Some does not sacrifice your primary damage dealer's turn. His normal path is <b>Focus Fire → Get Some → Trial By Fire → Collector → Defilade → Infiltrator → Scavenger/Combined Arms</b>.</p></div>
+<div class="card caseybox"><span class="src-badge src-casey">CASEY</span><h4>Specialist rose in value in 1.2</h4><p>Older Casey advice favored Shinobi officers. His 1.2 Specialist update makes Specialist a much stronger officer candidate because Scanning Protocol can provide information while the Shinobi is freed to fight. The exact candidate therefore depends on whether your officer should primarily scout or support.</p></div>
+</div>
+<div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> For a first campaign, <b>Shinobi officer is the simplest default</b> because the action economy is intuitive and matches Andy's tested routine. A high-stat Specialist or Holo Sharpshooter can justify a different tree, especially if you want Lead By Example. Do not force the same officer class into every squad if it creates a role gap.</div>
+
+<h3>Officer operational rules</h3>
+<ul>
+<li>Bring an officer on almost every normal mission if roster depth permits; the action economy from Command is valuable immediately.</li>
+<li>Do not stack officers expecting multiple officer kits: only the mission leader's officer abilities function.</li>
+<li><b>Command cannot target SPARKs</b>, so a SPARK-heavy squad reduces one of the officer's strongest tactical tools.</li>
+<li>Keep the officer close enough for Command Range perks when you need them; many aura perks do not buff the officer themself.</li>
+<li>Officer rank also helps a soldier Haven Adviser expose Faceless faster.</li>
+<li>Leadership familiarity bonuses are real but slow. Build squads around mission requirements first; treat repeat-officer bonuses as a bonus, not a constraint.</li>
+</ul>
+<div class="source-note">Current stable mechanics: <a href="https://www.ufopaedia.org/Officers_%28LWOTC%29" target="_blank">UFOpaedia Officers</a> and <a href="https://github.com/long-war-2/lwotc/blob/master/LongWarOfTheChosen/Config/XComLW_OfficerPack.ini" target="_blank">stable Officer config</a>. Strategy: Andy's <a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide</a> + <a href="https://app.notion.com/p/5ebe7e2beea3829ab9b3811d0715d644" target="_blank">Strategy Layer</a>, and Casey class/squad notes.</div>
 </section>
 <section class="searchable" id="liberation">
 <h2>12. Liberation playbook</h2>
@@ -1416,7 +1469,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>Early tactical micro / Yellow Alert / rooftop / move order</td><td class="audit-ok">INCLUDED</td><td><a href="#tactics">Early tactical micro</a></td></tr>
 <tr><td>Full late-enemy handbook incl. Hive Queen</td><td class="audit-ok">INCLUDED</td><td><a href="#enemies">Enemy handbook</a></td></tr>
 <tr><td>Testing builds with console commands</td><td class="audit-ok">INCLUDED</td><td><a href="#tactics">Testing builds</a></td></tr>
-<tr><td>Officer ability choices</td><td class="audit-ok">INCLUDED</td><td><a href="#squads">Officers &amp; bonds</a></td></tr>
+<tr><td>Full Officer tree: standard abilities, 7 ranks, training gates, Command scaling</td><td class="audit-ok">VERIFIED / INCLUDED</td><td><a href="#officers">Officer perks &amp; progression</a></td></tr>
+<tr><td>New-player mechanics: mission detection, Strength/Force/Vigilance, infiltration, evac, corpses</td><td class="audit-ok">INCLUDED</td><td><a href="#newplayer">New-player essentials</a></td></tr>
 <tr><td>Bond-role logic / forced lower-compatibility bonds</td><td class="audit-ok">INCLUDED</td><td><a href="#squads">Bonds</a></td></tr>
 <tr><td>Exact midgame squad examples / covert-op pair</td><td class="audit-ok">INCLUDED</td><td><a href="#squads">Squad examples</a></td></tr>
 <tr><td>Liberation dots / refresh / Tower-HQ expiry</td><td class="audit-ok">INCLUDED</td><td><a href="#liberation">Liberation</a></td></tr>
@@ -1472,9 +1526,21 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li><a href="https://xcom.substack.com/p/long-war-2-quick-start-guide">LW2 Quick Start — classic 100% infiltration / &lt;90% warning</a></li>
 </ul></div>
 <p><a href="https://xcom.substack.com/p/long-war-2-dealing-with-reinforcements">Dealing with Reinforcements (LW2; Casey says still relevant to LWOTC)</a></p><p><a href="https://xcom.substack.com/p/lwotc-some-thoughts-on-version-11">LWOTC v1.1 / miscellaneous notes — older edge cases retained where still useful</a></p>
+<h3>New-player / mechanics references <span class="v6flag">v9</span></h3>
+<ul>
+<li><a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">Andy — New Player Info</a></li>
+<li><a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot — LWOTC mechanics guide (pre-1.2; concepts only unless reverified)</a></li>
+<li><a href="https://www.ufopaedia.org/Long_War_of_the_Chosen" target="_blank">UFOpaedia — current LWOTC reference</a></li>
+<li><a href="https://www.ufopaedia.org/Officers_%28LWOTC%29" target="_blank">UFOpaedia — Officers</a></li>
+<li><a href="https://github.com/long-war-2/lwotc/wiki/New-Player-Resources" target="_blank">LWOTC project — New Player Resources</a></li>
+<li><a href="https://www.youtube.com/watch?v=Km1yo6Be2n4" target="_blank">DerAva — Quick and Dirty Strategy Layer Guide</a></li>
+<li><a href="https://www.youtube.com/watch?v=4XSLjOd6WIs" target="_blank">DerAva — Haven Management</a></li>
+</ul>
+<div class="callout warn"><b>Legacy Compendium note:</b> Andy links the old <i>Long War 2 Unofficial Compendium of Tips and Observations</i>. Its linked Drive file is currently unavailable and it predates LWOTC, so v9 does not import unverified mechanics from it.</div>
 <h3>Andy’s Notion sources</h3>
 <ul>
 <li><a href="https://app.notion.com/p/31ce7e2beea3839282dd81d164a7eb48" target="_blank">Andy’s LWotC Notes &amp; Guide (v1.2.2)</a></li>
+<li><a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a></li>
 <li><a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a></li>
 <li><a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide 1.2.2</a></li>
 <li><a href="https://app.notion.com/p/5ebe7e2beea3829ab9b3811d0715d644" target="_blank">Strategy Layer</a></li>
@@ -1590,8 +1656,8 @@ const contextGroups={
     links:[['Decide','missiondecision'],['Squads','missionsquads'],['Playbook','missions'],['Tactics','tactics'],['RNF','reinforcements']]
   },
   soldiers:{
-    ids:['personnel','equipment','builds','squads'],
-    links:[['Personnel','personnel'],['Equipment','equipment'],['Builds','builds'],['Squads/Bonds','squads']]
+    ids:['personnel','equipment','builds','officers','squads'],
+    links:[['Personnel','personnel'],['Equipment','equipment'],['Builds','builds'],['Officers','officers'],['Squads/Bonds','squads']]
   },
   reference:{
     ids:['chosen','enemies','legacy-notes','warnings','checklists','versionmodel','quick','coverage','images','sources'],
