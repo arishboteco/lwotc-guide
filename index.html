@@ -1636,13 +1636,6 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
 <script>
 const q=document.getElementById('search');
-q.addEventListener('input',()=>{
-  const s=q.value.trim().toLowerCase();
-  document.querySelectorAll('section.searchable, details.searchable, .classbox').forEach(el=>{
-    if(!s){el.classList.remove('hidden');return;}
-    el.classList.toggle('hidden', !el.innerText.toLowerCase().includes(s));
-  });
-});
 const menuToggle=document.getElementById('menuToggle');
 const sidebar=document.querySelector('.sidebar');
 if(menuToggle){
@@ -1650,16 +1643,398 @@ if(menuToggle){
   sidebar.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>sidebar.classList.remove('open')));
 }
 
+/* ---------- v10 campaign data ---------- */
+const trackerTechs=[
+  {id:'rescomms',label:'Resistance Communications',phase:0,anchor:'researchroadmap'},
+  {id:'modular',label:'Modular Weapons',phase:0,anchor:'researchroadmap'},
+  {id:'biotech',label:'Alien Biotech',phase:0,anchor:'researchroadmap'},
+  {id:'psionics',label:'Psionics (if using Psi)',phase:1,optional:true,anchor:'researchroadmap'},
+  {id:'laser',label:'Laser Weapons',phase:1,anchor:'researchroadmap'},
+  {id:'advlaser',label:'Advanced Laser Weapons',phase:1,anchor:'researchroadmap'},
+  {id:'mag',label:'Magnetic Weapons',phase:2,anchor:'researchroadmap'},
+  {id:'combatarmor',label:'Combat Armor',phase:3,anchor:'researchroadmap'},
+  {id:'advmag',label:'Advanced Magnetic Weaponry',phase:3,anchor:'researchroadmap'},
+  {id:'eleriumtech',label:'Elerium',phase:4,anchor:'researchroadmap'},
+  {id:'coil',label:'Coilguns',phase:5,anchor:'researchroadmap'},
+  {id:'advcoil',label:'Advanced Coilguns',phase:5,anchor:'researchroadmap'},
+  {id:'powered',label:'Powered Armor',phase:5,anchor:'researchroadmap'},
+  {id:'plasma',label:'Plasma Rifle',phase:6,anchor:'researchroadmap'}
+];
+const trackerFacilities=[
+  {id:'gts',label:'GTS / Officer training',phase:0},
+  {id:'pg',label:'Proving Ground',phase:1},
+  {id:'power',label:'Power Relay / sufficient power',phase:1},
+  {id:'training',label:'Training Center',phase:3},
+  {id:'lab',label:'Laboratory',phase:4},
+  {id:'matrix',label:'Defense Matrix',phase:4},
+  {id:'shadow',label:'Shadow Chamber',phase:5}
+];
 
-const topSearchBtn=document.getElementById('topSearchBtn');
-function openGuideSearch(){
-  if(sidebar) sidebar.classList.add('open');
-  window.setTimeout(()=>{ if(q){ q.focus(); q.select(); } },60);
+const sellKeepData=[
+  {name:'Alien Alloys',aliases:['alloys','alloy'],status:'KEEP',cls:'decision-keep',why:'A major midgame bottleneck for weapons, armor and projects. Both Casey and Andy warn against casually selling early Alloys.',uses:'Magnetic/Coil progression, armor, Proving Ground projects.',link:'researchroadmap'},
+  {name:'Elerium',aliases:['elerium dust'],status:'KEEP',cls:'decision-keep',why:'A major mid/late bottleneck. Andy recommends buying it earlier than feels necessary.',uses:'Elerium research, Coil/Plasma progression, advanced projects.',link:'researchroadmap'},
+  {name:'Elerium Core',aliases:['core','cores','elerium cores'],status:'RESERVE',cls:'decision-caution',why:'Early extras can be sold in some routes, but core demand rises sharply. The guide stops routine core sales around June/July.',uses:'Research gates and many Proving Ground projects.',link:'researchroadmap'},
+  {name:'Intel',aliases:['intel resource'],status:'KEEP / SPEND STRATEGICALLY',cls:'decision-keep',why:'Expansion, critical boosts and Golden Path contact chains consume large amounts of Intel. Routine boosts are usually a poor use.',uses:'Region contacts, liberation/Golden Path boosts, selected strategic actions.',link:'strategy'},
+  {name:'ADVENT Data Pad / Intel Cache',aliases:['data pad','datapad','intel cache'],status:'CONDITIONAL',cls:'decision-caution',why:'Can be converted or sold for tempo, but the guide recommends saving caches when a large expansion or Golden Path Intel bill is approaching.',uses:'Intel reserve / early economy.',link:'purchases'},
+  {name:'Sectoid Corpse',aliases:['sectoid'],status:'KEEP EARLY',cls:'decision-keep',why:'Preserve the early corpse needed for the Psi research route. Extras become more flexible after your planned unlocks are covered.',uses:'Sectoid Autopsy / Psionics route.',link:'researchroadmap'},
+  {name:'ADVENT Trooper Corpse',aliases:['trooper corpse','trooper'],status:'KEEP EARLY',cls:'decision-keep',why:'Core early autopsy material on the plating / Proving Ground route.',uses:'ADVENT Trooper Autopsy and related progression.',link:'researchroadmap'},
+  {name:'ADVENT Officer Corpse',aliases:['officer corpse','advent officer'],status:'KEEP',cls:'decision-keep',why:'Officer Autopsy feeds high-value progression and projects; do not sell the last useful copy casually.',uses:'Officer Autopsy, Skulljack/Talon-related progression.',link:'autopsies'},
+  {name:'Drone Wreck',aliases:['drone','drone corpse','drone wrecks'],status:'KEEP UNTIL ROBOTICS',cls:'decision-keep',why:'ADVENT Robotics is a high-priority autopsy in Casey’s framework. The research roadmap specifically warns that wrecks are easy to miss on evac missions.',uses:'ADVENT Robotics; the guide targets 3 wrecks for the research gate.',link:'autopsies'},
+  {name:'Purifier Corpse',aliases:['purifier'],status:'KEEP',cls:'decision-keep',why:'Purifier Autopsy is one of Casey’s highest-priority interrupts because Incendiary Grenades are a major control breakpoint.',uses:'Purifier Autopsy / Incendiary Grenade progression.',link:'autopsies'},
+  {name:'Stun Lancer Corpse',aliases:['stun lancer','lancer'],status:'KEEP UNTIL UNLOCK',cls:'decision-keep',why:'A high-value autopsy when you can immediately use the melee/electro unlocks.',uses:'Stun Lancer Autopsy; Arc Blade/Axe progression.',link:'autopsies'},
+  {name:'Gatekeeper Corpse',aliases:['gatekeeper'],status:'KEEP',cls:'decision-keep',why:'Casey rates Gatekeeper Autopsy 5/5.',uses:'Arc Blaster and Alien Psi Amp progression.',link:'autopsies'},
+  {name:'Archon Corpse',aliases:['archon'],status:'KEEP UNTIL AUTOPSY',cls:'decision-keep',why:'Casey rates the Archon Autopsy highly enough that the first useful corpses should be reserved.',uses:'Fusion Blade/Axe progression.',link:'autopsies'},
+  {name:'Muton Elite Corpse',aliases:['muton elite','elite muton'],status:'KEEP',cls:'decision-keep',why:'A high-priority corpse in the guide and tied to multiple useful late projects.',uses:'Dragon Rounds, Carapace/Gauntlet progression.',link:'autopsies'},
+  {name:'Sectopod Wreck',aliases:['sectopod'],status:'KEEP',cls:'decision-keep',why:'Casey rates Sectopod Autopsy 4/5.',uses:'Gremlin Mk III progression.',link:'autopsies'},
+  {name:'Turret Wreck',aliases:['turret'],status:'CONDITIONAL KEEP',cls:'decision-caution',why:'Useful for Shredder Rounds / Defense Matrix progression, but below the top autopsy tier.',uses:'Turret Autopsy and associated projects.',link:'autopsies'},
+  {name:'Andromedon Corpse',aliases:['andromedon'],status:'CONDITIONAL KEEP',cls:'decision-caution',why:'Mid-priority autopsy; reserve enough for the unlocks you actually plan to manufacture.',uses:'Advanced Grenades / Holo progression.',link:'autopsies'},
+  {name:'MEC Wreck',aliases:['mec','mec corpse'],status:'CONDITIONAL',cls:'decision-caution',why:'Casey rates this below the top autopsies, but Bluescreen progression can be strategically important.',uses:'MEC Autopsy / Bluescreen-related progression.',link:'autopsies'},
+  {name:'Muton Corpse',aliases:['muton'],status:'KEEP UNTIL PROJECTS COVERED',cls:'decision-keep',why:'Do not casually sell Mutons. The guide flags Muton-dependent projects and protection as valuable even though the autopsy itself is not top-rated.',uses:'Muton Autopsy / Plasma Grenade and other project progression.',link:'autopsies'},
+  {name:'Viper Corpse',aliases:['viper'],status:'CONDITIONAL',cls:'decision-caution',why:'Lower-priority than the major control/weapon autopsies, but still feeds useful items.',uses:'Venom Rounds / Nanomedikit progression.',link:'autopsies'},
+  {name:'Berserker Corpse',aliases:['berserker'],status:'SELL EXTRAS AFTER NEEDS',cls:'decision-caution',why:'Casey gives the autopsy low priority. Keep what you need for the intended unlock, then extras are more expendable.',uses:'Overdrive Serum progression.',link:'autopsies'},
+  {name:'Chryssalid Corpse',aliases:['chryssalid'],status:'SELL EXTRAS AFTER NEEDS',cls:'decision-caution',why:'Low-priority autopsy in Casey’s route.',uses:'Chitin Plating progression.',link:'autopsies'},
+  {name:'Shieldbearer Corpse',aliases:['shieldbearer'],status:'SELL EXTRAS AFTER NEEDS',cls:'decision-caution',why:'Low-priority autopsy in Casey’s route.',uses:'Stasis Vest progression.',link:'autopsies'},
+  {name:'Faceless Corpse',aliases:['faceless'],status:'OFTEN SELLABLE',cls:'decision-sell',why:'Casey rates the autopsy 0/5 in this route and Andy explicitly sells early Faceless corpses. Keep one only if a planned project needs it.',uses:'Needle/Chameleon-related progression in routes that value them.',link:'autopsies'},
+  {name:'Priest Corpse',aliases:['priest'],status:'LOW PRIORITY',cls:'decision-sell',why:'Casey rates this autopsy 0/5 in his route.',uses:'Sustaining Sphere progression.',link:'autopsies'},
+  {name:'Spectre Corpse',aliases:['spectre'],status:'LOW PRIORITY',cls:'decision-sell',why:'Casey rates this autopsy 0/5 in his route.',uses:'Refraction Field progression.',link:'autopsies'},
+  {name:'Weapon Mods',aliases:['weapon mod','mods','scope','stock','autoloader','suppressor'],status:'CONDITIONAL',cls:'decision-caution',why:'Andy sells many early mods for tempo, while keeping immediately useful pieces such as Auto-Loaders and an early Stock. Later, suppressors become broadly useful.',uses:'Class loadouts and infiltration efficiency.',link:'equipment'},
+  {name:'PCS',aliases:['personal combat sims','combat sim'],status:'CONDITIONAL',cls:'decision-caution',why:'Early mediocre PCS can be sold for tempo; strong or role-defining PCS should be retained.',uses:'Soldier stat specialization.',link:'personnel'}
+];
+
+const classData={
+  'Assault':{roles:['killer','control','guaranteed'],desc:'close-range kill + Electroshock control'},
+  'Grenadier':{roles:['control','cover','guaranteed'],desc:'grenade control + cover removal'},
+  'Gunner':{roles:['shooter','boss','control'],desc:'sustained fire, shred, boss damage'},
+  'Ranger':{roles:['shooter','killer'],desc:'reliable repeatable shooting'},
+  'Sharpshooter':{roles:['shooter','boss'],desc:'range + precision damage'},
+  'Shinobi':{roles:['scout','killer','guaranteed'],desc:'scouting + melee finisher'},
+  'Specialist':{roles:['hack','heal','information','control'],desc:'ranged hack, support, scanning'},
+  'Technical':{roles:['control','cover','guaranteed'],desc:'fire/rocket control + guaranteed damage'},
+  'Reaper':{roles:['scout','shooter','boss'],desc:'information + precision damage'},
+  'Skirmisher':{roles:['shooter','control','cover'],desc:'action-efficient hybrid'},
+  'Templar':{roles:['killer','control','guaranteed'],desc:'melee/control hybrid'},
+  'Psi Operative':{roles:['control','guaranteed','support'],desc:'reliable control + guaranteed effects'},
+  'SPARK':{roles:['shooter','hack','cover','boss'],desc:'durable firepower + mechanical utility'}
+};
+const missionData={
+  general:{label:'General guerrilla op',required:['scout','control','guaranteed'],optional:['shooter','hack'],note:'Default LWOTC coverage: information, hard control and guaranteed damage keep a bad activation recoverable.'},
+  hack:{label:'Hack / recover objective',required:['hack','scout','control'],optional:['guaranteed','shooter'],note:'Do not discover at the objective that nobody can hack from range. Specialist or SPARK covers the hack role.'},
+  lib1:{label:'Liberation 1 — hack',required:['hack','scout','guaranteed'],optional:['control'],note:'A Specialist/Shinobi pairing is especially useful when the timer is short or a stealth approach is viable.'},
+  tower:{label:'Network Tower',required:['hack','control','guaranteed','shooter'],optional:['scout','boss'],note:'Tower missions cap the deployed team at five. Build a compact squad with no dead-weight role.'},
+  hq:{label:'Regional HQ assault',required:['scout','control','boss','cover'],optional:['heal','shooter','guaranteed'],note:'Long full-salvage fight: information, control, armor/boss damage and cover destruction all matter.'},
+  supply:{label:'Supply Raid / Full Salvage',required:['scout','control','cover'],optional:['boss','guaranteed'],note:'Full salvage makes corpse preservation valuable. Avoid unnecessary explosive finishing blows on corpses you specifically need.'},
+  troop:{label:'Troop Ambush / Maneuvers',required:['scout','control','guaranteed'],optional:['cover','boss'],note:'High strategic value because of corpses/resources. Bring enough control to protect the salvage opportunity.'},
+  retaliation:{label:'Retaliation',required:['control','guaranteed','shooter'],optional:['heal','scout'],note:'Fast-response missions punish slow setup. Reliable damage and control matter more than a perfect infiltration composition.'},
+  chosen:{label:'Chosen encounter / Stronghold',required:['boss','control','shooter'],optional:['heal','guaranteed'],note:'Prioritize sustained boss damage, shred and control over stealth-only utility.'},
+  golden:{label:'Golden Path / story mission',required:['control','boss','guaranteed'],optional:['hack','heal','scout'],note:'Bring your deepest, most resilient team; story missions are not where you want a role hole.'},
+  covert:{label:'Covert-op ambush recovery',required:['guaranteed','control'],optional:['shooter','scout'],note:'Small teams need action-efficient classes. Technical, Assault, Ranger, Gunner and Shinobi all have strong two-person utility.'}
+};
+const roleLabels={scout:'Scout / information',control:'Hard control',guaranteed:'Guaranteed damage',shooter:'Repeatable shooting',hack:'Ranged hack',boss:'Boss / armor damage',cover:'Cover destruction',heal:'Healing',information:'Information',support:'Support'};
+
+/* ---------- campaign tracker ---------- */
+const phaseOrder={march:0,april:1,may:2,june:3,july:4,augsep:5,late:6};
+const phaseLabels={march:'March',april:'April',may:'May',june:'June',july:'July',augsep:'Aug–Sep',late:'Late campaign'};
+const researchChecks=document.getElementById('ctResearchChecks');
+const facilityChecks=document.getElementById('ctFacilityChecks');
+trackerTechs.forEach(t=>{
+  const label=document.createElement('label'); label.className='tracker-check';
+  label.innerHTML='<input type="checkbox" data-tech="'+t.id+'"/> <span>'+t.label+'</span>';
+  researchChecks.appendChild(label);
+});
+trackerFacilities.forEach(t=>{
+  const label=document.createElement('label'); label.className='tracker-check';
+  label.innerHTML='<input type="checkbox" data-facility="'+t.id+'"/> <span>'+t.label+'</span>';
+  facilityChecks.appendChild(label);
+});
+function getTrackerState(){
+  const completed={}; document.querySelectorAll('[data-tech]').forEach(x=>completed[x.dataset.tech]=x.checked);
+  const facilities={}; document.querySelectorAll('[data-facility]').forEach(x=>facilities[x.dataset.facility]=x.checked);
+  return {
+    phase:document.getElementById('ctPhase').value,difficulty:document.getElementById('ctDifficulty').value,
+    scientists:+document.getElementById('ctScientists').value||0,engineers:+document.getElementById('ctEngineers').value||0,
+    intel:+document.getElementById('ctIntel').value||0,alloys:+document.getElementById('ctAlloys').value||0,
+    elerium:+document.getElementById('ctElerium').value||0,cores:+document.getElementById('ctCores').value||0,
+    strength:+document.getElementById('ctStrength').value||0,liberation:document.getElementById('ctLiberation').value,
+    completed,facilities
+  };
 }
-if(topSearchBtn) topSearchBtn.addEventListener('click',openGuideSearch);
+function setTrackerState(s){
+  if(!s)return;
+  ['phase','difficulty'].forEach(k=>{const e=document.getElementById(k==='phase'?'ctPhase':'ctDifficulty');if(e&&s[k]!=null)e.value=s[k];});
+  const map={scientists:'ctScientists',engineers:'ctEngineers',intel:'ctIntel',alloys:'ctAlloys',elerium:'ctElerium',cores:'ctCores',strength:'ctStrength',liberation:'ctLiberation'};
+  Object.entries(map).forEach(([k,id])=>{const e=document.getElementById(id);if(e&&s[k]!=null)e.value=s[k];});
+  document.querySelectorAll('[data-tech]').forEach(x=>x.checked=!!(s.completed&&s.completed[x.dataset.tech]));
+  document.querySelectorAll('[data-facility]').forEach(x=>x.checked=!!(s.facilities&&s.facilities[x.dataset.facility]));
+}
+function trackerPriorities(s){
+  const p=[],phase=phaseOrder[s.phase]??0;
+  if(s.strength>=8)p.push({title:'Leave this region for routine ops',why:'Strength '+s.strength+' is extreme. Hide/cool it and use lower-Strength regions except for high-value exceptions.',link:'strategy',kind:'REGION'});
+  else if(s.strength>=5)p.push({title:'Cool or rotate out of this region',why:'Strength '+s.strength+' makes routine missions much less attractive. Expand or shift activity before spending Intel to force mediocre missions.',link:'strategy',kind:'REGION'});
+  if(phase<=1&&s.scientists<2)p.push({title:'Acquire a second Scientist',why:'Two Scientists are an important early threshold, especially if you are using the Psi route.',link:'researchroadmap',kind:'STAFF'});
+  if(phase<=1&&s.engineers<2)p.push({title:'Acquire a second Engineer',why:'Early engineering gates include Alloy Plating and faster Avenger development.',link:'researchroadmap',kind:'STAFF'});
+  if(phase>=2&&(s.scientists<3||s.engineers<3))p.push({title:'Check the 3 Scientist / 3 Engineer threshold',why:'If SPARK is part of your plan, the guide targets 3 Scientists + 3 Engineers around late April/May.',link:'researchroadmap',kind:'STAFF'});
+  const due=trackerTechs.filter(t=>!t.optional&&t.phase<=phase&&!s.completed[t.id]).slice(0,2);
+  due.forEach(t=>p.push({title:'Research: '+t.label,why:'This is an unfinished campaign-phase milestone in the canonical roadmap.',link:t.anchor,kind:'RESEARCH'}));
+  if(!s.facilities.gts&&phase>=0)p.push({title:'Build GTS / start officer pipeline',why:'This is the consistent first-facility priority in the guide and compounds through training/officers.',link:'masterorders',kind:'FACILITY'});
+  if(!s.facilities.pg&&phase>=1)p.push({title:'Build / prepare Proving Ground',why:'By April–May it unlocks plating, SPARK and major control/ammo projects.',link:'masterorders',kind:'FACILITY'});
+  if(phase>=4&&!s.facilities.matrix)p.push({title:'Evaluate Defense Matrix timing',why:'Before late Golden Path/UFO/Chosen pressure, a staffed Defense Matrix becomes cheap insurance.',link:'andyorders',kind:'FACILITY'});
+  if(s.intel<60&&phase<=3)p.push({title:'Protect your Intel reserve',why:'You are below 60 Intel. Expansion and liberation boosts compete directly with routine mission boosting.',link:'strategy',kind:'ECONOMY'});
+  else if(s.intel<100&&phase>=4)p.push({title:'Build a larger Intel reserve',why:'Mid/late contact chains and Golden Path progression can consume Intel rapidly.',link:'strategy',kind:'ECONOMY'});
+  if(phase>=2&&s.alloys<15)p.push({title:'Conserve / acquire Alloys',why:'You are entering the Magnetic/armor squeeze with fewer than 15 Alloys.',link:'sellkeep',kind:'RESOURCE'});
+  if(phase>=4&&!s.completed.eleriumtech&&s.elerium<50)p.push({title:'Prepare Elerium for the next tech gate',why:'The July roadmap expects a major Elerium requirement; buy or prioritize salvage before you are blocked.',link:'researchroadmap',kind:'RESOURCE'});
+  if(phase>=4&&!s.completed.eleriumtech&&s.cores<5)p.push({title:'Stop routine Core sales',why:'Your Core reserve is below the roadmap’s Elerium-tech gate. Treat Cores as a strategic reserve now.',link:'sellkeep',kind:'RESOURCE'});
+  const libRank={none:0,lib1:1,lib2:2,lib3:3,tower:4,hq:5,liberated:6}[s.liberation]||0;
+  if(phase>=2&&libRank===0)p.push({title:'Start a liberation chain',why:'By May the campaign should be identifying a liberation region rather than farming indefinitely.',link:'liberation',kind:'LIBERATION'});
+  if(phase>=4&&libRank<6)p.push({title:'Advance the first liberation',why:'The guide targets roughly July for the first liberated region; you are not there yet.',link:'liberation',kind:'LIBERATION'});
+  if(!p.length)p.push({title:'No obvious red flag from the tracker',why:'Your entered milestones are broadly aligned. Use the mission decision tool to choose the next opportunity.',link:'missiondecision',kind:'STATUS'});
+  return p.slice(0,7);
+}
+function renderTracker(){
+  const s=getTrackerState(),list=trackerPriorities(s),box=document.getElementById('ctNext');
+  box.innerHTML=list.map(x=>'<div class="next-card"><span class="search-type">'+x.kind+'</span><b>'+x.title+'</b><div class="small">'+x.why+'</div><a href="#'+x.link+'">Open relevant guide →</a></div>').join('');
+  const home=document.getElementById('homeCampaignSummary');
+  if(home)home.innerHTML='<b>'+phaseLabels[s.phase]+' · STR '+s.strength+' · '+s.intel+' Intel</b><span>'+list.slice(0,2).map(x=>x.title).join(' · ')+'</span>';
+}
+function saveTracker(){
+  const s=getTrackerState(); localStorage.setItem('lwotcCampaignStateV1',JSON.stringify(s)); renderTracker();
+  const e=document.getElementById('ctSaved'); e.textContent='Saved on this device'; setTimeout(()=>e.textContent='',1800);
+}
+document.getElementById('ctSave').addEventListener('click',saveTracker);
+document.getElementById('ctReset').addEventListener('click',()=>{
+  localStorage.removeItem('lwotcCampaignStateV1');
+  setTrackerState({phase:'march',difficulty:'Veteran',scientists:0,engineers:0,intel:0,alloys:0,elerium:0,cores:0,strength:1,liberation:'none',completed:{},facilities:{}});
+  renderTracker();
+});
+try{const saved=JSON.parse(localStorage.getItem('lwotcCampaignStateV1')||'null');if(saved)setTrackerState(saved);}catch(e){}
+renderTracker();
+
+/* ---------- Sell / Keep ---------- */
+const skInput=document.getElementById('sellKeepInput'),skSug=document.getElementById('sellKeepSuggestions'),skResult=document.getElementById('sellKeepResult');
+function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();}
+function levenshtein(a,b){
+  if(a===b)return 0;if(!a.length)return b.length;if(!b.length)return a.length;
+  const v0=Array(b.length+1).fill(0).map((_,i)=>i),v1=Array(b.length+1);
+  for(let i=0;i<a.length;i++){v1[0]=i+1;for(let j=0;j<b.length;j++){const c=a[i]===b[j]?0:1;v1[j+1]=Math.min(v1[j]+1,v0[j+1]+1,v0[j]+c);}for(let j=0;j<=b.length;j++)v0[j]=v1[j];}
+  return v1[b.length];
+}
+function textScore(query,name,aliases=[],body=''){
+  const qn=normalize(query),title=normalize(name),all=[title,...aliases.map(normalize)],tokens=qn.split(' ').filter(Boolean);
+  if(!qn)return 0; let score=0;
+  if(title===qn)score+=160;if(title.startsWith(qn))score+=90;if(title.includes(qn))score+=65;
+  all.forEach(a=>{if(a===qn)score+=120;else if(a.startsWith(qn))score+=65;else if(a.includes(qn))score+=40;});
+  const words=[...new Set(all.join(' ').split(' '))],bodyN=normalize(body);
+  tokens.forEach(t=>{
+    if(words.includes(t))score+=24;
+    if(words.some(w=>w.startsWith(t)))score+=16;
+    if(bodyN.includes(t))score+=3;
+    if(t.length>=4&&words.some(w=>Math.abs(w.length-t.length)<=2&&levenshtein(w,t)<=1))score+=12;
+    else if(t.length>=6&&words.some(w=>Math.abs(w.length-t.length)<=2&&levenshtein(w,t)<=2))score+=7;
+  });
+  return score;
+}
+function sellKeepMatches(query){return sellKeepData.map(x=>({x,score:textScore(query,x.name,x.aliases,x.why+' '+x.uses)})).filter(y=>y.score>0).sort((a,b)=>b.score-a.score).slice(0,6);}
+function renderSellKeepSuggestions(){
+  const qv=skInput.value.trim(); if(qv.length<1){skSug.innerHTML='';return;}
+  skSug.innerHTML=sellKeepMatches(qv).slice(0,5).map(y=>'<button type="button" data-sk="'+sellKeepData.indexOf(y.x)+'">'+y.x.name+'</button>').join('');
+  skSug.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>showSellKeep(+b.dataset.sk)));
+}
+function showSellKeep(index){
+  const x=sellKeepData[index]; if(!x)return; skInput.value=x.name; skSug.innerHTML='';
+  skResult.innerHTML='<span class="decision-badge '+x.cls+'">'+x.status+'</span><h3>'+x.name+'</h3><p><b>Why:</b> '+x.why+'</p><p><b>Main uses:</b> '+x.uses+'</p><a href="#'+x.link+'">Open related guide →</a>';
+}
+skInput.addEventListener('input',renderSellKeepSuggestions);
+skInput.addEventListener('keydown',e=>{if(e.key==='Enter'){const m=sellKeepMatches(skInput.value)[0];if(m)showSellKeep(sellKeepData.indexOf(m.x));}});
+document.getElementById('sellKeepSearch').addEventListener('click',()=>{const m=sellKeepMatches(skInput.value)[0];if(m)showSellKeep(sellKeepData.indexOf(m.x));});
+
+/* ---------- Squad Builder ---------- */
+const picker=document.getElementById('classPicker'),squadCounts={};
+Object.keys(classData).forEach(name=>{
+  squadCounts[name]=0; const row=document.createElement('div'); row.className='class-pick';
+  row.innerHTML='<div><b>'+name+'</b><small>'+classData[name].desc+'</small></div><div class="counter"><button type="button" data-minus="'+name+'" aria-label="Remove '+name+'">−</button><span data-count="'+name+'">0</span><button type="button" data-plus="'+name+'" aria-label="Add '+name+'">+</button></div>';
+  picker.appendChild(row);
+});
+function squadTotal(){return Object.values(squadCounts).reduce((a,b)=>a+b,0);}
+function updateSquadCount(){
+  Object.entries(squadCounts).forEach(([n,c])=>{const el=document.querySelector('[data-count="'+n+'"]');if(el)el.textContent=c;});
+  document.getElementById('sbCount').textContent=squadTotal()+' selected';
+}
+picker.addEventListener('click',e=>{
+  const plus=e.target.dataset.plus,minus=e.target.dataset.minus;
+  if(plus){squadCounts[plus]=Math.min(2,squadCounts[plus]+1);updateSquadCount();}
+  if(minus){squadCounts[minus]=Math.max(0,squadCounts[minus]-1);updateSquadCount();}
+});
+function analyzeSquad(){
+  const mission=missionData[document.getElementById('sbMission').value],target=+document.getElementById('sbTargetSize').value||5,total=squadTotal();
+  const covered={};Object.entries(squadCounts).forEach(([name,count])=>{if(count>0)classData[name].roles.forEach(r=>covered[r]=(covered[r]||0)+count);});
+  const req=[...mission.required],opt=[...mission.optional];
+  const cards=req.map(r=>'<div class="coverage '+(covered[r]?'ok':'miss')+'"><b>'+(covered[r]?'✓ ':'✕ ')+roleLabels[r]+'</b><small>'+(covered[r]?(covered[r]+' source'+(covered[r]>1?'s':'')):'Required gap')+'</small></div>')
+    .concat(opt.map(r=>'<div class="coverage '+(covered[r]?'ok':'optional')+'"><b>'+(covered[r]?'✓ ':'○ ')+roleLabels[r]+'</b><small>'+(covered[r]?'Covered':'Useful, not mandatory')+'</small></div>')).join('');
+  const missing=req.filter(r=>!covered[r]);
+  const suggestions=missing.map(r=>{
+    const picks=Object.keys(classData).filter(n=>classData[n].roles.includes(r)&&squadCounts[n]===0).slice(0,4);
+    return '<li><b>'+roleLabels[r]+':</b> '+(picks.length?picks.join(', '):'add another class already selected that covers this role')+'</li>';
+  }).join('');
+  const sizeNote=total<target?'<div class="callout warn"><b>Squad is '+(target-total)+' soldier'+(target-total===1?'':'s')+' short of your planned size.</b></div>':
+    total>target?'<div class="callout gold"><b>You selected '+total+' for a target of '+target+'.</b> Check infiltration / mission squad limits.</div>':'';
+  const towerNote=document.getElementById('sbMission').value==='tower'&&total>5?'<div class="callout warn"><b>Network Tower warning:</b> the mission is capped at five deployed soldiers.</div>':'';
+  document.getElementById('sbAnalysis').innerHTML='<h3>'+mission.label+'</h3>'+sizeNote+towerNote+'<div class="coverage-grid">'+cards+'</div><p>'+mission.note+'</p>'+(missing.length?'<h4>Best gaps to fix</h4><ul>'+suggestions+'</ul>':'<div class="callout good"><b>All critical role checks are covered.</b> Now optimize ranks, fatigue, infiltration and equipment.</div>')+'<p class="small"><a href="#missionsquads">See recommended mission squads →</a> · <a href="#equipment">Equipment by class →</a></p>';
+  try{localStorage.setItem('lwotcSquadBuilderV1',JSON.stringify({mission:document.getElementById('sbMission').value,target,counts:squadCounts}));}catch(e){}
+}
+document.getElementById('sbAnalyze').addEventListener('click',analyzeSquad);
+document.getElementById('sbClear').addEventListener('click',()=>{Object.keys(squadCounts).forEach(n=>squadCounts[n]=0);updateSquadCount();document.getElementById('sbAnalysis').innerHTML='<div class="muted">Add soldiers to see role coverage and mission-specific gaps.</div>';localStorage.removeItem('lwotcSquadBuilderV1');});
+try{
+  const sb=JSON.parse(localStorage.getItem('lwotcSquadBuilderV1')||'null');
+  if(sb){document.getElementById('sbMission').value=sb.mission||'general';document.getElementById('sbTargetSize').value=sb.target||5;Object.keys(squadCounts).forEach(n=>squadCounts[n]=Math.max(0,Math.min(2,+((sb.counts||{})[n]||0))));updateSquadCount();analyzeSquad();}
+}catch(e){}
+
+/* ---------- Predictive universal search ---------- */
+const searchOverlay=document.getElementById('searchOverlay'),globalSearch=document.getElementById('globalSearch'),searchResults=document.getElementById('searchResults'),recentSearches=document.getElementById('recentSearches');
+const searchAliases={
+  'mag':'magnetic weapons','mags':'magnetic weapons','adv mag':'advanced magnetic weaponry','psi':'psionics psi operative',
+  'rnf':'reinforcements','reinforcement':'reinforcements','pg':'proving ground','gts':'guerilla tactics school officer training',
+  'bm':'black market','lib':'liberation','lib1':'liberation 1','lib2':'liberation 2','lib3':'liberation 3',
+  'hq':'regional hq assault','coil':'coilguns','predator':'combat armor predator armor','spark':'spark robot',
+  'off':'officer','officer build':'officer perks progression','corpses':'corpse full salvage autopsy',
+  'sell':'sell keep black market','what next':'campaign tracker priorities','squad':'squad builder class roles',
+  'haven':'haven management rebels intel hide','str':'strength','vig':'vigilance','fl':'force level'
+};
+const sectionType={
+  tracker:'TOOL',sellkeep:'TOOL',squadbuilder:'TOOL',researchroadmap:'TECH',masterorders:'FACILITY',andyorders:'ECONOMY',purchases:'ECONOMY',
+  missiondecision:'MISSION',missionsquads:'MISSION',missions:'MISSION',liberation:'MISSION',tactics:'TACTICS',reinforcements:'MECHANIC',
+  builds:'CLASS',equipment:'EQUIPMENT',personnel:'SOLDIER',officers:'OFFICER',squads:'SQUAD',autopsies:'CORPSE',
+  enemies:'ENEMY',chosen:'ENEMY',strategy:'STRATEGY',newplayer:'MECHANIC',covert:'STRATEGY',timeline:'TIMELINE',warnings:'WARNING'
+};
+function slug(s){return normalize(s).replace(/ /g,'-').slice(0,72)||'item';}
+function headingChunk(el){
+  let txt=el.innerText||'',n=el.nextElementSibling,c=0;
+  while(n&&c<3&&!/^H[234]$/.test(n.tagName)){txt+=' '+(n.innerText||'');n=n.nextElementSibling;c++;}
+  return txt.slice(0,700);
+}
+let searchIndex=[];
+function addSearchEntry(title,text,target,type,sectionTitle,aliases=[],action=null){
+  title=(title||'').trim();if(!title||title.length<2)return;
+  const key=normalize(title)+'|'+normalize(sectionTitle||'');
+  if(searchIndex.some(x=>x.key===key))return;
+  if(target&&!target.id){let base='find-'+slug(title),id=base,i=2;while(document.getElementById(id)){id=base+'-'+i++;}target.id=id;}
+  searchIndex.push({key,title,text:(text||title).replace(/\s+/g,' ').trim().slice(0,900),target,type:type||'GUIDE',sectionTitle:sectionTitle||'',aliases,action});
+}
+function buildSearchIndex(){
+  searchIndex=[];
+  document.querySelectorAll('main section[id]').forEach(section=>{
+    const sid=section.id,stype=sectionType[sid]||'GUIDE',sh=section.querySelector(':scope > h2'),sectionTitle=sh?sh.innerText:sid;
+    if(sh)addSearchEntry(sectionTitle,section.innerText.slice(0,700),section,stype,sectionTitle);
+    section.querySelectorAll('h3,h4').forEach(el=>addSearchEntry(el.innerText,headingChunk(el),el,stype,sectionTitle));
+    section.querySelectorAll('details > summary').forEach(el=>addSearchEntry(el.innerText,el.parentElement.innerText,el,stype,sectionTitle));
+    section.querySelectorAll('tr').forEach(row=>{
+      const cells=[...row.querySelectorAll('td')];if(cells.length<2)return;
+      let title=cells[0].innerText.trim();if(/^\d+[a-z]?$/i.test(title)||title.length<3)title=cells[1].innerText.trim();
+      addSearchEntry(title,row.innerText,row,stype,sectionTitle);
+    });
+  });
+  sellKeepData.forEach((x,i)=>addSearchEntry('Sell/Keep: '+x.name,x.why+' '+x.uses,document.getElementById('sellkeep'),'LOOKUP','Sell / Keep lookup',x.aliases,()=>showSellKeep(i)));
+  Object.entries(missionData).forEach(([id,x])=>addSearchEntry('Squad Builder: '+x.label,x.note+' '+x.required.join(' '),document.getElementById('squadbuilder'),'TOOL','Interactive Squad Builder',[id],()=>{document.getElementById('sbMission').value=id;analyzeSquad();}));
+  addSearchEntry('What should I do next?','campaign tracker current month scientists engineers intel alloys elerium cores strength liberation priorities',document.getElementById('tracker'),'TOOL','Campaign Tracker',['what next','campaign state','next priority']);
+}
+buildSearchIndex();
+function expandedQuery(raw){
+  const n=normalize(raw),parts=[n];
+  Object.entries(searchAliases).forEach(([a,b])=>{if(n===a||n.includes(a+' ')||n.endsWith(' '+a))parts.push(b);});
+  if(/sell|keep|black market/.test(n))parts.push('sell keep corpse resource');
+  if(/what.*research|research.*next/.test(n))parts.push('research roadmap');
+  if(/squad|team/.test(n))parts.push('squad builder mission roles');
+  if(/officer/.test(n))parts.push('officer command perks');
+  return parts.join(' ');
+}
+function searchGuide(raw){
+  const query=expandedQuery(raw),n=normalize(raw);
+  if(!n)return [];
+  return searchIndex.map(item=>{
+    let score=textScore(query,item.title,item.aliases,item.text);
+    const sid=item.target&&item.target.closest?item.target.closest('section[id]')?.id:'';
+    if(/sell|keep/.test(n)&&sid==='sellkeep')score+=55;
+    if(/what next|priority|campaign state/.test(n)&&sid==='tracker')score+=55;
+    if(/squad|team/.test(n)&&sid==='squadbuilder')score+=45;
+    if(/research|tech/.test(n)&&sid==='researchroadmap')score+=30;
+    if(/officer|command/.test(n)&&sid==='officers')score+=35;
+    if(/corpse|autopsy/.test(n)&&sid==='autopsies')score+=25;
+    return {item,score};
+  }).filter(x=>x.score>4).sort((a,b)=>b.score-a.score).slice(0,10);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function regexEscape(s){
+  const specials='\\^$.*+?()[]{}|';
+  return String(s).split('').map(c=>specials.includes(c)?'\\'+c:c).join('');
+}
+function markText(text,raw){
+  let safe=escapeHtml(text),tokens=normalize(raw).split(' ').filter(t=>t.length>=2).slice(0,4);
+  tokens.forEach(t=>{const re=new RegExp('('+regexEscape(t)+')','ig');safe=safe.replace(re,'<mark>$1</mark>');});
+  return safe;
+}
+function snippet(item,raw){
+  const t=item.text||'',n=normalize(raw),idx=normalize(t).indexOf(n);let start=idx>55?idx-55:0;
+  let s=t.slice(start,start+180);if(start)s='…'+s;if(start+180<t.length)s+='…';return markText(s,raw);
+}
+let activeSearchIndex=0,currentSearchResults=[];
+function renderRecent(){
+  let rec=[];try{rec=JSON.parse(localStorage.getItem('lwotcRecentSearchesV1')||'[]');}catch(e){}
+  recentSearches.innerHTML=rec.slice(0,6).map(x=>'<button type="button" data-recent="'+escapeHtml(x)+'">'+escapeHtml(x)+'</button>').join('');
+  recentSearches.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{globalSearch.value=b.dataset.recent;renderSearch();globalSearch.focus();}));
+}
+function rememberSearch(qv){
+  if(!qv.trim())return;let rec=[];try{rec=JSON.parse(localStorage.getItem('lwotcRecentSearchesV1')||'[]');}catch(e){}
+  rec=[qv.trim(),...rec.filter(x=>normalize(x)!==normalize(qv))].slice(0,8);localStorage.setItem('lwotcRecentSearchesV1',JSON.stringify(rec));renderRecent();
+}
+function renderSearch(){
+  const raw=globalSearch.value.trim();
+  if(raw.length<2){
+    currentSearchResults=[
+      {item:searchIndex.find(x=>x.target&&x.target.id==='tracker'),score:1},
+      {item:searchIndex.find(x=>x.target&&x.target.id==='researchroadmap'),score:1},
+      {item:searchIndex.find(x=>x.target&&x.target.id==='missiondecision'),score:1},
+      {item:searchIndex.find(x=>x.target&&x.target.id==='officers'),score:1},
+      {item:searchIndex.find(x=>x.target&&x.target.id==='sellkeep'),score:1},
+      {item:searchIndex.find(x=>x.target&&x.target.id==='squadbuilder'),score:1}
+    ].filter(x=>x.item);
+  }else currentSearchResults=searchGuide(raw);
+  activeSearchIndex=0;
+  if(!currentSearchResults.length){searchResults.innerHTML='<div class="callout warn"><b>No strong match.</b> Try a shorter term, class name, mission, tech or abbreviation.</div>';return;}
+  searchResults.innerHTML=currentSearchResults.map((r,i)=>{
+    const x=r.item;return '<button class="search-result '+(i===0?'active':'')+'" type="button" data-result="'+i+'" role="option"><span class="search-type">'+escapeHtml(x.type)+'</span><span><b>'+markText(x.title,raw)+'</b><small>'+escapeHtml(x.sectionTitle)+(raw.length>=2?' · '+snippet(x,raw):'')+'</small></span></button>';
+  }).join('');
+  searchResults.querySelectorAll('.search-result').forEach(b=>b.addEventListener('click',()=>openSearchResult(+b.dataset.result)));
+}
+function setActiveSearch(n){
+  if(!currentSearchResults.length)return;activeSearchIndex=(n+currentSearchResults.length)%currentSearchResults.length;
+  searchResults.querySelectorAll('.search-result').forEach((el,i)=>el.classList.toggle('active',i===activeSearchIndex));
+  const a=searchResults.querySelector('.search-result.active');if(a)a.scrollIntoView({block:'nearest'});
+}
+function openSearchResult(i){
+  const r=currentSearchResults[i];if(!r)return;const x=r.item;rememberSearch(globalSearch.value);closeGuideSearch();
+  if(x.action)x.action();
+  const target=x.target;if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.add('search-hit');setTimeout(()=>target.classList.remove('search-hit'),1800);if(target.id)history.replaceState(null,'','#'+target.id);}
+}
+function openGuideSearch(seed=''){
+  searchOverlay.classList.add('open');searchOverlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+  if(seed)globalSearch.value=seed;renderRecent();renderSearch();setTimeout(()=>{globalSearch.focus();globalSearch.select();},30);
+}
+function closeGuideSearch(){searchOverlay.classList.remove('open');searchOverlay.setAttribute('aria-hidden','true');document.body.style.overflow='';if(sidebar)sidebar.classList.remove('open');}
+q.addEventListener('focus',()=>openGuideSearch(q.value));
+q.addEventListener('click',()=>openGuideSearch(q.value));
+globalSearch.addEventListener('input',renderSearch);
+globalSearch.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();setActiveSearch(activeSearchIndex+1);}
+  else if(e.key==='ArrowUp'){e.preventDefault();setActiveSearch(activeSearchIndex-1);}
+  else if(e.key==='Enter'){e.preventDefault();openSearchResult(activeSearchIndex);}
+  else if(e.key==='Escape'){closeGuideSearch();}
+});
+document.getElementById('searchClose').addEventListener('click',closeGuideSearch);
+searchOverlay.querySelectorAll('[data-search-close]').forEach(x=>x.addEventListener('click',closeGuideSearch));
+const topSearchBtn=document.getElementById('topSearchBtn');
+if(topSearchBtn)topSearchBtn.addEventListener('click',()=>openGuideSearch());
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();openGuideSearch();}else if(e.key==='Escape'&&searchOverlay.classList.contains('open'))closeGuideSearch();});
 window.addEventListener('DOMContentLoaded',()=>{
   const mobileSearchBtn=document.getElementById('mobileSearchBtn');
-  if(mobileSearchBtn) mobileSearchBtn.addEventListener('click',openGuideSearch);
+  if(mobileSearchBtn) mobileSearchBtn.addEventListener('click',()=>openGuideSearch());
 });
 
 function setNavGroupState(){
@@ -1724,6 +2099,10 @@ document.querySelectorAll('[data-month-key]').forEach(link=>{
 
 // Contextual navigation changes with the section currently being read.
 const contextGroups={
+  tools:{
+    ids:['tracker','sellkeep','squadbuilder'],
+    links:[['Tracker','tracker'],['Sell/Keep','sellkeep'],['Squad Builder','squadbuilder'],['Home','homehub']]
+  },
   campaign:{
     ids:['timeline','researchroadmap','masterorders','andyorders','purchases','strategy','covert','autopsies','liberation'],
     links:[['Timeline','timeline'],['Research','researchroadmap'],['Build/Cost','masterorders'],['Buy','purchases'],['Regions','strategy'],['Liberation','liberation'],['Golden Path','covert']]
