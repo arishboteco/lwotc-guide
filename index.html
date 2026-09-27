@@ -2213,6 +2213,36 @@ document.getElementById('xoAnalyze').addEventListener('click',analyzeXcom);
 document.getElementById('xoClear').addEventListener('click',()=>{xoPerks.querySelectorAll('input').forEach(x=>x.checked=false);analyzeXcom();});
 renderXcomPerks();analyzeXcom();
 
+// Make every documented XCOM-row recommendation searchable from the universal lookup.
+if(typeof addSearchEntry==='function'){
+  Object.entries(xcomBuildData).forEach(([cls,d])=>{
+    addSearchEntry(
+      'XCOM Build: '+cls,
+      d.baseline+' '+(d.empty||''),
+      document.getElementById('xcomOptimizer'),
+      'XCOM BUILD',
+      'Combined Soldier Builds',
+      [cls+' xcom row',cls+' build optimizer'],
+      ()=>{xoClass.value=cls;renderXcomPerks();analyzeXcom();}
+    );
+    d.perks.forEach((p,idx)=>{
+      addSearchEntry(
+        cls+' — '+p.name,
+        p.result+' '+p.changes.join(' ')+' '+(p.gear||''),
+        document.getElementById('xcomOptimizer'),
+        'XCOM PERK',
+        'Combined Soldier Builds',
+        [p.name,cls+' '+p.name],
+        ()=>{
+          xoClass.value=cls;renderXcomPerks();
+          const cb=xoPerks.querySelector('[data-xoperk="'+idx+'"]');if(cb)cb.checked=true;
+          analyzeXcom();
+        }
+      );
+    });
+  });
+}
+
 // Contextual navigation changes with the section currently being read.
 const contextGroups={
   tools:{
