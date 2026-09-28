@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v12</title>
+<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v13</title>
 <style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
@@ -145,7 +145,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 @media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
 
 
-/* --- v12 combined soldier builds --- */
+/* --- v13 combined soldier builds --- */
 .build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
 .merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
 
@@ -157,9 +157,22 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 .xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
 .xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
 
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
 </style>
 </head>
-<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><a class="brand" href="#homehub">LWOTC Guide v12</a><button aria-label="Search guide" id="topSearchBtn">⌕</button></div>
+<body id="top"><div class="mobilebar"><button aria-label="Open navigation" id="menuToggle">☰</button><a class="brand" href="#homehub">LWOTC Guide v13</a><button aria-label="Search guide" id="topSearchBtn">⌕</button></div>
 <nav class="context-dock" id="contextDock" aria-label="Context navigation"><div class="context-scroll" id="contextScroll"></div></nav>
 
 <div class="search-overlay" id="searchOverlay" aria-hidden="true">
@@ -181,7 +194,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="layout">
 <aside class="sidebar">
 <h1>LWOTC Stable 1.2.3 Guide</h1>
-<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v12</div>
+<div class="sub">Casey + Andy + official mechanics · mobile-first · decision matrix · v13</div>
 <input class="search" id="search" autocomplete="off" placeholder="Search everything… e.g. mag, officer, supply raid"/>
 <nav class="nav" aria-label="Guide navigation">
 <details class="navgroup" open>
@@ -246,9 +259,9 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </nav>
 </aside>
 <main class="main" id="content">
-<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v12</span><span class="pill">Stable 1.2.3</span><span class="pill">Predictive Search + Combined Builds</span>
+<div class="hero searchable"><span class="pill">Mobile-first</span><span class="pill">Mission Decision Matrix</span><span class="pill">Casey + Andy</span><span class="pill">Reference Conversion v13</span><span class="pill">Stable 1.2.3</span><span class="pill">Predictive Search + Combined Builds</span>
 
-<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v12</h1>
+<h1>LWOTC Stable 1.2.3 — Complete Campaign Reference v13</h1>
 <p>Merged campaign companion built from Casey’s XCOM Commander’s Journal, Andy’s LWotC 1.2.2 Legend/Honestman notes, and current stable LWOTC 1.2.3 mechanics. The goal is not to crown one author “correct,” but to preserve their useful differences and turn them into decisions you can make during a live campaign.</p>
 <div class="callout gold"><b>Version rule:</b> official stable 1.2.3 mechanics override 1.2.2/older advice when they conflict. Andy's 1.2.2 SPARK build is explicitly treated as historical because he himself flags the 1.2.3 SPARK rework. The experimental 1.2.4 branch is not used unless a note is explicitly labelled experimental.</div>
 <p class="small"><b>Mobile version:</b> start from the Guide Home cards or the five-item bottom bar. The menu is grouped by task, and the slim contextual strip changes as you move between Campaign, Missions, Soldiers and Reference.</p><div class="callout good"><b>Coverage standard:</b> “Incorporated” now means the useful decision point is actually present in the relevant section. Where Casey has not revised a class for 1.2, the guide keeps the older concept but marks it as legacy.</div></div>
@@ -472,6 +485,59 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>Basic Research / Engineering</td><td>No longer wants Basic Research rushed.</td><td>Generally considers both poor uses of time while meaningful tech exists.</td><td>Use only when core progression is temporarily blocked.</td></tr>
 </tbody></table>
 <div class="source-note">Mechanics/cost references: <a href="https://www.ufopaedia.org/Research_%28LWOTC%29" target="_blank">LWOTC Research</a>, <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">LWOTC Missions / full salvage</a>, <a href="https://www.ufopaedia.org/Difficulty_Levels_%28LWOTC%29" target="_blank">LWOTC difficulty scalars</a>, and Casey’s <a href="https://xcom.substack.com/p/lwotc-version-12-notes" target="_blank">version 1.2 notes</a> + <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy" target="_blank">mid/late strategy</a>.</div>
+
+<details class="complete-reference">
+<summary>Complete merged research & Proving Ground rationale — not just the sequence</summary>
+<div class="complete-body">
+<h3>Opening research logic</h3>
+<ul class="dense-list">
+<li><b>Resistance Communications first</b> in the Psi-oriented opening because a second region is a strategic requirement, not a convenience.</li>
+<li><b>Modular Weapons</b> is a short detour that unlocks early weapon upgrades; scopes/stocks have outsized value before soldier aim and weapon tiers mature.</li>
+<li><b>Alien Biotech → Sectoid Autopsy → Psionics</b> is the core Psi branch. Psionics itself has a Scientist gate; the point of starting early is that advanced Psi training consumes a large amount of calendar time.</li>
+<li><b>Trooper Autopsy / Hybrid Materials</b> are the survivability branch. Casey explicitly accepts moving them earlier if the campaign is taking too many wounds, because plating/vest HP can convert deaths into light wounds and reduce recovery time.</li>
+<li><b>Laser → Advanced Laser</b> is the first major damage breakpoint. Corpse-dependent interrupts such as Robotics, Purifier or Stun Lancer should jump ahead when the required bodies are actually available.</li>
+<li>Andy delays an autopsy if performing it would consume the last corpses needed for the resulting item/project. The guide therefore treats corpse count as part of the research condition, not merely a checkbox that the autopsy exists.</li>
+</ul>
+
+<h3>Mid/late research logic</h3>
+<ul class="dense-list">
+<li>After Lasers, research becomes less linear. <b>Weapons remain the priority</b>; armor is important, but both authors generally prefer the next weapon breakpoint before optional defensive/convenience technology.</li>
+<li>Advanced Magnetic, Combat Armor and Battle Armor form the core midgame path; Resistance Radio is delayed as long as geography allows because its Intel cost competes with expansion/Golden Path spending.</li>
+<li>Elerium → Coilguns → Advanced Coilguns is the next major offensive breakpoint. Check resource prices <b>before</b> spending Alloys/Elerium/Cores on optional projects.</li>
+<li>Alien Encryption, Codex Brain, Blacksite Vial and Psionic Gate are campaign-path technologies. Do not let optional research stall them once the roster can handle story missions.</li>
+<li>Powered Armor then Plasma branches complete the late combat curve. Mobile/Spider/Shadow armor is a late luxury in Andy’s route and can be skipped if the campaign is already nearing completion.</li>
+<li>Andy explicitly considers Basic Research / Basic Engineering poor use of research time in his 1.2.2 route.</li>
+</ul>
+
+<h3>Autopsy priority logic</h3>
+<table><thead><tr><th>Priority</th><th>Examples</th><th>Why</th></tr></thead><tbody>
+<tr><td><b>Critical</b></td><td>Purifier, Gatekeeper, Robotics, Stun Lancer, Sectopod, Archon, Andromedon, Muton Elite, Muton, Rulers</td><td>Unlocks control, high-tier weapons/amps/gremlins, strong ammo, grenades or unique armors. These can justify interrupting a longer tech when corpses are available.</td></tr>
+<tr><td><b>Tier 2</b></td><td>Viper, MEC, Turret, early Chosen weapons</td><td>Useful items but less campaign-defining. Chosen weapons are time-sensitive: good if obtained early, poor if Plasma is already close.</td></tr>
+<tr><td><b>Tier 3</b></td><td>Chryssalid, Berserker</td><td>Useful but niche defensive/project unlocks.</td></tr>
+<tr><td><b>Usually skip</b></td><td>Faceless, Priest, Spectre, Shieldbearer</td><td>Andy does not value the resulting projects enough to spend research time routinely. Still keep corpses that are separately required for other manufacturing, e.g. Priest corpses for advanced Psi equipment.</td></tr>
+</tbody></table>
+
+<h3>Proving Ground operating rule</h3>
+<ul class="dense-list">
+<li>The PG does not need to be built immediately. Late April is a reasonable timing because the early campaign often lacks both unlocks and spare Engineers.</li>
+<li>Engineer staffing is dynamic: accelerate a project when the breakpoint matters, but do not permanently trap scarce Engineers in the PG while excavation/power/facilities are bottlenecked.</li>
+<li>Andy’s old 1.2.2 route strongly prioritized early SPARKs. Stable 1.2.3 reworked SPARKs, so the <b>timing concept</b> is retained but the old exact SPARK valuation is marked version-sensitive.</li>
+</ul>
+
+<h3>High-value PG projects</h3>
+<ul class="dense-list">
+<li>Alloy Plating; Incendiary Grenades; Skulljack/Skullmining; Talon/Dragon/Shredder/Bluescreen/Redscreen ammunition; Plasma Grenades; upgraded heavy weapons; advanced grenades; selected alien armors; Battlefield Medicine/Nanomedikit; tactical plating/vests when they solve a specific problem.</li>
+<li>Incendiaries are repeatedly singled out because burning is one of the most reliable forms of control against organic enemies.</li>
+<li>Redscreen + Bluescreen effects are strategically important because they make higher-tier mechanical hacks practical, not merely because they do damage.</li>
+</ul>
+
+<h3>Projects commonly skipped or delayed</h3>
+<ul class="dense-list">
+<li>Specialty ammo with narrow use cases (Needle/Flechette/Stiletto), low-priority vests (Hellweave/Chameleon/Stasis), most non-incendiary grenade projects, Mimic Beacons, and routine weapon-mod upgrade projects.</li>
+<li>Plasma Blaster is situational: useful if Shredstorm is far away; less compelling once the stronger heavy-weapon option is available. Casey’s 1.2 note also values the extra ammo count versus Shredder Gun, so this is a legitimate source disagreement rather than a universal skip.</li>
+<li>Do not research every alien-hunter weapon early. Andy mainly values the Frost Bomb from that package before the PG economy is comfortable.</li>
+</ul>
+</div></details>
 </section>
 <section class="searchable" id="masterorders">
 <h2>2B. Casey's facility &amp; cost plan</h2>
@@ -680,6 +746,77 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>Liberated region</td><td>No normal discovery requirement.</td><td>Supplies become appropriate; Engineer advisor boosts output. Clear Faceless first.</td></tr></table>
 <div class="callout"><b>Retaliation thresholds Andy tracks:</b> roughly 3 Intel workers, 3 Supply workers or 6 Recruit workers can expose the haven to the respective retaliation family. Treat these as planning thresholds, not reasons to cripple mission discovery in a low-Strength region.</div>
 <div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> <b>Expansion trigger:</b> if your primary region is approaching Strength 4–5 <i>or</i> you are spending Intel to make routine infiltrations viable, prioritize a new contact. Intel used on region #2/#3 creates future mission capacity; Intel spent on an ordinary boost is gone.</div>
+
+<details class="complete-reference" open>
+<summary>Complete merged strategy-layer reference — region stats, haven jobs, economy, expansion & campaign cadence</summary>
+<div class="complete-body">
+<div class="callout good"><b>Completeness rule:</b> this layer preserves the practical exceptions and operating routines from Andy and Casey instead of reducing them to one-line rules. Current stable mechanics still override older strategy advice when numbers conflict.</div>
+
+<h3>Region state: Strength, Vigilance and when to leave</h3>
+<ul class="dense-list">
+<li><b>Strength</b> is the regional ADVENT presence that drives mission enemy counts and reinforcement pressure. Routine missions become much less attractive around Strength 5+, and both authors increasingly shift activity to other regions rather than trying to brute-force the same haven indefinitely.</li>
+<li><b>Vigilance</b> is ADVENT's alarm level. When Vigilance is above Strength, troop movement into the region becomes more likely. Andy notes Vigilance decays on a multi-day timer, and more active rebels can lengthen that decay; completing another mission in the region resets the decay cycle.</li>
+<li>Andy’s practical high-Strength rule is stricter than Casey’s older one: at <b>Strength 5+</b>, normal operations should largely stop; at <b>Strength 8</b>, avoid ordinary missions entirely because Snare-style reinforcement behavior can turn normal-looking hack missions into traps.</li>
+<li>There is one recurring exception: <b>Troop Ambush / Troop Column</b> missions remain attractive because they reduce regional Strength and provide full salvage. Both authors accept continuing to search for them after normal missions have become unattractive.</li>
+<li>Strength can rise <b>while a squad is infiltrating</b>. If Vigilance has spiked in a low-Strength region, assume the mission may launch one enemy-count bracket harder than it looked when you started infiltration.</li>
+</ul>
+
+<h3>Haven jobs and retaliation management</h3>
+<ul class="dense-list">
+<li>When actively farming a region, default to <b>Intel</b>. More detection means earlier mission discovery and longer infiltration windows. Avenger scanning and a Scientist adviser improve detection further.</li>
+<li>Casey’s early routine is to assign a soldier adviser immediately, scan the region until viable missions are found, then use spare scanning time elsewhere rather than sitting at the Black Market from day one.</li>
+<li>Andy increasingly avoids the Recruit job. Jailbreaks are usually a more efficient source of soldiers/rebels, and Intel workers are what reveal Jailbreaks. One exception is a nearly empty haven where very few Intel workers would only discover unusably short-timer missions.</li>
+<li>When a region is deliberately cooling down, switch most rebels to <b>Hide</b>. Andy notes that up to roughly two non-hiding workers can often be left active without creating the same retaliation pressure; he commonly leaves a small Intel presence to look for a Troop Ambush.</li>
+<li>In liberated regions, run <b>Supplies</b> and staff an <b>Engineer adviser</b> for income. Keep or rotate a soldier adviser long enough to find/remove hidden Faceless. Unexpectedly reduced supply income is a warning that a Faceless may still be present.</li>
+<li>Job changes impose a temporary productivity penalty, so do not bounce rebels between Intel/Supplies/Recruit every few hours just to micromanage a small gain.</li>
+<li>Andy’s retaliation heuristics: several rebels on Intel/Supplies/Recruit can cross job-specific retaliation thresholds. The exact prediction system is more detailed than a single threshold, so use the current Haven Management screen/UFOpaedia when timing matters.</li>
+<li>Recruited rebels have a non-trivial chance to be Faceless. Certain advisers/scanning tools reduce that risk; higher-rank soldiers and officers also improve adviser performance.</li>
+</ul>
+
+<h3>Expansion and mission throughput</h3>
+<ul class="dense-list">
+<li><b>Expand before you feel forced to.</b> If every discovered mission has a poor timer, high enemy count or bad Strength, the strategic failure usually happened earlier: you did not have enough contacted low-Strength regions generating missions.</li>
+<li>Andy targets roughly <b>nine missions per supply-drop cycle</b>, which implies several squads infiltrating simultaneously and at least two productive low-Strength regions. This is a campaign-health benchmark, not a hard quota.</li>
+<li>Most routine missions should use around <b>five soldiers</b>. Six is often a luxury or a chance to bring a lower-rank soldier. Seven on ordinary guerrilla ops is usually strategically expensive because infiltration time ties up too much of the roster; reserve large squads for genuinely large/untimed missions.</li>
+<li>By April, if a mission has a forgiving enemy count and a strong core team, deliberately bring a Squaddie or other lower-rank soldier. Deep roster development matters more than perfect A-team XP concentration.</li>
+<li>A healthy campaign eventually needs enough depth to keep two to three combat squads active while still supporting covert ops, officer training, bond training, wounds and haven advisers.</li>
+</ul>
+
+<h3>Intel discipline and boosting</h3>
+<ul class="dense-list">
+<li>Routine Intel boosting is usually a symptom of insufficient expansion. Intel is the currency for contacting regions, critical liberation/Golden Path boosts and story research.</li>
+<li>Andy’s regular boost exceptions are <b>Troop Ambushes, Supply Raids, Liberation missions and Golden Path missions</b>, and even there he prefers not to boost if the timer is already adequate.</li>
+<li>Casey similarly recommends stockpiling Intel for expansion and only spending it on missions that are unusually lucrative or campaign-critical.</li>
+<li>Once the campaign has multiple active regions, passing a mediocre mission is usually better than spending Intel to force it into viability.</li>
+</ul>
+
+<h3>Troop Ambush timing and region cycling</h3>
+<ul class="dense-list">
+<li>Troop Ambushes have a long cooldown after spawning. Both authors use a calendar/journal to estimate when the next one can appear and time a return to Intel collection accordingly.</li>
+<li>Casey additionally notes a global cap on active Troop Ambushes, which can occasionally explain why a region is not producing one even when its local cooldown has passed.</li>
+<li>After discovering a Troop Ambush in a high-Strength region, it can make sense to switch that haven away from Intel for a while, then return near the expected respawn window.</li>
+</ul>
+
+<h3>Black Market and economy</h3>
+<ul class="dense-list">
+<li>Early cash is more valuable than hoarding mediocre inventory. Both authors sell low-impact PCS, surplus weapon mods, data items and some corpses to fund facilities, staff and technology breakpoints.</li>
+<li>Do <b>not</b> sell blindly: preserve corpses/wrecks needed for near-term autopsies/projects and the one-off resource gates in your chosen build order. The Sell/Keep lookup in this guide is intentionally conservative.</li>
+<li>Casey’s older early-game economy is extremely aggressive about selling Cores/data/loot to fund urgent facilities, Vulture, staff and laser-tier purchases. Andy follows the same tempo logic but later becomes much more protective of Cores, Alloys and Elerium.</li>
+<li>Start buying <b>Elerium earlier than feels comfortable</b>. Late-game weapon/armor progression is frequently bottlenecked by Elerium and Alloys rather than Supplies.</li>
+<li>One or two liberated regions are generally enough for Supplies. More liberations can yield corpses and income, but they also remove unliberated regions that generate many of the missions that supply Alloys/Elerium.</li>
+<li>Chosen weapons are usually poor research priorities unless acquired unusually early. Andy considers the Darkclaw the notable exception; normal Coil/Plasma progression typically gives better return on research time.</li>
+</ul>
+
+<h3>Facilities and campaign operations that are easy to forget</h3>
+<ul class="dense-list">
+<li>Keep the GTS relevant throughout the campaign; late GTS upgrades such as larger infiltrating squads are easy to overlook after the opening months.</li>
+<li>Resistance Ring value rises after SGTs unlock better faction influence/rewards. Early low-value covert actions can consume scarce manpower; later, continuous covert operations become much more attractive.</li>
+<li>Do not send valuable soldiers on weak covert actions while the barracks is shallow. Ambush chance is never literally zero unless the UI says so.</li>
+<li>Templar HQ improves normal healing speed but not Tired recovery. Infirmary/Templar scanning also do not accelerate Will recovery from the Tired state.</li>
+<li>Flying the Avenger between regions does not consume strategic time in the same way players often assume; use movement for scanning/positioning without treating it as a major calendar cost.</li>
+<li>Keep a campaign journal. Andy explicitly uses it to identify patterns in failed missions, track Troop Ambush timing, and remember when strategic choices created later problems.</li>
+</ul>
+</div></details>
 </section>
 <section class="searchable" id="personnel">
 <h2>4A. Stats, class selection, fatigue &amp; promotion tempo</h2>
@@ -934,6 +1071,88 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <details><summary>Blacksite / Facility</summary><div><p>Throw evac earlier than intuition suggests; facility evac can be very slow. For Blacksite, Andy prefers clearing the map, staging almost everyone near evac, then sending the fast soldier for the vial because taking the vial starts reinforcement pressure. The 45-turn doom timer is generous: do not rush the map.</p></div></details>
 <details><summary>UFO / Chosen Avenger Defense</summary><div><p>Defense Matrix is extremely valuable: upgraded, staffed turrets can provide eight meaningful shots per turn. On Chosen Defense, do not get sucked into racing the objective; Andy reports enough Avenger power for careful play. The 1.2 version is far more beatable than old LWOTC versions.</p></div></details>
 </div>
+
+<details class="complete-reference" open>
+<summary>Complete mission reference — infiltration, mission-specific quirks, quick response missions & SITREPs</summary>
+<div class="complete-body">
+<h3>Squad size, over-infiltration and enemy readiness</h3>
+<ul class="dense-list">
+<li>Plan normal missions around roughly <b>five soldiers</b>. Six is comfortable when the timer allows and can carry a trainee. Seven is usually too strategically expensive for ordinary guerrilla ops unless the mission is critical or untimed.</li>
+<li>Over-infiltration can effectively reduce the mission’s regional-Strength contribution and sometimes enemy detection radius, but the exact breakpoint is not guaranteed to occur in clean 25% steps.</li>
+<li>Do not leave soldiers tied up for days merely because a 150% infiltration target exists. Launch when the expected enemy count and concealment conditions are acceptable.</li>
+<li>Always plan for 100% infiltration, but 90–99% can be rational if the displayed enemy count is already where you want it and the mission does not impose a critical sub-100% penalty.</li>
+</ul>
+
+<h3>Jailbreak</h3>
+<ul class="dense-list"><li>RNF pressure can be tight depending on evac placement. Move faster than on a leisurely hack mission, but still avoid blind activations. Jailbreaks are a major reason Recruit jobs are often unnecessary.</li></ul>
+
+<h3>Smash & Grab vs Extract ADVENT Supplies</h3>
+<div class="source-split">
+<div><h4>Smash & Grab</h4><ul class="dense-list"><li>Revealed start; several crates concentrated around an ADVENT structure.</li><li>Usually enough time to clear natural enemies carefully before fixed reinforcements become a serious issue.</li><li>Each soldier physically carrying a crate matters, so squad positioning and evac route planning are important.</li></ul></div>
+<div><h4>Extract ADVENT Supplies</h4><ul class="dense-list"><li>Concealed start; scattered crates and a short post-reveal RNF window.</li><li>Much more prone to baiting the player into unsafe movement for tagged crates. Do not dash into fog just because ADVENT marked one.</li><li>Call evac so that the pickup arrives around the first RNF window and center it near the final cluster of crates.</li><li>Wait to tag neutral crates when possible: if ADVENT marks it on their turn, reclaiming it can become a free action on yours.</li><li>Specialists are good remote crate collectors when the rear area is already scouted because many of their combat actions work at range.</li></ul></div>
+</div>
+
+<h3>Destroy Relay vs Sabotage Transmitter</h3>
+<ul class="dense-list">
+<li><b>Destroy Relay:</b> normal timed-objective logic. RNF pressure begins after concealment breaks, so use concealment to close distance before the first engagement.</li>
+<li><b>Sabotage Transmitter:</b> very short objective timer, extended by shooting relay nodes. Break concealment earlier, use pistols/melee for cheap relay destruction, and remember that extending the objective timer does <b>not</b> stop RNF escalation.</li>
+</ul>
+
+<h3>Covert Op Ambush</h3>
+<ul class="dense-list">
+<li>Never treat a single-digit ambush chance as zero. Send a team that can survive with C/B-tier equipment and give at least one operative a Medikit.</li>
+<li>The stranded pair should avoid waking pods until rescuers arrive; if contact happens early, use control (burn/stun) rather than trying to out-damage a full pod.</li>
+<li>Technical and Shinobi are strong covert operatives because they provide control/scouting even at low rank.</li>
+<li>The rescue team is capped and should prioritize mobility and immediate impact: SPARK Overdrive, Skirmisher grapple, a combat-capable Specialist, etc. A pure healer who contributes no offense is a poor use of a tiny rescue squad.</li>
+<li>Ambushes are also valuable no-infiltration XP opportunities; they are not purely a punishment.</li>
+</ul>
+
+<h3>Supply Raids / Troop Ambushes</h3>
+<ul class="dense-list">
+<li>High strategic value: resources, corpses and regional Strength reduction. No normal objective timer, but maps are compact enough that 20+ enemies can create multi-pod pileups.</li>
+<li>Below ~20 enemies and with adequate infiltration, bring the best team you can. These are among the few mission types where more than six soldiers can be justified if the timer supports it.</li>
+<li>Expect large rainbow pods. Bring AoE control, boss damage and enough ordinance to survive the one turn where multiple pods converge.</li>
+<li>DFA Sharpshooters can be awkward on flat wilderness maps; concealed Shinobi scouting is valuable but dangerous if the scout gets isolated.</li>
+<li>The special Covert Op troop ambush is smaller, has a fixed-ish infiltration window and does not reduce regional Strength in the same way.</li>
+</ul>
+
+<h3>Alien Facility / Blacksite / UFO missions</h3>
+<ul class="dense-list">
+<li><b>Alien Facility:</b> evac can be very long. Call early; do not stealth the objective only to spend several dead turns waiting while the command pod finds you. Usually one or two facilities are enough if Golden Path progress is timely.</li>
+<li><b>Blacksite:</b> long mission with generous doom-RNF grace. Clear the map, move most of the squad toward evac, then have the fastest soldier take the vial so the RNF phase starts with the team already positioned.</li>
+<li><b>Raid UFO:</b> treat it more like a Troop Ambush than a normal timer mission. The post-reveal beacon timer is long enough for controlled clearing; a Specialist can hack the beacon remotely.</li>
+<li><b>UFO Avenger Defense:</b> 12 soldiers and many enemies; Defense Matrix turrets are excellent value. Once RNFs begin they are relentless, even though the UI may not warn you clearly.</li>
+</ul>
+
+<h3>Chosen Avenger Defense</h3>
+<ul class="dense-list">
+<li>Stable 1.2 is substantially more manageable than the notorious older version, but it is still a 40+ enemy endurance battle plus a Chosen.</li>
+<li>Defense Matrix turrets with an Engineer are exceptionally valuable. Andy found the small external guns less important than simply killing enemies efficiently.</li>
+<li>Play slowly; the Avenger power timer is more forgiving than it appears. The mission has no normal reinforcement stream.</li>
+<li>The cleanest prevention plan is still to reveal/assault the Stronghold before the Chosen completes knowledge progress. Avoid kidnappings and save the “Counter Chosen Activity” covert action for the month it actually buys time.</li>
+</ul>
+
+<h3>Retaliations</h3>
+<ul class="dense-list">
+<li>Quick response, no infiltration, short launch window, Chosen present, haven adviser present. Bring the best available squad; SPARKs are especially efficient because infiltration penalties do not matter here.</li>
+<li>Rebels are expendable relative to trained soldiers. Use rebel grenades early rather than assuming the rebel survives long enough to spend them later.</li>
+<li><b>Full Retaliation:</b> continuous RNF begins very early; rescue what you safely can and leave rather than trying to save every rebel.</li>
+<li><b>Data Tap:</b> soldiers and rebels start separated; mobility is crucial. SPARK Overdrive, Phase Walk and long-range fire help bridge the map.</li>
+<li><b>Supply Convoy:</b> survive fixed RNF waves; regrouping matters more than blindly dashing to the rebels.</li>
+<li><b>Recruit Raid:</b> front-loaded RNF waves then relative calm. Smoke/defensible terrain can be unusually valuable here.</li>
+</ul>
+
+<h3>SITREP: Project Miranda</h3>
+<ul class="dense-list"><li>Extremely warping because the accuracy penalty hurts XCOM’s shooter-heavy turns disproportionately. It becomes more manageable later when Psi, Grenadier, Technical, Assault and SPARK can contribute without relying on normal Aim rolls. Still avoid high-enemy-count Miranda missions unless the reward is worth it.</li></ul>
+
+<h3>SITREP: Lost</h3>
+<ul class="dense-list">
+<li>Treat Lost as a serious risk multiplier, not free distraction. They interfere with your movement, explosives, concealment and ammo, and ADVENT is not guaranteed to prioritize them.</li>
+<li>Technical flamethrowers, pistol perks/Faceoff, Shinobi Bladestorm/Reaper and Gunner area suppression are strong tools.</li>
+<li>MEC explosives can create a feedback loop by spawning more Lost. Avoid unnecessary explosions, but do not let a Muton Elite or similarly lethal enemy act merely to avoid another horde.</li>
+<li>Lost Grapplers have Bladestorm. Prioritize Brutes immediately; when the horde is distant, Dashers are often the movement threat, while nearby Grapplers are the immediate melee trap.</li>
+</ul>
+</div></details>
 </section>
 <section class="searchable" id="tactics">
 <h2>8. Tactical operating procedure</h2>
@@ -997,6 +1216,85 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="callout warn"><b>Do not generalize stealth hacks to revealed Extract VIP missions.</b> Wandering patrols and overwatch make a lone-scout extraction much less reliable.</div>
 <h3>Hack rewards / failure reminders</h3>
 <p>Andy tracks high-impact hack effects such as all-robot control, temporary enemy control, disorient, action-point refund, concealment, targeting/crit buffs and supply/Intel caches. Failure effects can include Map Alert, Reinforcements or enemy stat buffs. <b>Map Alert is not always disastrous</b> if you are already in a defensive position and prefer enemies to come to you.</p>
+
+<details class="complete-reference" open>
+<summary>Complete merged tactical reference — probability, movement, stealth, control, hacking, loadouts & edge cases</summary>
+<div class="complete-body">
+<h3>Probability discipline</h3>
+<ul class="dense-list">
+<li>Long War is a campaign of hundreds of rolls. A 90–99% shot will eventually miss. The tactical objective is not to eliminate variance; it is to avoid creating turns where a single roll decides the squad’s survival.</li>
+<li>Separate <b>bad luck</b> from <b>bad planning</b>. A strong decision can fail; repeated “unlucky” disasters usually reveal a positioning, scouting, activation or backup-plan problem.</li>
+<li>Prefer guaranteed damage/control and high-probability actions when the consequence of failure is catastrophic. Save speculative shots for turns where a miss is survivable.</li>
+</ul>
+
+<h3>Movement and pod control</h3>
+<ul class="dense-list">
+<li>The governing tactical rule remains <b>fight one pod at a time</b>. Close-range classes tempt you to dash/Fleche/Run & Gun into unrevealed tiles; do not do that unless you are prepared for another pod.</li>
+<li><b>Leapfrog movement:</b> move rear soldiers into the lead rather than repeatedly pushing the current lead farther into fog. You preserve speed while exposing fewer new tiles each action.</li>
+<li>Enemy patrols can cover substantial distance on their turn. When a scout is close to an unseen pod, leave enough space for patrol movement rather than assuming the pod will remain stationary.</li>
+<li>On fully infiltrated missions, do not let fear of reinforcements force reckless movement. A single RNF drop is easier than fighting two natural pods simultaneously.</li>
+</ul>
+
+<h3>Early control and flashbang rules</h3>
+<ul class="dense-list">
+<li>Early flashbangs are campaign-saving utility. They break Sectoid Mind Control/Zombies when the <b>Sectoid</b> is targeted, disable Stun Lancer melee, reduce aim/mobility and combine well with Suppression.</li>
+<li>Not every enemy ability respects flashbang/disorientation: Purifier flamethrowers remain usable, and some late enemies resist or ignore particular control effects.</li>
+<li>Control evolves over the campaign: early Flashbang/Suppression/Hack/Arc Thrower/Flamethrower → midgame Combatives/Incendiary/Frost/Insanity → late Stasis/Domination/Sting/Dragon/Disabling Shot/Full Override/Chain Lightning.</li>
+<li>By summer, a large share of the barracks should contribute some form of reliable control. The point is to avoid turns where every dangerous enemy must be killed outright.</li>
+</ul>
+
+<h3>Loadout doctrine</h3>
+<ul class="dense-list">
+<li><b>Plating is not optional fluff.</b> Ablative HP often converts a lethal hit into survival and also reduces wound duration. Even late, Andy commonly dedicates multiple inventory slots to plating/vest protection.</li>
+<li>An <b>empty slot is an item</b> if the extra Mobility is strategically valuable. Technicals/Shinobis and stealth teams often benefit more from movement than from a marginal grenade or vest.</li>
+<li>SMGs belong on classes whose primary job is not directed fire: Technical, Grenadier, Shinobi and usually Specialist. Ranger is the main conventional rifle user in Andy’s doctrine; Psi uses SMG until Phase Walk, then can exploit a shotgun.</li>
+<li>AP rounds are excellent early on, particularly for Rangers/Sharpshooters against armored mechanicals. Laser sights do not use vanilla distance falloff, so crit Sharpshooters/Assaults can use them without the usual short-range assumption.</li>
+<li>Do not waste autoloader charges before a Codex Psionic Bomb or other forced reload situation if you can avoid it.</li>
+</ul>
+
+<h3>Mechanical hacking package</h3>
+<ul class="dense-list">
+<li>Hacking gets dramatically better when supported. Stack <b>Skulljack/Skullmining Hack bonus + Redscreen + Bluescreen Bombs</b> to move higher-tier MECs into reliable control range.</li>
+<li>Andy’s test case found Redscreen slightly stronger than Bluescreen Bombs for control chance, but both together are the real breakpoint. Because hacking a disoriented robot clears disorientation, sequence your control actions intentionally.</li>
+<li>Permanent/temporary controlled robots also absorb enemy fire, creating defensive value beyond their direct attacks.</li>
+<li>Specialist hacks and Combat Protocol can sometimes be executed via long straight-line line of sight even when the Specialist is not near the fight; search backward as well as forward for valid tiles.</li>
+<li>Hacking a robot does not break concealment.</li>
+</ul>
+
+<h3>Stealth-hack missions</h3>
+<ul class="dense-list">
+<li>Typical team: concealed Shinobi/officer + Specialist or similarly mobile objective unit. Bring SMGs, minimal equipment for Mobility, one Smoke if possible, and a bonded pair when available.</li>
+<li>Scout to a safe tile with line of sight to the objective, call evac early, then keep the hacker concealed until the evac timer is nearly complete. Command/Teamwork can pull the hacker back after an objective action.</li>
+<li>If detected <b>before</b> the evac flare, survival odds collapse. If detected after flare, Smoke and control may buy enough time.</li>
+<li>Spider Suit grapple movement does not break concealment, though Andy often skips Spider Suit research for broader economy reasons.</li>
+<li>Do not try the same trick on every revealed VIP extraction; patrol behavior and overwatch can make an apparently simple Shinobi escort much more dangerous than a standard stealth hack.</li>
+<li>Sewer/abandoned maps can make tiny stealth squads unusually dangerous; aborting a bad map is a valid strategic choice.</li>
+</ul>
+
+<h3>Hack rewards and failure penalties</h3>
+<ul class="dense-list">
+<li>Hack rewards include supply/intel caches, temporary squad buffs (Aim/Crit/Dodge/Squadsight/Run & Gun/concealment/vision), Facility Leads and other tactical effects. Large early Supply rewards can be a meaningful economy swing.</li>
+<li>Failure penalties can include Reinforcements, Map Alert and major enemy stat buffs. Do not chase a marginal bonus if the failure result is campaign-threatening.</li>
+<li>Some reward categories do not stack the way the interface may imply; always judge the actual reward rather than assuming two identical bonuses necessarily double.</li>
+</ul>
+
+<h3>Graze, Overwatch and status edge cases</h3>
+<ul class="dense-list">
+<li>Graze is not simply a miss. On multi-shot/shred/special-ammo classes it can still trigger useful secondary effects, which is why some authors value Grazing Fire more on Gunners than on pure finisher classes.</li>
+<li>Overwatch rules depend on whether the Revert Overwatch Rules mod is enabled. Without the revert, one-tile moves and entering visibility can trigger reaction fire, and cover is less protective against Overwatch.</li>
+<li>Stunning a Spectre does not automatically release Shadowbind; Revival Protocol can wake the bound soldier while the clone persists.</li>
+<li>Disorient disables Andromedon Acid Bomb, but Burning does not stop every melee attack: Berserkers/Archons and Muton counter behavior have important exceptions.</li>
+<li>Suppression is strong but not absolute; certain Rocketeers can run it and still produce a dangerous rocket. Late ADVENT Covering Fire also makes careless movement far more punishing.</li>
+<li>Incendiaries interact badly with water tiles: do not rely on fire effects on targets standing in rivers/fountains.</li>
+</ul>
+
+<h3>Explosives, corpses and loot</h3>
+<ul class="dense-list">
+<li>Full-salvage missions make corpse preservation strategically important. Avoid explosive finishing blows on enemies whose corpses you specifically need when another safe kill exists.</li>
+<li>Early Sectoids are especially valuable potential Elerium Core carriers. If you need Cores for the opening economy, do not casually destroy them with explosives.</li>
+<li>Do not hoard ordinance through a crisis. If three pods activate together, spend the rockets/grenades/incendiaries now; a healthy team with empty consumables is better than a wounded team that “saved” resources.</li>
+</ul>
+</div></details>
 </section>
 <section class="searchable" id="reinforcements">
 <h2>9A. Reinforcements, Snare &amp; hidden doom timers</h2>
@@ -1027,7 +1325,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="callout warn"><b>Strength ≥8 Snare rule:</b> normal-looking hack missions can become traps with relentless RNF after reveal. Andy’s practical rule is simpler: <b>do not operate in Strength 8 regions.</b></div>
 </section>
 <section class="searchable" id="builds">
-<h2>9–10. Combined Soldier Builds — perks, XCOM row &amp; equipment <span class="v6flag">REBUILT v12</span></h2>
+<h2>9–10. Combined Soldier Builds — perks, XCOM row &amp; equipment <span class="v6flag">REBUILT v13</span></h2>
 <div class="callout good"><b>One class, one place.</b> The old standalone Equipment section and separate Andy build comparison have been merged here. Each class now contains its baseline build, Andy/Casey differences, equipment, and a ranked list of the best XCOM-row perks with their effect on the build. Officers remain separate because officer training is a second progression tree.</div>
 <div class="callout"><b>Universal early loadout:</b> Rookies: Assault Rifle + Plating + Frag + Frag/Flash. Do not waste premium weapon upgrades on temporary rookies. Across all classes, do not neglect plating.</div><div class="build-jumps" id="buildJumps"></div>
 <div class="xcom-overview">
@@ -1596,7 +1894,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>v1.1 ambush / Ruler / Miranda / Full Override edge notes</td><td class="audit-ok">INCLUDED</td><td><a href="#legacy-notes">v1.1 notes</a></td></tr>
 <tr><td>Original Casey inline images</td><td class="audit-limit">EXTERNAL-ONLY</td><td><a href="#images">Source Images</a> — original article links retained; CDN assets cannot be reliably enumerated from the available retrieval interface.</td></tr>
 </tbody></table>
-<div class="callout good"><b>Textual gap status:</b> all textual/mechanical items from the prior gap analysis are represented in v5. The remaining limitation is bulk duplication of Casey's original embedded images.</div></section>
+<div class="callout good"><b>Textual gap status:</b> The prior audit used a topic-presence standard and overstated completeness. v13 replaces that standard with source-subsection coverage and exhaustive reference layers. The remaining limitation is bulk duplication of Casey's original embedded images.</div></section>
 <section class="searchable" id="images"><h2>18. Source images</h2><div class="callout warn"><b>Original inline images are the one gap this standalone file cannot honestly close.</b> The text retrieval available here exposes Casey's article prose and article URLs, but not a complete, reliable list of the original Substack CDN image assets. I therefore do <b>not</b> duplicate or substitute screenshots and call them Casey's originals.</div>
 <p>Use the source links below when you need the original screenshots/figures. The guide now contains the decision-relevant information those images support, including the explicit build/research orders and cost arithmetic that earlier versions missed.</p>
 <ul>
@@ -2131,7 +2429,7 @@ document.querySelectorAll('[data-month-key]').forEach(link=>{
 });
 
 
-/* ---------- v12 combined build navigator ---------- */
+/* ---------- v13 combined build navigator ---------- */
 const buildSection=document.getElementById('builds');
 const jumpTarget=document.getElementById('buildJumps');
 const classBoxes=[...buildSection.querySelectorAll(':scope > details.classbox')];
