@@ -361,6 +361,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="card andybox"><span class="src-badge src-andy">ANDY</span><h3>Legend/Honestman actual-play layer</h3><p>Andy’s 1.2.2 notes add exact operating routines, mission thresholds, equipment doctrine, current class trees, proving-ground costs and “what I actually do” campaign execution.</p><p class="source-ref"><a href="https://app.notion.com/p/31ce7e2beea3839282dd81d164a7eb48" target="_blank">Andy’s guide</a></p></div>
 <div class="card synthbox"><span class="src-badge src-synth">SYNTHESIS</span><h3>What this guide recommends</h3><p>Where Casey and Andy differ, both positions are retained and a practical recommendation is added. The synthesis is deliberately labelled so it is never mistaken for either author’s published advice.</p></div>
 </div>
+<div class="callout"><b>Strategy-source caveat:</b> Andy explicitly describes his guide as personal Legend/Honestman actual-play notes with a control-oriented style, not a claim that there is one objectively best way to play. Casey likewise revises recommendations as later campaigns expose better options. This merged guide therefore separates <b>mechanics</b> from <b>tested preferences</b>, and preserves disagreements instead of flattening them into false certainty.</div>
 <div class="callout warn"><b>Important 1.2.3 caveat:</b> Andy’s SPARK section was written for 1.2.2 and explicitly says it should be mostly ignored after the 1.2.3 SPARK rework. Use the rest of his 1.2.2 class advice as tested guidance, but treat SPARK as version-sensitive.</div>
 <div class="callout good"><b>Honestman:</b> Andy recommends saving normally but not reloading tactical mistakes, reserving saves for bugs/corruption. For a heavily modded first serious LWOTC campaign, this is a sensible safety practice.</div>
 </section>
@@ -433,7 +434,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Casey’s early strategy/tactics articles provide the structural campaign framework used throughout this guide.</li>
 <li>DerAva’s tutorials and campaign videos are valuable for seeing movement/tempo/haven management executed rather than merely described.</li>
 <li>The LWOTC Discord is active and technically strong, though community preferences can differ from Andy/Casey’s control-heavy style. Reddit/Pavonis contain useful historical discussion but require more skepticism about version/current accuracy.</li>
-<li>The project GitHub New Player Resources page is retained in Sources as a broader index.</li>
+<li>The project GitHub New Player Resources page is retained in Sources as a broader index.</li><li><b>Andy’s own setup references:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3582541381" target="_blank">LWOTC 2025 mod collection</a>, <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3583759033" target="_blank">LWOTC map collection</a>, and <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2085849235" target="_blank">cosmetic collection</a>. These describe his environment; they are not prerequisites for this guide. He specifically warns against Avenger-reskin mods because he has seen them break campaigns.</li>
+<li><b>Campaign Notebook:</b> Andy tracks mission dates and campaign events in a reusable <a href="https://app.notion.com/p/7dce7e2beea383239c7301f92462dc13" target="_blank">Campaign Notebook Template 1.2</a>. The most useful habit is recording Troop Ambush windows, strategic mistakes and upcoming milestones so recurring patterns are visible.</li>
 </ul>
 </div></details>
 </section>
@@ -837,14 +839,14 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Resistance Ring value rises after SGTs unlock better faction influence/rewards. Early low-value covert actions can consume scarce manpower; later, continuous covert operations become much more attractive.</li>
 <li>Do not send valuable soldiers on weak covert actions while the barracks is shallow. Ambush chance is never literally zero unless the UI says so.</li>
 <li>Templar HQ improves normal healing speed but not Tired recovery. Infirmary/Templar scanning also do not accelerate Will recovery from the Tired state.</li>
-<li>Flying the Avenger between regions does not consume strategic time in the same way players often assume; use movement for scanning/positioning without treating it as a major calendar cost.</li>
+<li><b>Avenger travel timing — Andy observation:</b> Andy’s 1.2.2 notes describe region-to-region flying as far less costly than players often assume because of how the geoscape clock behaves on arrival. Treat this as version-sensitive UI/strategy behavior rather than a precise universal timing rule; verify the current clock if a deadline is tight.</li>
 <li>Keep a campaign journal. Andy explicitly uses it to identify patterns in failed missions, track Troop Ambush timing, and remember when strategic choices created later problems.</li>
 </ul>
 </div></details>
 </section>
 <section class="searchable" id="personnel">
 <h2>4A. Stats, class selection, fatigue &amp; promotion tempo</h2>
-<div class="callout gold"><b>1.2 / Not Created Equally:</b> Casey's current campaign advice assumes random soldier stats are meaningful. The goal is to exploit good stats without becoming so obsessed with optimization that the barracks stops functioning.</div>
+<div class="callout gold"><b>Not Created Equally — source evolution:</b> Casey's older Early Game Strategy preferred turning NCE <b>off</b> for a more standardized roster. His 2026 v1.2 campaign deliberately left NCE <b>on</b> and then developed the stat-triage rules below. Treat this as a changed preference, not a contradiction to hide: the modern advice is how to exploit random stats <i>if you play with NCE enabled</i>, without allowing stat optimization to paralyze the barracks.</div>
 <h3>Rookie triage</h3>
 <table><tr><th>Step</th><th>Casey rule</th><th>Why</th></tr>
 <tr><td>1</td><td>Build the <b>GTS immediately</b>.</td><td>Officer training is arguably the bigger reason, but class selection also prevents wasting rare stat profiles.</td></tr>
@@ -861,11 +863,13 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li><b>Kill XP is awarded during the mission</b>, so kills reduce the later Trial by Fire grant. If you are deliberately power-leveling trainees, let veterans do more of the killing when tactically safe.</li>
 <li>Rush several soldiers to <b>SGT</b>: SGT unlocks important faction influence/contact options and Trial by Fire officer development.</li></ul>
 <h3>Will / fatigue rules that affect availability</h3>
-<table><tr><th>Situation</th><th>What Casey observed in 1.2</th></tr>
-<tr><td>Infirmary / Templar HQ</td><td>Does <b>not</b> speed recovery from the <b>Tired</b> status.</td></tr>
-<tr><td>Officer training</td><td>Will does not recover while training.</td></tr>
-<tr><td>Bond training</td><td>Will does not recover while training.</td></tr>
-<tr><td>Negative-trait removal</td><td>Will does not recover during treatment.</td></tr>
+<table><tr><th>Situation</th><th>Source detail</th></tr>
+<tr><td>Infirmary / Templar HQ</td><td>Casey and Andy agree these do <b>not</b> accelerate recovery from the <b>Tired</b> state. Andy separately observed roughly faster normal wound healing at Templar HQ; treat the exact percentage as an observed campaign value rather than a timeless constant.</td></tr>
+<tr><td>Infiltration</td><td>Andy’s main 1.2.2 notes say soldiers do <b>not</b> recover Will while infiltrating.</td></tr>
+<tr><td>Haven adviser duty</td><td>Andy’s main notes say soldiers do <b>not</b> recover Will while serving as haven advisers; rotate rested advisers when possible.</td></tr>
+<tr><td>Officer training</td><td>Casey’s v1.2 notes say Will does not recover while officer training.</td></tr>
+<tr><td>Bond training</td><td><b>Source disagreement:</b> Andy’s 1.2.2 main notes say Will <b>does</b> recover during bond training; Casey’s v1.2 notes say it <b>does not</b>. Do not plan a critical availability window around this interaction without checking the current campaign/version.</td></tr>
+<tr><td>Negative-trait removal</td><td>Casey’s v1.2 notes say Will does not recover during treatment.</td></tr>
 <tr><td>Low-Will soldiers early</td><td><b>Advanced Focus Chips</b> are a cheap way to improve availability before the barracks has enough depth.</td></tr></table>
 <div class="callout warn"><b>Barracks health metric:</b> Casey's comment follow-up says a healthy campaign should eventually be able to field roughly <b>three full combat squads</b> plus a couple of small stealth teams. If you cannot consistently field a second/third squad, the campaign is under real pressure even if your A-team is strong.</div>
 <p class="small">Source: <a href="https://xcom.substack.com/p/lwotc-version-12-notes">LWOTC v1.2 Notes</a>; campaign-depth note from Casey's Early Game Strategy comments.</p>
@@ -2299,7 +2303,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>Older LW2 / pre-1.2 references</td><td class="audit-limit">CONCEPTS ONLY</td><td>Used only where current mechanics do not conflict; current stable sources take precedence</td></tr>
 <tr><td>Original embedded screenshots</td><td class="audit-limit">LINKED, NOT COPIED</td><td>Source Images; ephemeral/third-party image assets are not mirrored</td></tr>
 </tbody></table>
-<div class="callout warn"><b>Meaning of “comprehensive” here:</b> no substantive gameplay point is intentionally omitted, but anecdotes and prose are paraphrased/clubbed rather than copied line-for-line. If two source paragraphs make the same recommendation, the guide keeps one canonical explanation; if they add different exceptions or disagree, those differences remain.</div>
+<div class="callout warn"><b>Meaning of “comprehensive” here:</b> no substantive gameplay point is intentionally omitted, but anecdotes and prose are paraphrased/clubbed rather than copied line-for-line. If two source paragraphs make the same recommendation, the guide keeps one canonical explanation; if they add different exceptions or disagree, those differences remain.</div><div class="callout"><b>Known source-conflict policy:</b> when Andy and Casey disagree on an implementation detail that is not conclusively resolved by the stable mechanics reference, the guide displays the disagreement rather than inventing a winner. Bond-training Will recovery is one explicit example. Strategy preferences such as NCE on/off, Technical archetype, Specialist late tree, officer class and some equipment choices are preserved as author/date-specific recommendations.</div>
 </section>
 <section class="searchable" id="images"><h2>18. Source images</h2><div class="callout warn"><b>Original inline images are the one gap this standalone file cannot honestly close.</b> The text retrieval available here exposes Casey's article prose and article URLs, but not a complete, reliable list of the original Substack CDN image assets. I therefore do <b>not</b> duplicate or substitute screenshots and call them Casey's originals.</div>
 <p>Use the source links below when you need the original screenshots/figures. The guide now contains the decision-relevant information those images support, including the explicit build/research orders and cost arithmetic that earlier versions missed.</p>
@@ -2351,6 +2355,13 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li><a href="https://www.youtube.com/watch?v=4XSLjOd6WIs" target="_blank">DerAva — Haven Management</a></li>
 </ul>
 <div class="callout warn"><b>Legacy Compendium note:</b> Andy links the old <i>Long War 2 Unofficial Compendium of Tips and Observations</i>. Its linked Drive file is currently unavailable and it predates LWOTC, so v9 does not import unverified mechanics from it.</div>
+<h3>Andy’s setup & planning resources</h3>
+<ul>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3582541381" target="_blank">Andy — LWOTC 2025 mod collection</a></li>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3583759033" target="_blank">Andy — LWOTC map collection</a></li>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2085849235" target="_blank">Andy — cosmetic collection</a></li>
+<li><a href="https://app.notion.com/p/7dce7e2beea383239c7301f92462dc13" target="_blank">Campaign Notebook Template 1.2</a></li>
+</ul>
 <h3>Andy’s Notion sources</h3>
 <ul>
 <li><a href="https://app.notion.com/p/31ce7e2beea3839282dd81d164a7eb48" target="_blank">Andy’s LWotC Notes &amp; Guide (v1.2.2)</a></li>
@@ -2434,7 +2445,7 @@ const sellKeepData=[
   {name:'Faceless Corpse',aliases:['faceless'],status:'OFTEN SELLABLE',cls:'decision-sell',why:'Casey rates the autopsy 0/5 in this route and Andy explicitly sells early Faceless corpses. Keep one only if a planned project needs it.',uses:'Needle/Chameleon-related progression in routes that value them.',link:'autopsies'},
   {name:'Priest Corpse',aliases:['priest'],status:'LOW PRIORITY',cls:'decision-sell',why:'Casey rates this autopsy 0/5 in his route.',uses:'Sustaining Sphere progression.',link:'autopsies'},
   {name:'Spectre Corpse',aliases:['spectre'],status:'LOW PRIORITY',cls:'decision-sell',why:'Casey rates this autopsy 0/5 in his route.',uses:'Refraction Field progression.',link:'autopsies'},
-  {name:'Weapon Mods',aliases:['weapon mod','mods','scope','stock','autoloader','suppressor'],status:'CONDITIONAL',cls:'decision-caution',why:'Andy sells many early mods for tempo, while keeping immediately useful pieces such as Auto-Loaders and an early Stock. Later, suppressors become broadly useful.',uses:'Class loadouts and infiltration efficiency.',link:'equipment'},
+  {name:'Weapon Mods',aliases:['weapon mod','mods','scope','stock','autoloader','suppressor'],status:'CONDITIONAL',cls:'decision-caution',why:'Andy sells many early mods for tempo, while keeping immediately useful pieces such as Auto-Loaders and an early Stock. Later, suppressors become broadly useful.',uses:'Class loadouts and infiltration efficiency.',link:'builds'},
   {name:'PCS',aliases:['personal combat sims','combat sim'],status:'CONDITIONAL',cls:'decision-caution',why:'Early mediocre PCS can be sold for tempo; strong or role-defining PCS should be retained.',uses:'Soldier stat specialization.',link:'personnel'}
 ];
 
