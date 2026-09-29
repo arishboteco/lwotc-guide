@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWOTC v13 — Version, Sources & Completeness</title><style>
+:root{
+  --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
+  --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+a{color:var(--accent)} a:hover{color:white}.layout{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0b0f14;border-right:1px solid var(--line);padding:18px}
+.sidebar h1{font-size:1.05rem;margin:0 0 8px}.sidebar .sub{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.search{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#141a21;color:white;margin:8px 0 12px}
+.nav a{display:block;text-decoration:none;color:#cbd5e1;padding:6px 8px;border-radius:6px;font-size:.88rem}.nav a:hover{background:var(--panel2);color:white}
+.main{max-width:1260px;padding:30px 34px 80px}.hero{padding:30px;border:1px solid var(--line);background:linear-gradient(135deg,#151c25,#202b38);border-radius:16px;margin-bottom:26px}
+.hero h1{font-size:2rem;margin:0 0 8px}.hero p{color:var(--muted);max-width:950px}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#22303e;border:1px solid #3e5366;color:#d8e6f3;font-size:.78rem;margin:2px 5px 2px 0}
+section{scroll-margin-top:18px;margin:30px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+h2{font-size:1.55rem;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin-top:22px;color:#dfe9f3}h4{margin-bottom:6px}
+.callout{border-left:4px solid var(--accent);background:#13202a;padding:12px 14px;border-radius:6px;margin:12px 0}.warn{border-left-color:var(--danger);background:#26191c}.good{border-left-color:var(--good);background:#14241c}.gold{border-left-color:var(--accent2);background:#2a2414}.purple{border-left-color:var(--purple);background:#20192b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}th{color:#e8f1fa;background:#111820;position:sticky;top:0;z-index:1}.small{font-size:.84rem;color:var(--muted)}
+.mission,.classbox,.sourceguide{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}.mission summary,.classbox summary,.sourceguide summary{cursor:pointer;padding:14px 16px;font-weight:700;background:#141b23}.mission .body,.classbox .body,.sourceguide .body{padding:14px 16px}.tag{font-size:.72rem;padding:3px 7px;border-radius:999px;background:#293644;border:1px solid #3c4d5d;margin-right:4px;white-space:nowrap}.tag.red{background:#3a2023}.tag.green{background:#183425}.tag.gold{background:#3a3218}.tag.purple{background:#322547}
+.sourcebox{background:#0c1117;border:1px dashed #425163;padding:14px;border-radius:8px}.check li{margin:6px 0}.topbtn{position:fixed;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--accent);color:#061017;font-weight:800;padding:11px 14px;cursor:pointer;box-shadow:0 4px 18px #0008}.hidden{display:none!important}
+.kpi{font-size:1.25rem;font-weight:800}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{color:var(--muted)}
+.phase{border-left:4px solid var(--accent2)}.dangerrow td:first-child{color:var(--danger);font-weight:700}.priority{font-weight:700;color:var(--accent2)}
+.imgplaceholder{border:1px dashed #58697a;border-radius:10px;padding:22px;text-align:center;color:var(--muted);background:#10161c}
+@media(max-width:950px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{columns:2}.main{padding:20px}.topbtn{right:12px;bottom:12px}}
+@media(max-width:600px){.nav{columns:1}.hero{padding:20px}.hero h1{font-size:1.55rem}.main{padding:14px}table{font-size:.81rem;display:block;overflow-x:auto}}
+
+/* --- Mobile-first usability layer --- */
+.mobilebar{display:none;position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid var(--line);padding:9px 10px;gap:8px;align-items:center}
+.mobilebar button,.quickjump{border:1px solid var(--line);background:#18212b;color:var(--text);border-radius:9px;padding:10px 12px;font-weight:700}
+.mobilebar .brand{font-weight:800;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.decision-grid label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px}
+.decision-grid select{width:100%;background:#10171e;color:var(--text);border:1px solid var(--line);padding:11px 10px;border-radius:9px}
+.decision-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.decision-actions button{background:var(--accent);color:#061017;border:0;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
+#decisionResult{margin-top:12px;padding:14px;border-radius:10px;background:#10171e;border:1px solid var(--line)}
+.result-take{border-left:5px solid var(--good)!important}.result-consider{border-left:5px solid var(--accent2)!important}.result-skip{border-left:5px solid var(--danger)!important}
+.matrix-badge{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 7px;border-radius:999px;margin-right:4px}.take{background:#173a27;color:#9af0bd}.maybe{background:#3a3218;color:#ffe38d}.skip{background:#3b2023;color:#ffabab}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.phase-card h3{margin:0 0 8px}.phase-card ul{padding-left:18px;margin:6px 0}.phase-card li{margin:5px 0}
+.rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rule{background:#111820;border:1px solid var(--line);border-radius:10px;padding:12px}.rule b{display:block;margin-bottom:4px}
+.mobile-tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0b0f14eF;border-top:1px solid var(--line);padding:6px;grid-template-columns:repeat(4,1fr);gap:4px;backdrop-filter:blur(8px)}
+.mobile-tabs a{text-align:center;text-decoration:none;color:#dbe7f2;font-size:.68rem;padding:7px 3px;border-radius:8px;background:#141b23}.mobile-tabs span{display:block;font-size:1rem}
+@media(max-width:950px){
+  body{padding-bottom:68px}.mobilebar{display:flex}.sidebar{display:none;position:fixed;z-index:70;top:52px;left:0;right:0;height:calc(100vh - 52px);overflow:auto;border:0;padding:14px;background:#0b0f14}.sidebar.open{display:block}.nav{columns:1}.mobile-tabs{display:grid}.main{max-width:none;padding:14px 12px 86px}.hero{padding:18px 15px;border-radius:12px;margin-top:8px}.hero h1{font-size:1.45rem}.hero p{font-size:.92rem}.grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr 1fr}section{margin:22px 0;scroll-margin-top:64px}h2{font-size:1.3rem}.topbtn{bottom:76px;right:10px;padding:9px 11px}
+  details summary{touch-action:manipulation;min-height:48px;display:flex;align-items:center}
+  table{display:block;overflow-x:auto;white-space:normal;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:#11161d} th,td{min-width:145px;padding:9px 8px} th:first-child,td:first-child{position:sticky;left:0;background:#111820;z-index:2;min-width:128px} th:first-child{z-index:3}
+}
+@media(max-width:600px){
+  .decision-grid{grid-template-columns:1fr}.phase-grid{grid-template-columns:1fr}.rulegrid{grid-template-columns:1fr}.card,.mission .body,.classbox .body,.sourceguide .body{padding:12px}.mission summary,.classbox summary,.sourceguide summary{padding:12px;font-size:.95rem}.pill{font-size:.71rem}.callout{padding:10px 11px}.main{padding-left:10px;padding-right:10px}table{font-size:.78rem}.sourcebox{overflow-wrap:anywhere}
+}
+
+.refnote{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}.tight td,.tight th{padding:6px 8px}.status-full{color:var(--good);font-weight:800}.status-legacy{color:var(--accent2);font-weight:800}
+
+.order-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#061017;font-weight:900;margin-right:8px}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0c1117;border:1px solid var(--line);padding:10px 12px;border-radius:8px;overflow:auto}
+.calcbox{background:#101820;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.calcrow{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:center;padding:5px 0}
+.calcrow input[type=number]{width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:#0f141a;color:var(--text)}
+.source-note{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+.audit-ok{color:var(--good);font-weight:800}.audit-limit{color:var(--accent2);font-weight:800}
+@media(max-width:700px){.calcrow{grid-template-columns:1fr 75px 90px;font-size:.86rem}.order-num{width:24px;height:24px}table{font-size:.84rem}}
+
+/* v6 source comparison additions */
+.source-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}.src-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+.src-official{background:#143423;color:#9ff0bf;border-color:#285c40}.src-casey{background:#183245;color:#9edfff;border-color:#315b76}.src-andy{background:#3c2d13;color:#ffd982;border-color:#725929}.src-synth{background:#33284a;color:#d8c1ff;border-color:#5b4a7e}.src-legacy{background:#3a2020;color:#ffb3b3;border-color:#6e3939}
+.compare4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.compare4 .card{margin:0}.andybox{border-left:4px solid #f3c95c;background:linear-gradient(90deg,rgba(243,201,92,.08),transparent)}.officialbox{border-left:4px solid #7be0a8}.synthbox{border-left:4px solid #c7a7ff}.caseybox{border-left:4px solid #63d0ff}
+.details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
+.v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
+@media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
+
+/* --- v10 predictive search + campaign companion --- */
+.home-campaign-summary{display:flex;flex-direction:column;gap:3px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#111a22}
+.home-campaign-summary span{color:var(--muted);font-size:.82rem}
+.companion-tool{background:linear-gradient(180deg,#121922,#0f151b);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tool-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}.tool-grid label{font-size:.77rem;color:var(--muted);font-weight:800}
+.tool-grid input,.tool-grid select,.lookup-row input{width:100%;margin-top:5px;background:#0e151c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+.tracker-details{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#10171e}.tracker-details summary{cursor:pointer;padding:11px 12px;font-weight:800}.tracker-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}.tracker-check{display:flex;gap:7px;align-items:center;padding:7px 8px;border-radius:8px;background:#151e27;font-size:.8rem}.tracker-check input{accent-color:var(--accent)}
+.tool-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.primary-btn,.secondary-btn,.icon-btn{border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-family:inherit}.primary-btn{border:0;background:var(--accent);color:#061017}.secondary-btn,.icon-btn{border:1px solid var(--line);background:#18212b;color:var(--text)}
+.what-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-top:10px}.next-card{border:1px solid var(--line);background:#111820;border-radius:10px;padding:12px}.next-card b{display:block;margin-bottom:4px}.next-card a{font-size:.8rem}
+.lookup-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.lookup-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.lookup-suggestions button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:6px 9px;font-size:.78rem;cursor:pointer}.lookup-result{border:1px solid var(--line);background:#10171e;border-radius:12px;padding:14px;min-height:72px}.decision-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;margin-bottom:8px}.decision-keep{background:#163b27;color:#9ff0bf}.decision-caution{background:#3a3218;color:#ffe38d}.decision-sell{background:#3b2023;color:#ffb4b4}
+.class-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0}.class-pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:#111820;border-radius:10px;padding:10px}.class-pick small{display:block;color:var(--muted);margin-top:2px}.counter{display:grid;grid-template-columns:30px 28px 30px;align-items:center;text-align:center}.counter button{height:30px;border:1px solid var(--line);background:#19242e;color:var(--text);font-weight:900;cursor:pointer}.counter button:first-child{border-radius:8px 0 0 8px}.counter button:last-child{border-radius:0 8px 8px 0}.counter span{height:30px;line-height:30px;background:#0c1319;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin:9px 0}.coverage{padding:9px;border:1px solid var(--line);border-radius:9px;background:#121a22}.coverage.ok{border-left:4px solid var(--good)}.coverage.miss{border-left:4px solid var(--danger)}.coverage.optional{border-left:4px solid var(--accent2)}
+.search-overlay{display:none;position:fixed;inset:0;z-index:200}.search-overlay.open{display:block}.search-backdrop{position:absolute;inset:0;background:#02060acd;backdrop-filter:blur(4px)}.search-panel{position:relative;width:min(820px,calc(100% - 24px));max-height:min(760px,calc(100vh - 30px));overflow:auto;margin:15px auto;background:#0d141b;border:1px solid #3b4b5d;border-radius:16px;padding:16px;box-shadow:0 24px 80px #000c}
+.search-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.search-head h2{border:0;padding:0;margin:2px 0 8px}.icon-btn{font-size:1.25rem;padding:5px 11px}.global-search-wrap{display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid #476177;background:#101a23;border-radius:12px;padding:2px 9px}.global-search-wrap input{border:0;outline:0;background:transparent;color:white;font-size:1rem;padding:12px 5px;width:100%}.global-search-wrap kbd{border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--muted);font-size:.72rem}.search-help{margin:7px 2px 10px}.recent-searches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-searches button{background:#161f28;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 8px;cursor:pointer}.search-results{display:grid;gap:6px}.search-result{display:grid;grid-template-columns:auto 1fr;gap:9px;text-align:left;border:1px solid transparent;background:#111820;color:var(--text);border-radius:10px;padding:10px;cursor:pointer;width:100%}.search-result:hover,.search-result.active{border-color:#4e718c;background:#16232e}.search-type{font-size:.65rem;font-weight:900;letter-spacing:.05em;padding:3px 6px;border-radius:6px;background:#223242;color:#bde9ff;align-self:start}.search-result b{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px;line-height:1.3}.search-result mark{background:#594b1d;color:#fff2b0;border-radius:2px}.search-hit{animation:searchFlash 1.7s ease}@keyframes searchFlash{0%,35%{outline:3px solid var(--accent2);outline-offset:4px;background-color:#2b2515}100%{outline-color:transparent}}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracker-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.search-panel{margin:8px auto;max-height:calc(100vh - 16px);padding:12px}}
+@media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
+
+
+/* --- v13 combined soldier builds --- */
+.build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
+.merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
+
+@media(max-width:760px){.merged-build-meta{grid-template-columns:1fr}}
+.xcom-overview,.xcom-guide{border:1px solid #40576b;background:#0e1821;border-radius:12px;padding:12px;margin:13px 0}
+.xcom-overview h3,.xcom-guide h4{margin:0 0 8px}
+.xcom-key{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:center;font-size:.8rem}
+.xcom-rank{display:inline-block;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
+.xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
+
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
+
+
+.chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
+.chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
+.chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chapter-title{font-weight:900;margin-right:auto}
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
+.chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
+.chapter-search{max-width:1180px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
+.chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
+.chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
+.chapter-intro h1{margin:.15rem 0 .35rem}
+.chapter-hidden{display:none!important}
+.read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
+@media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a class="active" href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
+<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell">
+<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Version, Sources & Completeness</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
+
+<section class="searchable" id="versionmodel">
+<h2>0. Version &amp; source model <span class="v6flag">NEW IN v6</span></h2>
+<div class="source-legend"><span class="src-badge src-official">OFFICIAL</span><span class="src-badge src-casey">CASEY</span><span class="src-badge src-andy">ANDY</span><span class="src-badge src-synth">SYNTHESIS</span><span class="src-badge src-legacy">LEGACY</span></div>
+<div class="compare4">
+<div class="card officialbox"><span class="src-badge src-official">OFFICIAL</span><h3>What the game currently does</h3><p>Stable LWOTC is <b>1.2.3</b> with subsequent stable hotfixes. The experimental branch is 1.2.4; this guide does not import experimental balance changes into normal recommendations.</p><p class="source-ref"><a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2683996590" target="_blank">Official Steam change notes</a></p></div>
+<div class="card caseybox"><span class="src-badge src-casey">CASEY</span><h3>Mechanics + strategic reasoning</h3><p>Casey remains the backbone for early/mid strategy, liberation, officer/bond logic, control principles and the classes he has revised for 1.2.</p></div>
+<div class="card andybox"><span class="src-badge src-andy">ANDY</span><h3>Legend/Honestman actual-play layer</h3><p>Andy’s 1.2.2 notes add exact operating routines, mission thresholds, equipment doctrine, current class trees, proving-ground costs and “what I actually do” campaign execution.</p><p class="source-ref"><a href="https://app.notion.com/p/31ce7e2beea3839282dd81d164a7eb48" target="_blank">Andy’s guide</a></p></div>
+<div class="card synthbox"><span class="src-badge src-synth">SYNTHESIS</span><h3>What this guide recommends</h3><p>Where Casey and Andy differ, both positions are retained and a practical recommendation is added. The synthesis is deliberately labelled so it is never mistaken for either author’s published advice.</p></div>
+</div>
+<div class="callout"><b>Strategy-source caveat:</b> Andy explicitly describes his guide as personal Legend/Honestman actual-play notes with a control-oriented style, not a claim that there is one objectively best way to play. Casey likewise revises recommendations as later campaigns expose better options. This merged guide therefore separates <b>mechanics</b> from <b>tested preferences</b>, and preserves disagreements instead of flattening them into false certainty.</div>
+<div class="callout warn"><b>Important 1.2.3 caveat:</b> Andy’s SPARK section was written for 1.2.2 and explicitly says it should be mostly ignored after the 1.2.3 SPARK rework. Use the rest of his 1.2.2 class advice as tested guidance, but treat SPARK as version-sensitive.</div>
+<div class="callout good"><b>Honestman:</b> Andy recommends saving normally but not reloading tactical mistakes, reserving saves for bugs/corruption. For a heavily modded first serious LWOTC campaign, this is a sensible safety practice.</div>
+</section>
+<section class="searchable" id="coverage"><h2>17. Casey + Andy source coverage — completion audit</h2>
+<div class="callout good"><b>v13 completeness standard:</b> coverage is no longer counted because a topic name appears once. Each source subsection is expected to have its substantive mechanics, recommendations, exceptions, failure cases and disagreements represented in the canonical guide section. Repeated ideas are merged; source-specific differences are retained and labelled. Source prose is paraphrased rather than reproduced verbatim.</div>
+<h3>Andy Notion coverage</h3>
+<table><tr><th>Andy page</th><th>Status</th><th>Where it is used</th></tr>
+<tr><td>Main guide / notes</td><td><span class="audit-ok">INTEGRATED</span></td><td>Version model, Honestman, general 1.2.2→1.2.3 caveats, mod warnings</td></tr>
+<tr><td>New Player Info</td><td><span class="audit-ok">INTEGRATED</span></td><td>Mission choice, infiltration, havens, evac, Honestman</td></tr>
+<tr><td>Class Guide 1.2.2</td><td><span class="audit-ok">INTEGRATED</span></td><td>Builds, equipment, officers, XCOM row, bonds</td></tr>
+<tr><td>Strategy Layer</td><td><span class="audit-ok">INTEGRATED</span></td><td>Builds, regions, expansion, Black Market, campaign tempo</td></tr>
+<tr><td>Research / Proving Ground</td><td><span class="audit-ok">INTEGRATED</span></td><td>Research order, autopsy logic, PG costs/priorities/skips</td></tr>
+<tr><td>Liberation Info</td><td><span class="audit-ok">INTEGRATED</span></td><td>Lib mission rules, Tower, HQ, Invasion</td></tr>
+<tr><td>Golden Path</td><td><span class="audit-ok">INTEGRATED</span></td><td>Story sequence and final mission</td></tr>
+<tr><td>Tactics Layer</td><td><span class="audit-ok">INTEGRATED</span></td><td>Probability, stealth, equipment, hacks, micro rules</td></tr>
+<tr><td>Mission Types / SITREPs / RNF</td><td><span class="audit-ok">INTEGRATED</span></td><td>RNF table, mission playbook, Lost/Miranda, squad size</td></tr>
+<tr><td>Enemy Notes</td><td><span class="audit-ok">INTEGRATED</span></td><td>Enemy handbook, Rulers</td></tr>
+<tr><td>Chosen</td><td><span class="audit-ok">INTEGRATED</span></td><td>Chosen micro + Stronghold</td></tr></table>
+<p>This is the completion checklist for the gap analysis that triggered v5. <b>“Included” means the information is actually present in a usable section, not merely mentioned here.</b></p>
+<table><thead><tr><th>Gap previously identified</th><th>Status</th><th>Where it now lives</th></tr></thead><tbody>
+<tr><td>Random-stat soldier triage / class selection</td><td class="audit-ok">INCLUDED</td><td><a href="soldiers.html#personnel">Stats, class selection, fatigue</a></td></tr>
+<tr><td>Trial by Fire XP order / fatigue / Will / Focus Chips</td><td class="audit-ok">INCLUDED</td><td><a href="soldiers.html#personnel">Personnel</a></td></tr>
+<tr><td>1.2 tactical status edge cases</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#tactics">Tactics</a> + <a href="enemies.html#enemies">Enemy handbook</a></td></tr>
+<tr><td>Early economy exact cost arithmetic</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#masterorders">Build / research / costs</a> — 785 + 865 = 1,650</td></tr>
+<tr><td>Workshop placement</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#masterorders">Early facility order</a> + Purchases</td></tr>
+<tr><td>Explicit early research sequence + corpse conditions</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#masterorders">Research order</a></td></tr>
+<tr><td>Early scanning routine / 24-hour job loss</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#strategy">Regions &amp; havens</a></td></tr>
+<tr><td>Covert Ops rewards / continuous operation / manpower warning</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#covert">Covert Ops</a></td></tr>
+<tr><td>Chosen Avenger Defense timing</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#masterorders">Bottleneck calculations</a> + Covert Ops</td></tr>
+<tr><td>Laboratory six-scientist staffing logic</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#masterorders">Midgame build order</a></td></tr>
+<tr><td>Full autopsy priority table</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#autopsies">Autopsy priorities</a></td></tr>
+<tr><td>Golden Path / Skulljack / Psi Gate first</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#covert">Golden Path</a></td></tr>
+<tr><td>Overwatch-rule explanation</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#tactics">Tactics</a></td></tr>
+<tr><td>Early tactical micro / Yellow Alert / rooftop / move order</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#tactics">Early tactical micro</a></td></tr>
+<tr><td>Full late-enemy handbook incl. Hive Queen</td><td class="audit-ok">INCLUDED</td><td><a href="enemies.html#enemies">Enemy handbook</a></td></tr>
+<tr><td>Testing builds with console commands</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#tactics">Testing builds</a></td></tr>
+<tr><td>Full Officer tree: standard abilities, 7 ranks, training gates, Command scaling</td><td class="audit-ok">VERIFIED / INCLUDED</td><td><a href="soldiers.html#officers">Officer perks &amp; progression</a></td></tr>
+<tr><td>New-player mechanics: mission detection, Strength/Force/Vigilance, infiltration, evac, corpses</td><td class="audit-ok">INCLUDED</td><td><a href="campaign.html#newplayer">New-player essentials</a></td></tr>
+<tr><td>Bond-role logic / forced lower-compatibility bonds</td><td class="audit-ok">INCLUDED</td><td><a href="soldiers.html#squads">Bonds</a></td></tr>
+<tr><td>Exact midgame squad examples / covert-op pair</td><td class="audit-ok">INCLUDED</td><td><a href="soldiers.html#squads">Squad examples</a></td></tr>
+<tr><td>Liberation dots / refresh / Tower-HQ expiry</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">Liberation</a></td></tr>
+<tr><td>Lib 2 +1 Strength / timer / 30-Intel benchmark</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">Lib 2</a></td></tr>
+<tr><td>Lib 3 +2 Strength / finesse variants / Faceless risk</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">Lib 3</a></td></tr>
+<tr><td>Network Tower Spider Suit / positioning / 2-turn stun</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">Network Tower</a></td></tr>
+<tr><td>ADVENT HQ 40+ enemy endurance doctrine</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">ADVENT HQ</a></td></tr>
+<tr><td>General control sequence</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">General cheat sheet</a></td></tr>
+<tr><td>Invasion 21-day / Strength-8 / beacon methods</td><td class="audit-ok">INCLUDED</td><td><a href="missions.html#liberation">Invasion</a></td></tr>
+<tr><td>Chosen micro / cover removal / movement manipulation</td><td class="audit-ok">INCLUDED</td><td><a href="enemies.html#chosen">Chosen</a></td></tr>
+<tr><td>Alien Ruler exact action/reaction logic</td><td class="audit-ok">INCLUDED</td><td><a href="enemies.html#chosen">Alien Rulers</a></td></tr>
+<tr><td>Combined class builds: baseline, alternatives, Andy/Casey differences, equipment, ranked XCOM-row suggestions</td><td class="audit-ok">INCLUDED</td><td><a href="soldiers.html#builds">Combined Soldier Builds</a></td></tr>
+<tr><td>v1.1 ambush / Ruler / Miranda / Full Override edge notes</td><td class="audit-ok">INCLUDED</td><td><a href="enemies.html#legacy-notes">v1.1 notes</a></td></tr>
+<tr><td>Original Casey inline images</td><td class="audit-limit">EXTERNAL-ONLY</td><td><a href="#images">Source Images</a> — original article links retained; CDN assets cannot be reliably enumerated from the available retrieval interface.</td></tr>
+</tbody></table>
+<div class="callout good"><b>Textual gap status:</b> The prior audit used a topic-presence standard and overstated completeness. v13 replaces that standard with source-subsection coverage and exhaustive reference layers. The remaining limitation is bulk duplication of Casey's original embedded images.</div>
+<h3>v13 source-by-source completeness matrix</h3>
+<table><thead><tr><th>Source set</th><th>Status</th><th>Where the detail lives</th></tr></thead><tbody>
+<tr><td>Andy — New Player Info</td><td class="audit-ok">MERGED</td><td>New-player essentials + Strategy + Missions</td></tr>
+<tr><td>Andy — Class Guide 1.2.2</td><td class="audit-ok">MERGED</td><td>Combined Soldier Builds + Squads/Bonds + Officers</td></tr>
+<tr><td>Andy — Strategy Layer</td><td class="audit-ok">MERGED</td><td>Strategy + Research/PG + Timeline</td></tr>
+<tr><td>Andy — Research / Proving Ground</td><td class="audit-ok">MERGED</td><td>Research roadmap + Autopsies + Purchases</td></tr>
+<tr><td>Andy — Liberation Info</td><td class="audit-ok">MERGED</td><td>Liberation playbook</td></tr>
+<tr><td>Andy — Golden Path</td><td class="audit-ok">MERGED</td><td>Covert Ops & Golden Path</td></tr>
+<tr><td>Andy — Tactics Layer</td><td class="audit-ok">MERGED</td><td>Tactical operating procedure</td></tr>
+<tr><td>Andy — Mission Types / SITREPs / RNF</td><td class="audit-ok">MERGED</td><td>Missions + Reinforcements</td></tr>
+<tr><td>Andy — Enemy Notes</td><td class="audit-ok">MERGED</td><td>Enemy handbook + Chosen/Rulers</td></tr>
+<tr><td>Andy — Chosen</td><td class="audit-ok">MERGED</td><td>Chosen/Rulers</td></tr>
+<tr><td>Casey — 1.2 Notes</td><td class="audit-ok">MERGED</td><td>Personnel + Builds + Tactics + Strategy + Chosen</td></tr>
+<tr><td>Casey — Early/Mid-Late Strategy</td><td class="audit-ok">MERGED</td><td>Facility/cost plans + Strategy + Golden Path</td></tr>
+<tr><td>Casey — Early/Mid-Late Tactics</td><td class="audit-ok">MERGED</td><td>Tactics + Enemy handbook</td></tr>
+<tr><td>Casey — 1.2 class revisions</td><td class="audit-ok">MERGED</td><td>Combined Soldier Builds</td></tr>
+<tr><td>Casey — legacy class guides</td><td class="audit-ok">PRESERVED / LABELLED</td><td>Combined Soldier Builds; legacy where not republished for 1.2</td></tr>
+<tr><td>Casey — Liberation / Squads / Chosen & Rulers</td><td class="audit-ok">MERGED</td><td>Liberation + Squads/Bonds + Chosen/Rulers</td></tr>
+<tr><td>Older LW2 / pre-1.2 references</td><td class="audit-limit">CONCEPTS ONLY</td><td>Used only where current mechanics do not conflict; current stable sources take precedence</td></tr>
+<tr><td>Original embedded screenshots</td><td class="audit-limit">LINKED, NOT COPIED</td><td>Source Images; ephemeral/third-party image assets are not mirrored</td></tr>
+</tbody></table>
+<div class="callout warn"><b>Meaning of “comprehensive” here:</b> no substantive gameplay point is intentionally omitted, but anecdotes and prose are paraphrased/clubbed rather than copied line-for-line. If two source paragraphs make the same recommendation, the guide keeps one canonical explanation; if they add different exceptions or disagree, those differences remain.</div><div class="callout"><b>Known source-conflict policy:</b> when Andy and Casey disagree on an implementation detail that is not conclusively resolved by the stable mechanics reference, the guide displays the disagreement rather than inventing a winner. Bond-training Will recovery is one explicit example. Strategy preferences such as NCE on/off, Technical archetype, Specialist late tree, officer class and some equipment choices are preserved as author/date-specific recommendations.</div>
+</section>
+<section class="searchable" id="images"><h2>18. Source images</h2><div class="callout warn"><b>Original inline images are the one gap this standalone file cannot honestly close.</b> The text retrieval available here exposes Casey's article prose and article URLs, but not a complete, reliable list of the original Substack CDN image assets. I therefore do <b>not</b> duplicate or substitute screenshots and call them Casey's originals.</div>
+<p>Use the source links below when you need the original screenshots/figures. The guide now contains the decision-relevant information those images support, including the explicit build/research orders and cost arithmetic that earlier versions missed.</p>
+<ul>
+<li><a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy — build order, cost/economy, tech path, haven screenshots</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Strategy — base, economy and tech progression</a></li>
+<li><a href="https://xcom.substack.com/p/long-war-2-liberation-guide">Liberation Guide — liberation/tactical illustrations</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-squad-composition-officers">Squads / officers / bonds</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-the-chosen-and-alien-rulers">Chosen &amp; Alien Rulers</a></li>
+</ul>
+<h3>Andy image/diagram inventory <span class="v6flag">v6</span></h3>
+<p>The Notion connector exposes Andy’s embedded images through short-lived signed asset URLs, which are not safe to hard-code into a public GitHub Pages site because they expire. v6 therefore inventories every embedded figure discovered and links to its permanent source page. When we publish the GitHub site, these should be copied into an <code>assets/</code> folder if we can obtain durable image files.</p>
+<table><tr><th>Figure discovered in Andy’s guide</th><th>Permanent page</th></tr>
+<tr><td>Psi ability-tree screenshot</td><td><a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide</a></td></tr>
+<tr><td>Combat Intelligence / AP table</td><td><a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide</a></td></tr>
+<tr><td>Tech-tree diagram</td><td><a href="https://app.notion.com/p/5ebe7e2beea3829ab9b3811d0715d644" target="_blank">Strategy Layer</a></td></tr>
+<tr><td>Graze diagram</td><td><a href="https://app.notion.com/p/ea8e7e2beea382389f56012f85c6dd77" target="_blank">Tactics Layer</a></td></tr>
+<tr><td>Retaliation prediction chart</td><td><a href="https://app.notion.com/p/a22e7e2beea38273b93f01ecd4b63083" target="_blank">Mission Types</a></td></tr>
+<tr><td>Updated Force Level enemy appearance chart</td><td><a href="https://app.notion.com/p/946e7e2beea38273857301e8bb6ed978" target="_blank">Enemy Notes</a></td></tr>
+<tr><td>Purifier explosion-range test image</td><td><a href="https://app.notion.com/p/946e7e2beea38273857301e8bb6ed978" target="_blank">Enemy Notes</a></td></tr></table>
+</section>
+<section class="searchable" id="sources"><h2>19. Source index</h2>
+<div class="sourcebox"><p><b>Core Casey guides</b></p><ul>
+<li><a href="https://xcom.substack.com/p/lwotc-version-12-notes">LWOTC Version 1.2 Notes</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-early-game-tactics">Early Game Tactics</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Game Strategy</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-advanced-tactics">Mid/Late Game Tactics</a></li>
+<li><a href="https://xcom.substack.com/p/long-war-2-liberation-guide">Liberation Guide</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-squad-composition-officers">Squad Composition, Officers &amp; Bondmates</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-the-chosen-and-alien-rulers">Chosen &amp; Alien Rulers</a></li>
+</ul><p><b>Class guides</b></p><ul>
+<li><a href="https://xcom.substack.com/p/lwotc-class-builds-specialist">Specialist 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-grenadier">Grenadier 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-gunner">Gunner 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-technical">Technical 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-shinobi">Shinobi 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-ranger">Ranger 1.2</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-assault">Assault legacy</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-sharpshooter">Sharpshooter legacy</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-spark">SPARK legacy</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-psi-operative">Psi legacy</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-skirmisher">Skirmisher legacy</a></li><li><a href="https://xcom.substack.com/p/lwotc-class-builds-reaper">Reaper legacy</a></li>
+</ul><p><b>Technical / current mechanics</b></p><ul><li><a href="https://ufopaedia.org/Templar_%28LWOTC%29">Current LWOTC Templar mechanics</a></li><li><a href="https://github.com/long-war-2/lwotc/blob/master/LongWarOfTheChosen/Config/XComLW_Overhaul.ini">LWOTC XComLW_Overhaul.ini</a></li><li><a href="https://github.com/long-war-2/lwotc/blob/master/LongWarOfTheChosen/Config/XComMissions.ini">LWOTC XComMissions.ini</a></li></ul><p><b>Mission-selection references</b></p><ul>
+<li><a href="https://xcom.substack.com/p/lwotc-early-game-tactics">Early Game Tactics — mission tempo, RNF, squad examples, aborting bad stealth maps</a></li>
+<li><a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Strategy — low-Strength regions, Liberation timing, Golden Path</a></li>
+<li><a href="https://xcom.substack.com/p/long-war-2-liberation-guide">Liberation Guide — Lib detection, Vigilance/Strength, Lib 2/3 prioritization</a></li>
+<li><a href="https://xcom.substack.com/p/long-war-2-quick-start-guide">LW2 Quick Start — classic 100% infiltration / &lt;90% warning</a></li>
+</ul></div>
+<p><a href="https://xcom.substack.com/p/long-war-2-dealing-with-reinforcements">Dealing with Reinforcements (LW2; Casey says still relevant to LWOTC)</a></p><p><a href="https://xcom.substack.com/p/lwotc-some-thoughts-on-version-11">LWOTC v1.1 / miscellaneous notes — older edge cases retained where still useful</a></p>
+<h3>New-player / mechanics references <span class="v6flag">v9</span></h3>
+<ul>
+<li><a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">Andy — New Player Info</a></li>
+<li><a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot — LWOTC mechanics guide (pre-1.2; concepts only unless reverified)</a></li>
+<li><a href="https://www.ufopaedia.org/Long_War_of_the_Chosen" target="_blank">UFOpaedia — current LWOTC reference</a></li>
+<li><a href="https://www.ufopaedia.org/Officers_%28LWOTC%29" target="_blank">UFOpaedia — Officers</a></li>
+<li><a href="https://github.com/long-war-2/lwotc/wiki/New-Player-Resources" target="_blank">LWOTC project — New Player Resources</a></li>
+<li><a href="https://www.youtube.com/watch?v=Km1yo6Be2n4" target="_blank">DerAva — Quick and Dirty Strategy Layer Guide</a></li>
+<li><a href="https://www.youtube.com/watch?v=4XSLjOd6WIs" target="_blank">DerAva — Haven Management</a></li>
+</ul>
+<div class="callout warn"><b>Legacy Compendium note:</b> Andy links the old <i>Long War 2 Unofficial Compendium of Tips and Observations</i>. Its linked Drive file is currently unavailable and it predates LWOTC, so v9 does not import unverified mechanics from it.</div>
+<h3>Andy’s setup & planning resources</h3>
+<ul>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3582541381" target="_blank">Andy — LWOTC 2025 mod collection</a></li>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3583759033" target="_blank">Andy — LWOTC map collection</a></li>
+<li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2085849235" target="_blank">Andy — cosmetic collection</a></li>
+<li><a href="https://app.notion.com/p/7dce7e2beea383239c7301f92462dc13" target="_blank">Campaign Notebook Template 1.2</a></li>
+</ul>
+<h3>Andy’s Notion sources</h3>
+<ul>
+<li><a href="https://app.notion.com/p/31ce7e2beea3839282dd81d164a7eb48" target="_blank">Andy’s LWotC Notes &amp; Guide (v1.2.2)</a></li>
+<li><a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a></li>
+
+<li><a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide 1.2.2</a></li>
+<li><a href="https://app.notion.com/p/5ebe7e2beea3829ab9b3811d0715d644" target="_blank">Strategy Layer</a></li>
+<li><a href="https://app.notion.com/p/413e7e2beea38283926d811f483a8d8d" target="_blank">Research / Proving Ground</a></li>
+<li><a href="https://app.notion.com/p/89fe7e2beea383bdbfd981a25e9106a2" target="_blank">Liberation Info</a></li>
+<li><a href="https://app.notion.com/p/0e7e7e2beea3824f80c081b16eb06c0c" target="_blank">Golden Path</a></li>
+<li><a href="https://app.notion.com/p/ea8e7e2beea382389f56012f85c6dd77" target="_blank">Tactics Layer</a></li>
+<li><a href="https://app.notion.com/p/a22e7e2beea38273b93f01ecd4b63083" target="_blank">Mission Types, SITREPs &amp; Reinforcement</a></li>
+<li><a href="https://app.notion.com/p/946e7e2beea38273857301e8bb6ed978" target="_blank">Enemy Notes</a></li>
+<li><a href="https://app.notion.com/p/566e7e2beea3824084e0814a9b5a076b" target="_blank">Chosen</a></li>
+</ul>
+<h3>Official version checks</h3><ul><li><a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2683996590" target="_blank">Stable LWOTC Steam change notes — 1.2.3 and hotfixes</a></li><li><a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2663990965" target="_blank">Experimental 1.2.4 change notes — deliberately excluded from normal recommendations</a></li></ul>
+</section>
+</main>
+<script>
+(function(){
+ const q=document.getElementById('chapterSearch');
+ const clear=document.getElementById('chapterClear');
+ function run(){
+  const term=(q.value||'').trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(sec=>{
+   if(!term){sec.classList.remove('chapter-hidden'); return;}
+   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
+  });
+  document.querySelectorAll('details').forEach(d=>{
+   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
+  });
+ }
+ q.addEventListener('input',run);
+ clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
+ const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){
+  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
+   const s=box.querySelector('summary'); if(!s)return;
+   const name=(s.innerText||'').split(' — ')[0].trim();
+   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
+  });
+ }
+})();
+</script></body></html>
