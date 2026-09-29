@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LWOTC v13 — Version, Sources & Completeness</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LWOTC v13 — Version, Sources & Completeness</title><style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
   --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
@@ -170,7 +168,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 .chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
 .chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
 .chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.chapter-title{font-weight:900;margin-right:auto}
+.chapter-title{font-weight:900;margin-right:auto;color:var(--text);text-decoration:none}
 .chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
 .chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
 .chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
@@ -178,18 +176,12 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 .chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
 .chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
-.chapter-intro h1{margin:.15rem 0 .35rem}
-.chapter-hidden{display:none!important}
+.chapter-intro h1{margin:.15rem 0 .35rem}.chapter-hidden{display:none!important}
 .read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
 @media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
-</style></head>
-<body>
-<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a class="active" href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
-<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
-<main class="chapter-shell">
-<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Version, Sources & Completeness</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
-
-<section class="searchable" id="versionmodel">
+</style></head><body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a class="active" href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div><div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell"><div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Version, Sources & Completeness</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div><section class="searchable" id="versionmodel">
 <h2>0. Version &amp; source model <span class="v6flag">NEW IN v6</span></h2>
 <div class="source-legend"><span class="src-badge src-official">OFFICIAL</span><span class="src-badge src-casey">CASEY</span><span class="src-badge src-andy">ANDY</span><span class="src-badge src-synth">SYNTHESIS</span><span class="src-badge src-legacy">LEGACY</span></div>
 <div class="compare4">
@@ -349,33 +341,12 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li><a href="https://app.notion.com/p/566e7e2beea3824084e0814a9b5a076b" target="_blank">Chosen</a></li>
 </ul>
 <h3>Official version checks</h3><ul><li><a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2683996590" target="_blank">Stable LWOTC Steam change notes — 1.2.3 and hotfixes</a></li><li><a href="https://steamcommunity.com/sharedfiles/filedetails/changelog/2663990965" target="_blank">Experimental 1.2.4 change notes — deliberately excluded from normal recommendations</a></li></ul>
-</section>
-</main>
-<script>
+</section></main><script>
 (function(){
- const q=document.getElementById('chapterSearch');
- const clear=document.getElementById('chapterClear');
- function run(){
-  const term=(q.value||'').trim().toLowerCase();
-  document.querySelectorAll('main section').forEach(sec=>{
-   if(!term){sec.classList.remove('chapter-hidden'); return;}
-   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
-  });
-  document.querySelectorAll('details').forEach(d=>{
-   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
-  });
- }
- q.addEventListener('input',run);
- clear.addEventListener('click',()=>{q.value='';run();q.focus();});
- if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
- const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
- if(build&&jumps&&!jumps.children.length){
-  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
-   const s=box.querySelector('summary'); if(!s)return;
-   const name=(s.innerText||'').split(' — ')[0].trim();
-   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
-  });
- }
+ const q=document.getElementById('chapterSearch'), clear=document.getElementById('chapterClear');
+ function run(){const term=(q.value||'').trim().toLowerCase();document.querySelectorAll('main section').forEach(sec=>{sec.classList.toggle('chapter-hidden',!!term&&!sec.innerText.toLowerCase().includes(term));});document.querySelectorAll('details').forEach(d=>{if(term&&d.innerText.toLowerCase().includes(term))d.open=true;});}
+ q.addEventListener('input',run);clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ const build=document.getElementById('builds'),jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){[...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{const s=box.querySelector('summary');if(!s)return;const name=(s.innerText||'').split(' — ')[0].trim();if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);});}
 })();
 </script></body></html>
