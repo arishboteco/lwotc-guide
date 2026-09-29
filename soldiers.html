@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWOTC v13 — Soldiers, Builds, Officers & Bonds</title><style>
+:root{
+  --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
+  --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+a{color:var(--accent)} a:hover{color:white}.layout{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0b0f14;border-right:1px solid var(--line);padding:18px}
+.sidebar h1{font-size:1.05rem;margin:0 0 8px}.sidebar .sub{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.search{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#141a21;color:white;margin:8px 0 12px}
+.nav a{display:block;text-decoration:none;color:#cbd5e1;padding:6px 8px;border-radius:6px;font-size:.88rem}.nav a:hover{background:var(--panel2);color:white}
+.main{max-width:1260px;padding:30px 34px 80px}.hero{padding:30px;border:1px solid var(--line);background:linear-gradient(135deg,#151c25,#202b38);border-radius:16px;margin-bottom:26px}
+.hero h1{font-size:2rem;margin:0 0 8px}.hero p{color:var(--muted);max-width:950px}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#22303e;border:1px solid #3e5366;color:#d8e6f3;font-size:.78rem;margin:2px 5px 2px 0}
+section{scroll-margin-top:18px;margin:30px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+h2{font-size:1.55rem;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin-top:22px;color:#dfe9f3}h4{margin-bottom:6px}
+.callout{border-left:4px solid var(--accent);background:#13202a;padding:12px 14px;border-radius:6px;margin:12px 0}.warn{border-left-color:var(--danger);background:#26191c}.good{border-left-color:var(--good);background:#14241c}.gold{border-left-color:var(--accent2);background:#2a2414}.purple{border-left-color:var(--purple);background:#20192b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}th{color:#e8f1fa;background:#111820;position:sticky;top:0;z-index:1}.small{font-size:.84rem;color:var(--muted)}
+.mission,.classbox,.sourceguide{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}.mission summary,.classbox summary,.sourceguide summary{cursor:pointer;padding:14px 16px;font-weight:700;background:#141b23}.mission .body,.classbox .body,.sourceguide .body{padding:14px 16px}.tag{font-size:.72rem;padding:3px 7px;border-radius:999px;background:#293644;border:1px solid #3c4d5d;margin-right:4px;white-space:nowrap}.tag.red{background:#3a2023}.tag.green{background:#183425}.tag.gold{background:#3a3218}.tag.purple{background:#322547}
+.sourcebox{background:#0c1117;border:1px dashed #425163;padding:14px;border-radius:8px}.check li{margin:6px 0}.topbtn{position:fixed;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--accent);color:#061017;font-weight:800;padding:11px 14px;cursor:pointer;box-shadow:0 4px 18px #0008}.hidden{display:none!important}
+.kpi{font-size:1.25rem;font-weight:800}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{color:var(--muted)}
+.phase{border-left:4px solid var(--accent2)}.dangerrow td:first-child{color:var(--danger);font-weight:700}.priority{font-weight:700;color:var(--accent2)}
+.imgplaceholder{border:1px dashed #58697a;border-radius:10px;padding:22px;text-align:center;color:var(--muted);background:#10161c}
+@media(max-width:950px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{columns:2}.main{padding:20px}.topbtn{right:12px;bottom:12px}}
+@media(max-width:600px){.nav{columns:1}.hero{padding:20px}.hero h1{font-size:1.55rem}.main{padding:14px}table{font-size:.81rem;display:block;overflow-x:auto}}
+
+/* --- Mobile-first usability layer --- */
+.mobilebar{display:none;position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid var(--line);padding:9px 10px;gap:8px;align-items:center}
+.mobilebar button,.quickjump{border:1px solid var(--line);background:#18212b;color:var(--text);border-radius:9px;padding:10px 12px;font-weight:700}
+.mobilebar .brand{font-weight:800;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.decision-grid label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px}
+.decision-grid select{width:100%;background:#10171e;color:var(--text);border:1px solid var(--line);padding:11px 10px;border-radius:9px}
+.decision-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.decision-actions button{background:var(--accent);color:#061017;border:0;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
+#decisionResult{margin-top:12px;padding:14px;border-radius:10px;background:#10171e;border:1px solid var(--line)}
+.result-take{border-left:5px solid var(--good)!important}.result-consider{border-left:5px solid var(--accent2)!important}.result-skip{border-left:5px solid var(--danger)!important}
+.matrix-badge{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 7px;border-radius:999px;margin-right:4px}.take{background:#173a27;color:#9af0bd}.maybe{background:#3a3218;color:#ffe38d}.skip{background:#3b2023;color:#ffabab}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.phase-card h3{margin:0 0 8px}.phase-card ul{padding-left:18px;margin:6px 0}.phase-card li{margin:5px 0}
+.rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rule{background:#111820;border:1px solid var(--line);border-radius:10px;padding:12px}.rule b{display:block;margin-bottom:4px}
+.mobile-tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0b0f14eF;border-top:1px solid var(--line);padding:6px;grid-template-columns:repeat(4,1fr);gap:4px;backdrop-filter:blur(8px)}
+.mobile-tabs a{text-align:center;text-decoration:none;color:#dbe7f2;font-size:.68rem;padding:7px 3px;border-radius:8px;background:#141b23}.mobile-tabs span{display:block;font-size:1rem}
+@media(max-width:950px){
+  body{padding-bottom:68px}.mobilebar{display:flex}.sidebar{display:none;position:fixed;z-index:70;top:52px;left:0;right:0;height:calc(100vh - 52px);overflow:auto;border:0;padding:14px;background:#0b0f14}.sidebar.open{display:block}.nav{columns:1}.mobile-tabs{display:grid}.main{max-width:none;padding:14px 12px 86px}.hero{padding:18px 15px;border-radius:12px;margin-top:8px}.hero h1{font-size:1.45rem}.hero p{font-size:.92rem}.grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr 1fr}section{margin:22px 0;scroll-margin-top:64px}h2{font-size:1.3rem}.topbtn{bottom:76px;right:10px;padding:9px 11px}
+  details summary{touch-action:manipulation;min-height:48px;display:flex;align-items:center}
+  table{display:block;overflow-x:auto;white-space:normal;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:#11161d} th,td{min-width:145px;padding:9px 8px} th:first-child,td:first-child{position:sticky;left:0;background:#111820;z-index:2;min-width:128px} th:first-child{z-index:3}
+}
+@media(max-width:600px){
+  .decision-grid{grid-template-columns:1fr}.phase-grid{grid-template-columns:1fr}.rulegrid{grid-template-columns:1fr}.card,.mission .body,.classbox .body,.sourceguide .body{padding:12px}.mission summary,.classbox summary,.sourceguide summary{padding:12px;font-size:.95rem}.pill{font-size:.71rem}.callout{padding:10px 11px}.main{padding-left:10px;padding-right:10px}table{font-size:.78rem}.sourcebox{overflow-wrap:anywhere}
+}
+
+.refnote{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}.tight td,.tight th{padding:6px 8px}.status-full{color:var(--good);font-weight:800}.status-legacy{color:var(--accent2);font-weight:800}
+
+.order-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#061017;font-weight:900;margin-right:8px}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0c1117;border:1px solid var(--line);padding:10px 12px;border-radius:8px;overflow:auto}
+.calcbox{background:#101820;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.calcrow{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:center;padding:5px 0}
+.calcrow input[type=number]{width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:#0f141a;color:var(--text)}
+.source-note{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+.audit-ok{color:var(--good);font-weight:800}.audit-limit{color:var(--accent2);font-weight:800}
+@media(max-width:700px){.calcrow{grid-template-columns:1fr 75px 90px;font-size:.86rem}.order-num{width:24px;height:24px}table{font-size:.84rem}}
+
+/* v6 source comparison additions */
+.source-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}.src-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+.src-official{background:#143423;color:#9ff0bf;border-color:#285c40}.src-casey{background:#183245;color:#9edfff;border-color:#315b76}.src-andy{background:#3c2d13;color:#ffd982;border-color:#725929}.src-synth{background:#33284a;color:#d8c1ff;border-color:#5b4a7e}.src-legacy{background:#3a2020;color:#ffb3b3;border-color:#6e3939}
+.compare4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.compare4 .card{margin:0}.andybox{border-left:4px solid #f3c95c;background:linear-gradient(90deg,rgba(243,201,92,.08),transparent)}.officialbox{border-left:4px solid #7be0a8}.synthbox{border-left:4px solid #c7a7ff}.caseybox{border-left:4px solid #63d0ff}
+.details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
+.v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
+@media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
+
+/* --- v10 predictive search + campaign companion --- */
+.home-campaign-summary{display:flex;flex-direction:column;gap:3px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#111a22}
+.home-campaign-summary span{color:var(--muted);font-size:.82rem}
+.companion-tool{background:linear-gradient(180deg,#121922,#0f151b);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tool-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}.tool-grid label{font-size:.77rem;color:var(--muted);font-weight:800}
+.tool-grid input,.tool-grid select,.lookup-row input{width:100%;margin-top:5px;background:#0e151c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+.tracker-details{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#10171e}.tracker-details summary{cursor:pointer;padding:11px 12px;font-weight:800}.tracker-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}.tracker-check{display:flex;gap:7px;align-items:center;padding:7px 8px;border-radius:8px;background:#151e27;font-size:.8rem}.tracker-check input{accent-color:var(--accent)}
+.tool-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.primary-btn,.secondary-btn,.icon-btn{border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-family:inherit}.primary-btn{border:0;background:var(--accent);color:#061017}.secondary-btn,.icon-btn{border:1px solid var(--line);background:#18212b;color:var(--text)}
+.what-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-top:10px}.next-card{border:1px solid var(--line);background:#111820;border-radius:10px;padding:12px}.next-card b{display:block;margin-bottom:4px}.next-card a{font-size:.8rem}
+.lookup-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.lookup-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.lookup-suggestions button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:6px 9px;font-size:.78rem;cursor:pointer}.lookup-result{border:1px solid var(--line);background:#10171e;border-radius:12px;padding:14px;min-height:72px}.decision-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;margin-bottom:8px}.decision-keep{background:#163b27;color:#9ff0bf}.decision-caution{background:#3a3218;color:#ffe38d}.decision-sell{background:#3b2023;color:#ffb4b4}
+.class-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0}.class-pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:#111820;border-radius:10px;padding:10px}.class-pick small{display:block;color:var(--muted);margin-top:2px}.counter{display:grid;grid-template-columns:30px 28px 30px;align-items:center;text-align:center}.counter button{height:30px;border:1px solid var(--line);background:#19242e;color:var(--text);font-weight:900;cursor:pointer}.counter button:first-child{border-radius:8px 0 0 8px}.counter button:last-child{border-radius:0 8px 8px 0}.counter span{height:30px;line-height:30px;background:#0c1319;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin:9px 0}.coverage{padding:9px;border:1px solid var(--line);border-radius:9px;background:#121a22}.coverage.ok{border-left:4px solid var(--good)}.coverage.miss{border-left:4px solid var(--danger)}.coverage.optional{border-left:4px solid var(--accent2)}
+.search-overlay{display:none;position:fixed;inset:0;z-index:200}.search-overlay.open{display:block}.search-backdrop{position:absolute;inset:0;background:#02060acd;backdrop-filter:blur(4px)}.search-panel{position:relative;width:min(820px,calc(100% - 24px));max-height:min(760px,calc(100vh - 30px));overflow:auto;margin:15px auto;background:#0d141b;border:1px solid #3b4b5d;border-radius:16px;padding:16px;box-shadow:0 24px 80px #000c}
+.search-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.search-head h2{border:0;padding:0;margin:2px 0 8px}.icon-btn{font-size:1.25rem;padding:5px 11px}.global-search-wrap{display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid #476177;background:#101a23;border-radius:12px;padding:2px 9px}.global-search-wrap input{border:0;outline:0;background:transparent;color:white;font-size:1rem;padding:12px 5px;width:100%}.global-search-wrap kbd{border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--muted);font-size:.72rem}.search-help{margin:7px 2px 10px}.recent-searches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-searches button{background:#161f28;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 8px;cursor:pointer}.search-results{display:grid;gap:6px}.search-result{display:grid;grid-template-columns:auto 1fr;gap:9px;text-align:left;border:1px solid transparent;background:#111820;color:var(--text);border-radius:10px;padding:10px;cursor:pointer;width:100%}.search-result:hover,.search-result.active{border-color:#4e718c;background:#16232e}.search-type{font-size:.65rem;font-weight:900;letter-spacing:.05em;padding:3px 6px;border-radius:6px;background:#223242;color:#bde9ff;align-self:start}.search-result b{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px;line-height:1.3}.search-result mark{background:#594b1d;color:#fff2b0;border-radius:2px}.search-hit{animation:searchFlash 1.7s ease}@keyframes searchFlash{0%,35%{outline:3px solid var(--accent2);outline-offset:4px;background-color:#2b2515}100%{outline-color:transparent}}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracker-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.search-panel{margin:8px auto;max-height:calc(100vh - 16px);padding:12px}}
+@media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
+
+
+/* --- v13 combined soldier builds --- */
+.build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
+.merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
+
+@media(max-width:760px){.merged-build-meta{grid-template-columns:1fr}}
+.xcom-overview,.xcom-guide{border:1px solid #40576b;background:#0e1821;border-radius:12px;padding:12px;margin:13px 0}
+.xcom-overview h3,.xcom-guide h4{margin:0 0 8px}
+.xcom-key{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:center;font-size:.8rem}
+.xcom-rank{display:inline-block;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
+.xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
+
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
+
+
+.chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
+.chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
+.chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chapter-title{font-weight:900;margin-right:auto}
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
+.chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
+.chapter-search{max-width:1180px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
+.chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
+.chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
+.chapter-intro h1{margin:.15rem 0 .35rem}
+.chapter-hidden{display:none!important}
+.read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
+@media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a class="active" href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
+<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell">
+<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Soldiers, Builds, Officers & Bonds</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
+<a class="read-tool-link" href="index.html#squadbuilder"><b>Interactive Squad Builder →</b><br><span class="small">Use the master guide for role-coverage analysis.</span></a>
+<section class="searchable" id="personnel">
+<h2>4A. Stats, class selection, fatigue &amp; promotion tempo</h2>
+<div class="callout gold"><b>Not Created Equally — source evolution:</b> Casey's older Early Game Strategy preferred turning NCE <b>off</b> for a more standardized roster. His 2026 v1.2 campaign deliberately left NCE <b>on</b> and then developed the stat-triage rules below. Treat this as a changed preference, not a contradiction to hide: the modern advice is how to exploit random stats <i>if you play with NCE enabled</i>, without allowing stat optimization to paralyze the barracks.</div>
+<h3>Rookie triage</h3>
+<table><tr><th>Step</th><th>Casey rule</th><th>Why</th></tr>
+<tr><td>1</td><td>Build the <b>GTS immediately</b>.</td><td>Officer training is arguably the bigger reason, but class selection also prevents wasting rare stat profiles.</td></tr>
+<tr><td>2</td><td>Hold roughly <b>six rookies</b> for chosen GTS classes.</td><td>Holding many more starves early missions; holding none wastes your ability to match stats to roles.</td></tr>
+<tr><td>3</td><td>Mark the best <b>2–3 Psi Offense</b> rookies for Psi.</td><td>Psi Offense is the defining stat and does not get replaced by conventional Aim.</td></tr>
+<tr><td>4</td><td>Save several high-Aim rookies for shooter classes.</td><td>Ranger/Gunner/Sharpshooter get the most value from excellent Aim.</td></tr>
+<tr><td>5</td><td>Consider high Hack for Specialist.</td><td>Permanent MEC control and objective/security hacks scale strongly with Hack.</td></tr>
+<tr><td>6</td><td>Check the rest of the sheet.</td><td><b>15 Mobility</b> is a useful benchmark for shooters; Will and Combat Intelligence matter. Do not stat-max Aim while ignoring everything else.</td></tr></table>
+<h3>Free early class-selection trick</h3>
+<p>The first eight normal XCOM promotions contain one of each base class. After the first seven promotions you know the eighth class in advance, so you can deliberately bring a rookie whose stats suit that remaining class. Sometimes after six promotions the two remaining classes want similar stat profiles; Casey may wait to promote rookies seven/eight until the next missions return.</p>
+<h3>Trial by Fire — how it actually awards XP</h3>
+<ul><li><b>Trial by Fire applies before mission XP.</b> It first grants enough XP for an eligible low-rank soldier to reach the next rank; mission XP is then added afterward.</li>
+<li>That means even a soldier only a few XP short of promotion can still benefit from accompanying a Trial by Fire officer.</li>
+<li><b>Kill XP is awarded during the mission</b>, so kills reduce the later Trial by Fire grant. If you are deliberately power-leveling trainees, let veterans do more of the killing when tactically safe.</li>
+<li>Rush several soldiers to <b>SGT</b>: SGT unlocks important faction influence/contact options and Trial by Fire officer development.</li></ul>
+<h3>Will / fatigue rules that affect availability</h3>
+<table><tr><th>Situation</th><th>Source detail</th></tr>
+<tr><td>Infirmary / Templar HQ</td><td>Casey and Andy agree these do <b>not</b> accelerate recovery from the <b>Tired</b> state. Andy separately observed roughly faster normal wound healing at Templar HQ; treat the exact percentage as an observed campaign value rather than a timeless constant.</td></tr>
+<tr><td>Infiltration</td><td>Andy’s main 1.2.2 notes say soldiers do <b>not</b> recover Will while infiltrating.</td></tr>
+<tr><td>Haven adviser duty</td><td>Andy’s main notes say soldiers do <b>not</b> recover Will while serving as haven advisers; rotate rested advisers when possible.</td></tr>
+<tr><td>Officer training</td><td>Casey’s v1.2 notes say Will does not recover while officer training.</td></tr>
+<tr><td>Bond training</td><td><b>Source disagreement:</b> Andy’s 1.2.2 main notes say Will <b>does</b> recover during bond training; Casey’s v1.2 notes say it <b>does not</b>. Do not plan a critical availability window around this interaction without checking the current campaign/version.</td></tr>
+<tr><td>Negative-trait removal</td><td>Casey’s v1.2 notes say Will does not recover during treatment.</td></tr>
+<tr><td>Low-Will soldiers early</td><td><b>Advanced Focus Chips</b> are a cheap way to improve availability before the barracks has enough depth.</td></tr></table>
+<div class="callout warn"><b>Barracks health metric:</b> Casey's comment follow-up says a healthy campaign should eventually be able to field roughly <b>three full combat squads</b> plus a couple of small stealth teams. If you cannot consistently field a second/third squad, the campaign is under real pressure even if your A-team is strong.</div>
+<p class="small">Source: <a href="https://xcom.substack.com/p/lwotc-version-12-notes">LWOTC v1.2 Notes</a>; campaign-depth note from Casey's Early Game Strategy comments.</p>
+<div class="callout purple"><b>Do not stat-max your campaign into paralysis.</b> Casey explicitly warns that a high-Aim rookie can still die, get wounded repeatedly, roll weak XCOM perks, or simply fail to level. Combat Intelligence, Will and Mobility matter; Psi is the exception where Psi Offense dominates the class decision.</div></section>
+<section class="searchable" id="builds">
+<h2>9–10. Combined Soldier Builds — complete perk reasoning, XCOM row &amp; equipment <span class="v6flag">REBUILT v13</span></h2>
+<div class="callout good"><b>One class, one place.</b> The old standalone Equipment section and separate Andy build comparison have been merged here. Each class now contains its baseline build, Andy/Casey differences, equipment, and a ranked list of the best XCOM-row perks with their effect on the build. Officers remain separate because officer training is a second progression tree.</div>
+<div class="callout"><b>Universal early loadout:</b> Rookies: Assault Rifle + Plating + Frag + Frag/Flash. Do not waste premium weapon upgrades on temporary rookies. Across all classes, do not neglect plating.</div><div class="build-jumps" id="buildJumps"></div>
+<div class="xcom-overview">
+<h3>How to use randomized XCOM-row perks</h3>
+<p><b>You do not need a separate build tool.</b> Each class below now has a ranked <b>Best XCOM-row perks</b> table. The important distinction is whether a perk simply strengthens the normal build or is strong enough to justify changing normal-tree choices.</p>
+<div class="xcom-key"><span class="xcom-rank reroute">BUILD-CHANGING</span><span>Change one or more normal-tree choices to exploit it.</span><span class="xcom-rank premium">PREMIUM</span><span>Take it when AP allows; keep the normal build.</span><span class="xcom-rank value">GOOD VALUE</span><span>Useful addition, but do not distort the build for it.</span></div>
+</div>
+<div class="callout purple"><b>General rule from Andy:</b> inspect the randomized row as soon as the soldier reaches Squaddie. A perk you cannot afford until much later can still change the normal-tree choices you make now. Casey’s current 1.2 guides reinforce this for several classes. XCOM-row perks are purchased through the Training Center; Psi Operatives and SPARKs are handled separately and do not use this randomized row.</div>
+<details class="classbox searchable" open=""><summary>Specialist — Hack 'n Heal <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Scanning Protocol → Trojan → Medical Protocol → Air Drop → Chaining Jolt → Full Override → Capacitor Discharge.</b><p>Andy trades Casey’s late healing insurance for more Gremlin offense. If the campaign is taking heavy wounds, Casey’s Savior/Restoration route remains safer.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Usually SMG + upgraded Gremlin + plating. Add Medikit for Medical Protocol and Skulljack for Golden Path/hacking. Hack PCS for support/hacker. If you deliberately convert to the Overwatch archetype, use Rifle + Scope + Expanded Magazine and prioritize Aim.</p></div></div>
+<p><b>Build:</b> Scanning Protocol → Trojan → Medical Protocol → Airdrop → Savior → Full Override → Restoration.</p>
+<ul>
+<li><b>Scanning Protocol:</b> Casey calls it mandatory. Save charges; usually scan after the ambush. Upgraded Gremlin makes Specialist viable as primary scout on concealed missions.</li>
+<li><b>Trojan:</b> strengthens shutdown and kills/softens mechanicals; hacking a Drone can be done without breaking stealth.</li>
+<li><b>Medical Protocol:</b> long-range healing is superior to waiting for a safe adjacent heal. Field Medic is an alternative but does not solve emergency combat healing.</li>
+<li><b>Airdrop:</b> strong with Grenadier, especially on long missions; extra explosive charges extend a class that otherwise runs dry.</li>
+<li><b>Savior:</b> insurance for Chosen/long-mission disasters; Casey wants at least one serious healer in the roster.</li>
+<li><b>Full Override:</b> one of the strongest Specialist abilities. MEC2/3 ownership can decide Forge/Psi Gate/Avenger Defense encounters.</li>
+<li><b>Restoration:</b> whole-squad emergency recovery; especially useful after AoE/Ruler/Assassin damage.</li>
+<li><b>Officer update:</b> 1.2 shifts Casey from Shinobi officers toward Specialist officers because Scanner allows Shinobi to fight while Specialist contributes through Command.</li>
+
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Scanning Protocol</td><td>Revival / Blinding</td><td>Revival is beginner insurance; Blinding is a clever control perk, but Casey values information far more.</td></tr>
+<tr><td>Trojan</td><td>Field Surgeon / Sentinel</td><td>Field Surgeon for roster availability; Sentinel only if committing to an overwatch rifle build.</td></tr>
+<tr><td>Medical Protocol</td><td>Covering Fire / Failsafe</td><td>Covering Fire for overwatch specialist; Failsafe for aggressive hack play but low overall value.</td></tr>
+<tr><td>Airdrop</td><td>Ever Vigilant / Neutralizing Agents</td><td>Ever Vigilant for overwatch build; Neutralizing Agents is niche.</td></tr>
+<tr><td>Savior</td><td>Cool Under Pressure / Chaining Jolt</td><td>CUP for overwatch; Chaining Jolt for a more offensive Gremlin package. Keep at least one serious Savior healer.</td></tr>
+<tr><td>Full Override</td><td>Rescue Protocol / Threat Assessment</td><td>Casey treats Override as near-mandatory; alternatives are utility, not comparable power.</td></tr>
+<tr><td>Restoration</td><td>Kill Zone / Capacitor Discharge</td><td>Kill Zone completes overwatch build; Capacitor Discharge if Disassembly/XCOM-row synergy pushes offense.</td></tr></table><a href="https://xcom.substack.com/p/lwotc-class-builds-specialist">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Specialist</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Disassembly</b></td><td><span class="xcom-rank reroute">BUILD-CHANGING</span></td><td>Best reason to move from pure Hack ’n Heal toward an offensive Gremlin hybrid. <b>Chaining Jolt</b> becomes more attractive than Savior and <b>Capacitor Discharge</b> more attractive than Restoration; keep Full Override.</td></tr>
+<tr><td><b>Sensor Overlays</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Excellent information utility. It <b>enhances</b> the normal support/hack build; no tree change needed.</td></tr>
+<tr><td><b>Hail of Bullets / Hit and Run</b></td><td><span class="xcom-rank value">GOOD VALUE</span></td><td>Good shooter perks, but one alone is not enough to turn a Specialist into a rifle build. Only consider the Overwatch/shooter tree if several shooting perks stack on the same soldier.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Specialist</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Class identity:</b> both authors treat Specialist as the broadest utility package rather than a damage class: scouting, hacking, healing, objective interaction, overwatch clearing and mechanical control. Its weakness is direct damage, which is why officer duty can be attractive.</li>
+<li><b>Scanning Protocol changes squad structure.</b> Casey’s 1.2 revision treats it as transformative: use it after the first ambush to locate remaining pods, allowing the Shinobi to join combat. Early Gremlins have limited charges, so do not waste scans before contact unless the map demands it.</li>
+<li>Andy likewise finds Scanning Protocol useful throughout the campaign and notes that it can let a Specialist substitute for a Shinobi on some small missions. Revival remains defensible for early Chosen kidnapping prevention, but becomes less necessary as play improves.</li>
+<li><b>Interference Protocol</b> is free Overwatch cancellation and should be used liberally on normal missions. In stable 1.2.3 it cannot be spammed multiple times in the same turn, but that rarely changes the decision.</li>
+<li><b>Trojan</b> extends shutdown utility and can kill/soften Drones/MECs; Drone hacks can be performed without breaking concealment. Andy values it above Field Surgeon despite Field Surgeon being very good for roster availability.</li>
+<li><b>Medical Protocol</b> remains emergency combat healing at range. Casey is more healing-friendly after several disaster missions; Andy has moved toward “healing is recovery from a mistake” and prefers a more offensive late tree, but still takes Medical Protocol because a single preventable death is worth the slot.</li>
+<li><b>Airdrop</b> is best when a Grenadier/Skirmisher is present and turns a long-mission ordinance bottleneck into additional control/damage. It can also hand a grenade to a friendly VIP in niche situations.</li>
+<li><b>Savior vs Chaining Jolt:</b> Casey keeps at least one high-end healer; Andy now chooses Chaining Jolt because multi-target guaranteed damage gives the Specialist productive combat turns. Disassembly in the XCOM row pushes even harder toward Chaining Jolt.</li>
+<li><b>Full Override is mandatory-tier</b> in both philosophies. Permanent MEC control can decide Forge, Psi Gate and Avenger Defense; even simple repeated shutdowns make the Specialist more active over a multi-turn fight.</li>
+<li><b>Restoration vs Capacitor Discharge:</b> Casey values Restoration as disaster insurance; Andy prefers Capacitor Discharge for guaranteed AoE damage. If the barracks repeatedly needs Restoration, also examine the tactical cause of the wounds.</li>
+<li><b>Hacking requires squad support.</b> Stack Skulljack/Skullmining Hack bonuses with Redscreen/Bluescreen effects; a higher-tier MEC takeover can swing an entire mission. Skirmisher Manual Override is exceptionally strong with Haywire/Combat Protocol cooldowns.</li>
+<li><b>Small-squad warning:</b> a pure support Specialist can be dead weight in a 4-person combat team. If the objective does not need remote hacking and the team cannot afford low direct damage, take a more offensive class.</li>
+<li><b>Loadout:</b> upgraded Gremlin is crucial; Skulljack + Medikit + plating is the classic support kit. SMG is the mobility default, rifle only for good-Aim/mobile or deliberate Overwatch builds. Protect the Specialist because they are often the only soldier who can restore another disabled/wounded unit.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Grenadier — Control <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Needle Grenades → Bombardier → Bluescreen Bombs → Tandem HEAT Warheads → Sting Grenades → Volatile Mix → Shockwave.</b><p>Casey and Andy are essentially aligned on the control build.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SMG + plating + grenade-heavy utility. Prioritize Incendiary/Sting payloads and launcher upgrades; EXO can add long-mission endurance. Shooting mods are low priority; Mobility/defensive PCS usually matter more.</p></div></div>
+<p><b>Build:</b> Needle Grenades → Bombardier → Bluescreen Bombs → Tandem HEAT Warheads → Sting Grenades → Volatile Mix → Shockwave.</p>
+<ul>
+<li>1.2 moved extra grenade capacity from perks into upgraded launchers.</li>
+<li><b>Needle Grenades:</b> improves early guaranteed damage; Sapper remains a very strong alternative if you want reliable cover destruction.</li>
+<li><b>Bombardier:</b> Casey values the extra two tiles because range determines whether an Incendiary/Sting grenade can solve the actual priority target.</li>
+<li><b>Bluescreen Bombs:</b> often moves Specialist hack viability up roughly one mechanical tier; pairs beautifully with Sting.</li>
+<li><b>Sting Grenades:</b> one of Casey's highest-value late control abilities, particularly against heavy MEC/Sectopod pods.</li>
+<li><b>Volatile Mix:</b> expands the practical area of Incendiary/Sting payloads and makes multi-target control much more consistent.</li>
+<li><b>Shockwave:</b> defense/dodge debuff supports the shooters who finish late-game enemies.</li>
+<li>Casey dislikes Rapid Deployment/Salvo on his control build because they burn through limited ordinance faster than the mission can sustain.</li>
+<li>Early Grenadier should usually carry actual grenades, not flashbangs; other classes throw flashbangs far enough already.</li>
+
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Needle Grenades</td><td>Holo / Rapid Deployment</td><td>Holo for rare high-Aim shooter Grenadier; Rapid Deployment trades endurance for action economy.</td></tr>
+<tr><td>Bombardier</td><td>Sapper / Combat Fitness</td><td><b>Sapper is genuinely strong</b> when reliable cover destruction matters more than maximum range; Combat Fitness for shooter build.</td></tr>
+<tr><td>Bluescreen Bombs</td><td>Boosted Cores / Watch Them Run</td><td>Boosted Cores if prioritizing grenade damage; Watch Them Run for shooty hybrid.</td></tr>
+<tr><td>Tandem HEAT</td><td>Dense Smoke / Cool Under Pressure</td><td>Dense Smoke is weak in Casey's view; CUP belongs to shooter/overwatch route.</td></tr>
+<tr><td>Sting Grenades</td><td>Biggest Booms / Combat Engineer</td><td>Casey considers Sting substantially stronger than both for control.</td></tr>
+<tr><td>Volatile Mix</td><td>Sentinel / Salvo</td><td>Sentinel for shooter build; Salvo when you deliberately value burst over grenade endurance.</td></tr>
+<tr><td>Shockwave</td><td>Coup de Grace / Ghost Grenade</td><td>Coup for shooter variant; Ghost Grenade is a niche one-use concealment tool.</td></tr></table><a href="https://xcom.substack.com/p/lwotc-class-builds-grenadier">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Grenadier</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Flashbanger</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Cheap extra control that fits perfectly into the standard control Grenadier. <b>No tree change.</b></td></tr>
+<tr><td><b>Demolition</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Gives useful repeatable cover removal after grenades run low. Enhances the control build without consuming ordinance.</td></tr>
+<tr><td><b>Holo Targeting</b></td><td><span class="xcom-rank value">GOOD VALUE</span></td><td>Strong squad utility, but Andy still wants the Grenadier throwing grenades. Do not rebuild into a primary shooter just because you rolled Holo.</td></tr>
+<tr><td><b>Bring ’Em On</b></td><td><span class="xcom-rank reroute">SITUATIONAL REROUTE</span></td><td>Can support a damage-focused explosive variant, especially if you also take <b>Biggest Booms</b> instead of Sting Grenades. You are trading some hard-control identity for damage.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Grenadier</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Role progression:</b> early guaranteed damage → mid/late control. Incendiary, Sting and Bluescreen effects are the core reasons the class remains valuable after raw grenade damage stops scaling.</li>
+<li>1.2 moved extra grenade capacity from perks into launcher tiers. <b>Launcher upgrades are therefore class power upgrades</b>, not optional weapon housekeeping.</li>
+<li><b>Needle vs Sapper:</b> Casey changed from Sapper to Needle because +damage and corpse preservation matter early; Sapper remains reliable cover destruction and Andy likes it conceptually but finds it less consistent than expected. The decision is damage/corpse preservation versus guaranteed terrain destruction.</li>
+<li><b>Rapid Deployment/Salvo warning:</b> action economy is seductive but can make the Grenadier spend two of only 3–4 meaningful consumables in one encounter. Both authors increasingly prefer making each grenade stronger rather than throwing them faster.</li>
+<li>Early on, Grenadiers should usually carry <b>damaging grenades</b>; other classes can throw Flashbangs far enough. Later, the Grenadier becomes the natural Flashbang carrier because Sting/Bluescreen/launcher upgrades make those effects uniquely powerful.</li>
+<li><b>Bombardier</b> solves a practical range problem. Two tiles often decides whether an Incendiary/Sting can reach the Muton Elite/MEC that actually matters. Sapper becomes less valuable once control, rather than cover removal, dominates the job.</li>
+<li><b>Bluescreen Bombs</b> are not mainly a damage perk. They can move Specialist hack odds up roughly one mechanical tier without reducing the future puppet’s HP; remember that hacking a disoriented robot removes disorientation.</li>
+<li><b>Sting Grenades</b> are top-tier control, especially into multi-robot pods. The sequence “Sting/Bluescreen → Hack best MEC → kill easy targets” can neutralize otherwise overwhelming late pods.</li>
+<li><b>Volatile Mix</b> materially increases the number of enemies caught by Incendiary/Sting effects; the class transitions from “grenade damage” to “large-area status application.”</li>
+<li><b>Shockwave</b> is support on top of offense, reducing defense/dodge for follow-up shooters. Andy is less enthusiastic because the class is often throwing Flashbang/Incendiary effects when shooters may focus on other targets.</li>
+<li><b>SMG and Mobility:</b> Grenadiers almost never need premium primary-weapon damage. High HP is valuable because utility slots compete with plating. On large missions Andy sometimes drops plating for one more grenade, but no longer does this automatically.</li>
+<li><b>Advanced launcher slot:</b> put a high-value limited grenade such as Incendiary/Frost into the duplicated slot to stretch the rare item, and use regular slots for Flashbangs/mission payloads.</li>
+<li>Heavy-weapon armor can give one extra high-impact action after grenades run low. Specialist Airdrop is an especially strong partner for medium/long missions.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Gunner — Boss Killer <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Center Mass (or Grazing on some soldiers) → Formidable → Shredder → Chain Shot → Cyclic Fire → Kill Zone → Saturation Fire.</b><p>Both use the Gunner as the boss/mechanical killer; XCOM-row reaction-fire perks are the main reason to reroute.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Cannon + plating; Scope + best Expanded Magazine are premium. Bluescreen Rounds once available. Perception PCS unless Mobility is truly crippling.</p></div></div>
+<p><b>Build:</b> Center Mass → Formidable → Shredder → Chain Shot → Cyclic Fire → Kill Zone → Saturation Fire.</p>
+<ul>
+<li>1.2 front-loaded aim and the Gunner's +5 aim makes direct fire more attractive than in older versions.</li>
+<li><b>Center Mass:</b> simple +damage on a class that shoots often.</li>
+<li><b>Formidable:</b> durability; Lockdown is the alternative if you want a suppression-specialist package.</li>
+<li><b>Shredder:</b> Casey treats armor shred as mandatory somewhere in every late squad.</li>
+<li><b>Chain Shot / Cyclic Fire:</b> build the Gunner into a boss/mechanical executioner.</li>
+<li><b>Kill Zone:</b> strong concealed ambush tool and especially useful against Alien Ruler pod activation.</li>
+<li><b>Saturation Fire:</b> multi-target late-game pressure; Combat Fitness is reasonable on unusually slow/low-aim soldiers.</li>
+<li><b>Suppression:</b> still excellent against Chosen; do not interpret the shooter build as “never suppress.”</li>
+<li><b>Bluescreen Rounds + Command:</b> Casey's signature Sectopod deletion package.</li>
+<li>Overwatch can protect against dangerous activation fire, but Rangers handle mobile overwatch better on timed missions.</li>
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Center Mass</td><td>Grazing Fire / Combatives</td><td>Grazing Fire gains value when Aim is poor or reaction/Chain Shot accuracy is the problem; Combatives is emergency melee control.</td></tr>
+<tr><td>Formidable</td><td>Lockdown / Flush</td><td>Lockdown only as part of a full suppression build; Flush has interesting Chosen/Ruler reposition utility.</td></tr>
+<tr><td>Shredder</td><td>Hail of Bullets / Mayhem</td><td>Hail for guaranteed direct hit; Mayhem only if building the full suppression package.</td></tr>
+<tr><td>Chain Shot</td><td>Demolition / Danger Zone</td><td>Demolition is excellent non-damaging cover removal against Chosen; Danger Zone if suppression is your identity.</td></tr>
+<tr><td>Cyclic Fire</td><td>Iron Curtain / Cool Under Pressure</td><td>Iron Curtain mainly for Chosen movement control; CUP if activation-fire protection matters more than boss burst.</td></tr>
+<tr><td>Kill Zone</td><td>Rapid Fire / Rupture</td><td>Rapid Fire has shorter cooldown; Rupture is a boss-specialist choice when multi-shot redundancy is acceptable.</td></tr>
+<tr><td>Saturation Fire</td><td>Combat Fitness / Traverse Fire</td><td>Combat Fitness on unusually slow/low-Aim Gunner; Traverse Fire for repeated directed-fire action economy.</td></tr></table><a href="https://xcom.substack.com/p/lwotc-class-builds-gunner">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Gunner</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Rapid Reaction</b></td><td><span class="xcom-rank reroute">BUILD-CHANGING</span></td><td>The clearest reason to build a true reaction-fire Gunner. <b>Lockdown, Danger Zone and Cool Under Pressure</b> become more attractive. Preserve Shredder if this Gunner supplies the squad’s armor shred.</td></tr>
+<tr><td><b>Ready For Anything</b></td><td><span class="xcom-rank reroute">BUILD-CHANGING</span></td><td>Especially strong when paired with Rapid Reaction or other reaction-fire support. Pushes the Gunner toward the Overwatch/suppression package rather than pure boss burst.</td></tr>
+<tr><td><b>Hit and Run</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Fantastic action economy on the existing boss-killer build. Keep Chain Shot/Cyclic Fire; this simply makes the direct-fire package better.</td></tr>
+<tr><td><b>Locked On</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Excellent with repeated attacks. Strong synergy with Chain Shot/Cyclic Fire; no reroute required.</td></tr>
+<tr><td><b>Death From Above / Serial</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>DFA improves high-ground action economy; Serial adds a cleanup mode. Both enhance rather than replace the normal shooter build.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Gunner</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Primary identity:</b> boss/mechanical killer. Shred first, then multi-shot with Bluescreen so the rest of the squad attacks a lower-armor target.</li>
+<li>Andy has progressively moved away from suppression-centric builds. Suppression remains useful, especially versus Chosen, but hard control or outright kills are preferred when available.</li>
+<li><b>Center Mass vs Grazing Fire:</b> grazes can preserve Chain Shot’s second shot and still apply shred/ammo effects; Center Mass produces more consistent kill thresholds. Andy has moved back toward Center Mass because one-HP survivors occur more often than graze saves a turn.</li>
+<li><b>Formidable</b> is boring but valuable because early wound recovery and survivability matter. Flush is substantially better than in older versions and can function like a high-Aim finisher/Chosen reposition tool.</li>
+<li><b>Shredder</b> is central because the Gunner is already reserving the ammo slot for Bluescreen; substituting Shredder Rounds would create an equipment conflict.</li>
+<li><b>Chain Shot</b> is the first easy multi-shot tool and remains relevant all campaign. Demolition belongs on someone else if the Gunner is your best direct shooter.</li>
+<li><b>Cyclic Fire</b> is the signature single-target boss attack; three Bluescreen shots can delete or heavily cripple late mechanicals.</li>
+<li><b>Kill Zone</b> gives the class a second identity: devastating first-contact/ambush fire. Rapid Fire is usable but overlaps with Chain Shot and has a meaningful aim penalty on a class whose Aim is lower than Ranger.</li>
+<li><b>MSGT choice:</b> Saturation Fire is situational but explosive into rainbow pods; Traverse Fire provides reliable action economy; Combat Fitness repairs bad Mobility/Aim. Andy prefers Saturation if Kill Zone was skipped, otherwise all three are legitimate.</li>
+<li><b>XCOM-row reaction perks</b> such as Ready For Anything / Ever Vigilant / Rapid Reaction can justify an alternate reaction-fire package. This is the main reason to depart from the boss-killer baseline.</li>
+<li><b>Loadout:</b> Scope is premium because multi-shot abilities carry aim penalties. Bluescreen becomes the default ammo. Remaining slots are plating/vest according to survivability.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Technical — Rocketeer <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Napalm X → Roust → Burnout → Phosphorus → Incinerator → Quickburn → Bunker Buster / Firestorm.</b><p>This is the largest Casey/Andy split: Casey’s current 1.2 route is Rocketeer; Andy prefers pure flame/control after repeated Legend campaigns.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SMG + Gauntlet + plating. Rocketeer: preserve rocket capacity and consider heavy-weapon armor later. Burner: mobility and durable medium/heavy armor matter more. Primary-gun upgrades are secondary.</p></div></div>
+<p><b>Build:</b> Fire in the Hole → Concussion Rocket → Biggest Booms → Javelin Rockets → EMP Rocket → Salvo → Bunker Buster.</p>
+<ul>
+<li>1.2 gives Technicals more ordinance and lower rocket scatter, so they no longer fall off as badly late.</li>
+<li><b>Fire in the Hole:</b> enables useful one-action rockets; also changes bond economy because the Technical can donate/receive actions more effectively.</li>
+<li><b>Concussion Rocket:</b> ranged disorient with stun chance, excellent against enemies neutered by disorient.</li>
+<li><b>Biggest Booms:</b> early extra damage matters because it converts wounds into kills; late it is less important but applies across many rockets.</li>
+<li><b>Javelin:</b> increases the number of situations where the rocket can solve a target without dangerous movement.</li>
+<li><b>EMP Rocket:</b> reliable mechanical control option; Casey prefers it over committing fully to burner at that rank.</li>
+<li><b>Salvo:</b> can support two-rocket turns; Quickburn remains a legitimate alternative if you value move → burn → rocket action economy.</li>
+<li><b>Bunker Buster:</b> huge area, mass cover destruction, strong end-tree payoff.</li>
+<li>Burner alternatives remain viable: Napalm-X greatly improves flamethrower control, Incinerator expands arc size/range, High Pressure Tank/Roust add charges.</li>
+
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Fire in the Hole</td><td>Rapid Fire / Napalm-X</td><td>Rapid Fire can seed a shooter Technical; Napalm-X is the control foundation for a Burner.</td></tr>
+<tr><td>Concussion Rocket</td><td>Formidable / Roust</td><td>Formidable if your Technical is exposed up front; Roust for additional flame control and Assassin movement manipulation.</td></tr>
+<tr><td>Biggest Booms</td><td>Shredder / Burnout</td><td>Shredder for shooter route; Burnout for close-range burner durability.</td></tr>
+<tr><td>Javelin Rockets</td><td>Center Mass / Phosphorus</td><td>Center Mass for shooter; Phosphorus if committed to flamethrower damage against fire-immune targets.</td></tr>
+<tr><td>EMP Rocket</td><td>Rupture / Incinerator</td><td>Incinerator is the huge Burner breakpoint; EMP makes the Rocketeer a substitute mechanical-control package.</td></tr>
+<tr><td>Salvo</td><td>Implacable / Quickburn</td><td>Quickburn is strong even on Rocketeer when move→burn→rocket matters more than double-rocket burst.</td></tr>
+<tr><td>Bunker Buster</td><td>Crusader's Rage / Firestorm</td><td>Crusader for experimental tank build; Firestorm is powerful but demands dangerous positioning and can activate new pods.</td></tr></table><a href="https://xcom.substack.com/p/lwotc-class-builds-technical">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Technical</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Shredder Rocket</b></td><td><span class="xcom-rank premium">TOP PICK</span></td><td>Casey specifically hopes to roll this. It directly extends the Rocketeer’s ordinance and reinforces the existing build.</td></tr>
+<tr><td><b>Shock and Awe</b></td><td><span class="xcom-rank premium">TOP PICK</span></td><td>Same logic: more rocket capacity makes the Rocketeer much less likely to run dry on long missions.</td></tr>
+<tr><td><b>Tandem HEAT Warheads</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Turns an already useful Rocketeer into a much stronger anti-armor package. No tree reroute required.</td></tr>
+<tr><td><b>Bring ’Em On / Shellshock</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Improve rocket damage/control while preserving the normal route.</td></tr>
+<tr><td><b>Full Kit</b></td><td><span class="xcom-rank value">GOOD VALUE</span></td><td>Adds grenade endurance alongside rockets; useful on long missions without changing the tree.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Technical</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Major Casey/Andy disagreement:</b> Casey’s 1.2 revision likes the revitalized Rocketeer; Andy’s repeated Legend runs moved him toward pure flame/control. Keep both archetypes because they solve different squad problems.</li>
+<li>Andy’s flame logic: fire is one of the best early controls, and a concealed flamethrower ambush can neutralize an entire pod. New players often dislike Technical because rifles make them feel useless; the class needs Mobility and its unique weapons.</li>
+<li><b>Napalm-X</b> raises burn reliability and damage. Fire in the Hole is excellent rocket insurance but less valuable if the entire plan is to control with fire.</li>
+<li><b>Roust</b> adds another flame use with more reach and makes aggressive positioning worthwhile. Concussion Rocket is excellent flexible early control if you want a hybrid.</li>
+<li><b>Burnout / Biggest Booms:</b> Burnout protects the exposed Burner; Biggest Booms keeps rockets/grenades relevant. This is a playstyle rank rather than a universal answer.</li>
+<li><b>Phosphorus</b> lets flame damage armored/fire-immune targets but does not create the same burn control; use it to avoid completely dead flame turns against robots.</li>
+<li><b>Incinerator</b> is the Burner breakpoint because added range changes what can be controlled. EMP Rocket is the Rocketeer/mechanical-control alternative.</li>
+<li><b>Quickburn</b> is emergency action economy: move/burn/retreat or burn two groups after a bad multi-pod activation. Salvo is less attractive on a class that does not value its gun action.</li>
+<li><b>MSGT:</b> Bunker Buster and Firestorm are both huge, fun high-impact effects; late campaign Technical usage can drop as more specialized classes mature.</li>
+<li><b>Loadout:</b> SMG without exception in Andy’s doctrine; empty utility slot for Mobility is often correct. Redscreen + pistol/Quickdraw provides remote anti-robot utility. EXO/heavy-weapon armor extends limited-use abilities; extra flamethrower tanks are especially strong on Lost missions.</li>
+<li>Casey’s Rocketeer XCOM standouts — Shredder Rocket, Shock and Awe, Tandem HEAT, Bring ’Em On, Shellshock — mostly strengthen the rocket tree rather than create a new build.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Shinobi — Sword <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Blademaster → Combatives → Covert → Bladestorm → Reaper → Whirlwind → Conceal.</b><p>Andy keeps the scout/officer identity longer; Casey’s 1.2 revision frees the Shinobi to fight more because Specialist scanning improved.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SMG + Sword + plating with Nanoscale/Tactical Armor emphasis. Mobility/defense PCS are valuable. A dedicated stealth operator can use a Suppressor. If Paramedic rolls, carry a Medikit.</p></div></div>
+<p><b>Build:</b> Blademaster → Combatives → Covert → Bladestorm → Reaper → Untouchable → Coup de Grace.</p>
+<ul>
+<li>1.2 Specialist Scanner means Shinobi should spend more missions <b>fighting</b>, not permanently hiding.</li>
+<li><b>Blademaster:</b> Casey values reliability because a failed Fleche leaves the Shinobi in danger.</li>
+<li><b>Combatives:</b> emergency hard control vs Mutons/Archons/Andromedons. Know the exceptions; Stun Lancers may simply run elsewhere.</li>
+<li><b>Covert:</b> Casey takes it to reduce bad activation risk even on a combat Shinobi.</li>
+<li><b>Bladestorm:</b> natural synergy with Combatives and failed-kill insurance.</li>
+<li><b>Reaper:</b> cleanup chain; Casey prefers it to trying to turn the SMG into a shooter weapon.</li>
+<li><b>Untouchable:</b> defensive insurance, though enemy targeting behavior makes it imperfect.</li>
+<li><b>Ghostwalker:</b> still worthwhile on dedicated stealth Shinobi, Network Tower, Invasion/Avenger Defense and blind-corner movement.</li>
+<li><b>Nanoscale/Tactical Armor:</b> crit resistance matters because Combatives can fail on crit. Casey's 1.2 note says Tactical Armor is now strictly better than nanoscale once available.</li>
+
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Blademaster</td><td>Ghostwalker / Lone Wolf</td><td>Ghostwalker on dedicated 2-man/Network Tower stealth operator; Lone Wolf is good but loses +damage reliability.</td></tr>
+<tr><td>Combatives</td><td>Shadowstep / Executioner</td><td>Shadowstep for pure stealth operator; Executioner for more Reaper-chain offense.</td></tr>
+<tr><td>Covert</td><td>—</td><td>Retains unique value on Tower and missions where you must physically slip past pods.</td></tr>
+<tr><td>Bladestorm</td><td>Shadowstrike / Evasive</td><td>Evasive is strong defense; Bladestorm's counterattack/Combatives synergy wins for Casey.</td></tr>
+<tr><td>Reaper</td><td>Hit and Run / Disabling Shot</td><td>Disabling Shot is a fascinating Sectopod/high-HP control option; H&amp;R is limited by SMG damage.</td></tr>
+<tr><td>Untouchable</td><td>Hunter's Instincts / Whirlwind</td><td>Whirlwind lets Fleche then relocate next to a Muton/safer tile; pairs less cleanly with Reaper.</td></tr>
+<tr><td>Coup de Grace</td><td>Rapid Fire / Conceal</td><td>Conceal regains value on Forge/Psi Gate length; Rapid Fire is generally worse than a strong Fleche/Fusion Blade.</td></tr></table><a href="https://xcom.substack.com/p/lwotc-class-builds-shinobi">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Shinobi</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Paramedic</b></td><td><span class="xcom-rank premium">TOP PICK</span></td><td>Andy always takes it. A concealed scout often has spare/non-revealing actions, so healing gives the Shinobi another high-value job. <b>Carry a Medikit; keep the sword/scout tree.</b></td></tr>
+<tr><td><b>Sensor Overlays</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Strengthens the information/scouting role without changing the normal tree.</td></tr>
+<tr><td><b>Lightning Slash / Concentration</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Directly strengthen the combat Shinobi’s melee identity. Keep the existing sword build.</td></tr>
+<tr><td><b>Generic rifle perks</b></td><td><span class="xcom-rank value">LOWER PRIORITY</span></td><td>Do not turn a sword/scout Shinobi into a shooter just because one good rifle perk appears.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Shinobi</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Andy’s organizational doctrine:</b> every Shinobi becomes an officer and all officers are Shinobi. Concealed scouting + Command means the class contributes while hidden, then transitions into melee cleanup later.</li>
+<li>Andy stopped maintaining a separate “stealth Shinobi” because roster availability makes specialization unreliable. Casey’s 1.2 Specialist-scanning update similarly frees Shinobi to fight more often.</li>
+<li><b>Blademaster</b> is preferred to Ghostwalker because failed Fleche is catastrophic; guaranteed melee accuracy matters on every normal mission. Covert later becomes the concession that preserves some stealth capability.</li>
+<li><b>Combatives</b> is situational but can completely solve Mutons and certain melee threats. Do not Fleche into a Muton expecting Combatives to save you; move adjacent safely and exploit the enemy’s melee preference.</li>
+<li><b>Bladestorm</b> provides failed-kill insurance and becomes excellent against Lost. Evasive is strong defense, but Bladestorm often removes the threat rather than merely surviving it.</li>
+<li><b>Reaper</b> is an action-economy cleanup engine; the final refunded action can even be used on Officer Command after all viable slash kills are exhausted.</li>
+<li><b>Whirlwind</b> supports the exact risky Fleche that otherwise leaves Shinobi exposed: move back to cover or into a Combatives/Bladestorm zone after the strike.</li>
+<li><b>Conceal</b> is more situational than it looks because it ends the turn; on untimed/story missions it can still be excellent. Rifle-oriented MSGT alternatives are poor on a ballistic-SMG scout/melee soldier.</li>
+<li><b>Loadout:</b> SMG all campaign is viable because shooting is secondary. Plating + crit protection (Nanoscale/Tactical Armor) are core; empty slot for Mobility is legitimate. Paramedic XCOM roll immediately creates a Medikit job that can be performed from concealment.</li>
+<li>Do not let a juicy shooting XCOM perk lure a functioning melee/scout into an incoherent rifle hybrid unless multiple rolls support a genuinely new role.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Ranger — Mobile Shooter / Finisher <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Ever Vigilant → Locked On → Center Mass → Executioner → Implacable → Rapid Fire → Kill Zone / Combat Fitness by stats.</b><p>Very close to Casey. Both favor the repeatable mobile rifle shooter over shotgun specialization.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Assault Rifle + plating; AP early, Dragon Rounds later for general damage. Scope + best Expanded Magazine/Auto Loader. Perception PCS. Keep sawed-off upgraded even when not building around it.</p></div></div>
+<p><b>Build:</b> Ever Vigilant → Locked On → Center Mass → Executioner → Implacable → Rapid Fire → Combat Fitness.</p>
+<ul>
+<li>Ranger is Casey's early-game finisher: many shots, flexible target splitting, excellent cleanup.</li>
+<li><b>Ever Vigilant:</b> keeps pace on timed missions while protecting against activation fire; doors/reload/loot can cancel it.</li>
+<li><b>Locked On:</b> excellent with repeated attacks and Rapid Fire.</li>
+<li><b>Center Mass:</b> repeated +damage pays because rifles are lower base damage but fire often.</li>
+<li><b>Executioner:</b> reinforces finisher identity against already-wounded targets.</li>
+<li><b>Implacable:</b> lets both actions remain available for shooting while still repositioning after a kill.</li>
+<li><b>Rapid Fire:</b> class-defining late breakpoint; synergizes strongly with Locked On, Executioner and special ammo.</li>
+<li><b>Combat Fitness:</b> broad stat improvement; Casey specifically dislikes using mobility PCS on shooters just to fix movement.</li>
+<li>Casey rejects Rapid Reaction as his default after a campaign-ending Supply Raid where an exposed flank, overextension and command-pod activation turned prolonged overwatch play into a wipe.</li>
+
+</ul>
+<h4>Perk decisions / alternatives</h4><table><tr><th>Chosen</th><th>Main alternatives</th><th>When the alternative makes sense</th></tr>
+<tr><td>Ever Vigilant</td><td>Walk Fire / Close &amp; Personal</td><td>Walk Fire for early low-HP certainty; C&amp;P is foundational for sawed-off build.</td></tr>
+<tr><td>Locked On</td><td>Pump Action / Covering Fire</td><td>Pump Action for sawed-off specialist; Covering Fire supports overwatch and is stronger in 1.2.</td></tr>
+<tr><td>Center Mass</td><td>Cool Under Pressure / Aggression</td><td>CUP for overwatch protection; Aggression for crit/Talon route.</td></tr>
+<tr><td>Executioner</td><td>Open Fire / Avenger</td><td>Open Fire is a similar all-purpose accuracy perk; Avenger belongs to overwatch build.</td></tr>
+<tr><td>Implacable</td><td>Bring 'Em On / Grazing Fire</td><td>Bring 'Em On for more offense; Casey thinks Grazing Fire is too late to matter.</td></tr>
+<tr><td>Rapid Fire</td><td>Scrap Metal / Rapid Reaction</td><td>Scrap Metal for shorty build; Rapid Reaction is an exceptional opener but less reliable in prolonged fights.</td></tr>
+<tr><td>Combat Fitness</td><td>Rupture / Kill Zone</td><td>Rupture for boss target; Kill Zone if Aim/mobility are already strong and you want an ambush tool.</td></tr></table>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-ranger">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Ranger</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Disabling Shot</b></td><td><span class="xcom-rank premium">TRANSFORMATIVE</span></td><td>Casey considers this an A-team quality roll. It adds high-value control to the mobile-shooter/finisher build. <b>Keep the normal tree.</b></td></tr>
+<tr><td><b>Death From Above</b></td><td><span class="xcom-rank premium">TRANSFORMATIVE</span></td><td>Excellent action economy from elevation. Keep the rifle build but prioritize high-ground positioning.</td></tr>
+<tr><td><b>Anatomy / Predator / Shooting Sharp / Blood Trail</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>All reinforce what the Ranger already does well: repeated accurate rifle damage and finishing wounded targets. No reroute.</td></tr>
+<tr><td><b>Run and Gun</b></td><td><span class="xcom-rank value">GOOD, EXPENSIVE</span></td><td>Adds a strong reposition/burst option, but Casey does not treat it as a reason by itself to abandon the rifle-centered build for sawed-off specialization.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Ranger</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Andy’s premier conventional shooter:</b> prioritize accurate, repeatable rifle shots. Sawed-off attacks remain useful emergency burst but are not reliable enough to shape the entire tree.</li>
+<li>The Overwatch Ranger can produce absurd shot counts, but it depends on enemy movement. Andy prefers to control the action on his own turn; Casey’s 1.2 revision reaches a similar mobile-shooter result.</li>
+<li><b>Ever Vigilant</b> keeps the Ranger with the squad after double-moving and turns movement into occasional free fire. Walk Fire is excellent early finishing utility but loses uniqueness once Ranger Aim is high.</li>
+<li><b>Locked On</b> pays off across repeated shots, especially once Rapid Fire arrives. Pump Action belongs to a sawed-off specialist; Covering Fire belongs to an Overwatch variant.</li>
+<li><b>Center Mass</b> can trigger several times in one turn and improves kill thresholds. Aggression is strong but less consistent; the baseline prioritizes reliable damage.</li>
+<li><b>Executioner</b> turns Rangers into elite finishers: another soldier softens a boss, then Ranger gets an Aim/Crit swing. Open Fire is less compatible with “shoot both actions”; Avenger depends on taking enemy fire, which good tactics tries to avoid.</li>
+<li><b>Implacable</b> solves the Ranger’s action-economy problem. After a kill, reposition without spending one of the two actions you want to devote to shooting.</li>
+<li><b>Rapid Fire</b> is the class breakpoint. Locked On/Executioner can offset its aim penalty, creating three-shot turns.</li>
+<li><b>Combat Fitness vs Kill Zone:</b> use stats. Combat Fitness fixes a mediocre soldier; Kill Zone makes an already strong soldier substantially more dangerous. Andy regards late Rangers without Kill Zone as noticeably less explosive.</li>
+<li>Casey’s XCOM-row standouts <b>Disabling Shot and Death From Above</b> can elevate a Ranger to A-team status without requiring a full rebuild; Anatomy/Predator/Shooting Sharp/Blood Trail are strong shooting additions.</li>
+<li><b>Loadout:</b> AP rounds early; Dragon later for broad damage. Best Expanded Magazine normally goes here. Auto-loader can substitute on short missions. Keep the sawed-off upgraded because Both Barrels remains strong burst even on a rifle build.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Assault — Run &amp; Stun <span class="tag gold">legacy / not 1.2-revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Electroshock → Close & Personal → Stun Gunner → Formidable → Rapid Fire → Close Combat Specialist → Chain Lightning.</b><p>Andy’s 1.2.2 control-first path is the more current practical baseline; a Reposition XCOM roll can justify a Close Encounters variant.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Shotgun + Arc Thrower + plating. Talon Rounds + Laser Sight support crit burst; Hair Trigger becomes better after close-combat perks and an Extended Magazine helps later. Medikit or defensive utility for risky close positions.</p></div></div>
+<p><b>Build:</b> Electroshock → Close and Personal → Stun Gunner → Formidable → Rapid Fire → Untouchable → Chain Lightning.</p>
+<ul><li>Core philosophy: give Assault a useful ranged/control action so you are not tempted to Run &amp; Gun into unrevealed territory.</li><li>Electroshock guarantees at least disorient, breaks overwatch and is a Sectoid answer.</li><li>Close &amp; Personal supports point-blank shotgun crit; Casey explicitly combines shotgun + Laser Sight + Talon Rounds.</li><li>Stun Gunner makes Arc Thrower a real answer to Gatekeeper/Andromedon.</li><li>Rapid Fire works with Run &amp; Gun and is less conditional than Hit &amp; Run/Close Encounters.</li><li>Chain Lightning remains powerful control despite being nerfed from LW2.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-assault">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Assault</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Reposition</b></td><td><span class="xcom-rank reroute">BUILD-CHANGING</span></td><td>Andy specifically says this can make him reconsider <b>Close Encounters</b>. It enables a more aggressive close-range action loop while keeping the core Electroshock/control identity.</td></tr>
+<tr><td><b>Paramedic</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Adds field support without changing the tree. Carry a Medikit when the squad lacks another good carrier.</td></tr>
+<tr><td><b>Field Medic</b></td><td><span class="xcom-rank value">GOOD VALUE</span></td><td>Useful long-mission endurance; keep Electroshock/Stun Gunner and treat the perk as extra utility.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Assault</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Central lesson:</b> Assault’s power creates bad incentives. A point-blank shotgun solves problems but moving into fog can activate another pod. Both Casey and Andy deliberately select control/survivability perks that make conservative play attractive.</li>
+<li><b>Electroshock</b> turns Arc Thrower into guaranteed disorient at range and provides a useful action when Run & Gun would be unsafe. It breaks Sectoid mental effects and turns dangerous melee/Overwatch enemies into softer threats.</li>
+<li>Lightning Reflexes is simpler for new players, but 1.2 gives Assault Dedication and the squad has many other Overwatch clears. Andy finds Electroshock even easier to justify after Lightning Reflexes moved much later in the tree.</li>
+<li><b>Close & Personal</b> completes the crit package: point-blank shotgun + Laser Sight + Talon + flank becomes near/fully guaranteed crit. Trench Gun is powerful but awkward because its cone and shotgun range incentives conflict.</li>
+<li><b>Stun Gunner</b> makes Gatekeeper/Andromedon control practical; a graze still produces the stun effect. Unconscious/stunned aliens can also lose vision, occasionally rescuing a trapped scout.</li>
+<li><b>Formidable</b> wins over more damage in Andy’s current route because close-range positioning is dangerous. Casey remains more open to Aggression/Extra Conditioning in damage-heavy variants.</li>
+<li><b>Rapid Fire</b> beats Close Encounters/Hit & Run for consistency because both shots resolve in a single ability and work with Run & Gun. This also reduces Codex/Avatar/Ruler reaction complications.</li>
+<li><b>CCS vs Untouchable:</b> Andy now prefers CCS because free close-range shots solve many melee problems; Casey chose Untouchable in his older route because CCS can create bad/unwanted reaction shots. This is a real source disagreement.</li>
+<li><b>Chain Lightning</b> remains premier reusable mass control despite its LWOTC nerf. Street Sweeper is strong but positioning-sensitive; Lethal is flat damage on a class already capable of very large crits.</li>
+<li><b>Loadout:</b> Shotgun + Arc Thrower; Laser Sight, then Hair Trigger once CCS is online; switch from autoloader to Extended Mag as Rapid Fire/CCS increase ammo consumption. Talon + plating + vest/Medikit. Heavy-weapon armor adds a valuable ranged action to a class otherwise dependent on proximity.</li>
+<li><b>Reposition XCOM roll</b> is the main reason Andy would reconsider Close Encounters and build a more aggressive action-loop variant.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Sharpshooter — DFA <span class="tag gold">legacy / not 1.2-revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Death From Above → DGG or Center Mass → Precision Shot → Reposition → Aggression → Disabling Shot → Double Tap / AMF.</b><p>Use Andy’s DFA + Steady Weapon crit sniper as the modern practical baseline; Casey’s page is legacy.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Sniper Rifle + Stock; Auto Loader is strong. Scope early, then Laser Sight on a high-Aim crit build. AP early → Talon later. Icarus armor is ideal when available.</p></div></div>
+<p><b>Build:</b> Death From Above → Center Mass → Precision Shot → Low Profile → Deadeye → Disabling Shot → Double Tap.</p>
+<ul><li>DFA is Casey's preferred track; Holobot is a legitimate alternative if you commit to the entire holo package.</li><li>Precision Shot + Deadeye alternate strong special shots through the campaign.</li><li>Disabling Shot is a premier Sectopod control tool.</li><li>Long Watch is dangerous because squadsight overwatch can activate a pod you never intended to fight.</li><li>Stock/steady aim and Talon crit support are explicit parts of Casey's calculations.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-sharpshooter">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Sharpshooter</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Shredder</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Andy’s general rule is that Shredder is close to an auto-include on normal soldiers other than Shinobi/Templar. On a Sharpshooter it adds armor utility without changing the DFA/Steady Weapon tree.</td></tr>
+<tr><td><b>Other rolls</b></td><td><span class="xcom-rank value">CASE-BY-CASE</span></td><td>Neither Andy nor Casey publishes a current 1.2 Sharpshooter-specific randomized-row reroute matrix. Keep the DFA crit-sniper baseline unless multiple perks clearly create a different coherent role.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Sharpshooter</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>DFA defines the build.</b> The plan is to secure an elevated kill and end the turn with Stock-based Steady Weapon so the next turn starts with a high-confidence shot. Flat maps and obstructed lines of sight are the natural weaknesses.</li>
+<li><b>Holobot is a full alternate archetype</b>, not a one-perk detour. Rapid Targeting + Holo upgrades can buff an entire pod, but both Casey and Andy dislike making the best natural shooter spend most turns supporting weaker shooters. It is most defensible on a very low-Aim Sharpshooter/officer.</li>
+<li><b>Damn Good Ground vs Center Mass:</b> DGG helps mediocre Aim and adds defense; Center Mass works everywhere. As Aim grows and Steady Weapon stacks, raw Aim bonuses lose value.</li>
+<li><b>Precision Shot</b> is a reliable early/mid one-shot tool and keeps DFA chains alive. Lone Wolf creates positioning micromanagement and can tempt the squad to separate unsafely.</li>
+<li><b>Low Profile vs Reposition:</b> Casey’s older baseline uses Low Profile because roof edges are often half cover; Andy now likes Reposition for occasional free movement, while acknowledging it is less transformational than expected.</li>
+<li><b>Deadeye vs Aggression:</b> Casey prefers Deadeye’s direct damage; Andy has shifted toward Aggression + Laser Sight + Talon to improve crit reliability for normal shots and Disabling Shot. This is a genuine playstyle split.</li>
+<li><b>Disabling Shot</b> is non-negotiable in both modern approaches because it is one of the few reliable answers to a Sectopod and is also excellent against Rulers.</li>
+<li><b>Double Tap vs AMF vs Serial:</b> Double Tap is predictable extra action economy; AMF is smooth flat damage that helps preserve DFA chains; Serial creates spectacular but fragile cleanup turns. Both authors increasingly prefer reliability over the high-variance Serial ceiling.</li>
+<li><b>Long Watch warning:</b> squadsight Overwatch can wake pods you did not intend to engage and conflicts with the Steady Weapon plan.</li>
+<li><b>Loadout:</b> Stock is mandatory to support Steady; Autoloader is excellent; Scope early, Laser Sight once Aim is already strong enough for crit-stacking. Talon pairs with Aggression/crit path. Icarus is the ideal positional armor; Spider is useful but often not worth research opportunity cost.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>SPARK — Sparktacus <span class="tag gold">legacy build, still conceptually useful</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Andy’s 1.2.2 SPARK build is explicitly outdated after the 1.2.3 rework.</b><p>Do not use randomized XCOM-row logic for SPARKs; evaluate the current SPARK tree directly.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SPARK Cannon + best available heavy weapon. Expanded Magazine is especially valuable for multi-shot/Hunter Protocol concepts; Scope/Hair Trigger are useful secondary mods.</p></div></div>
+<p><b>Build:</b> Adaptive Aim → Rainmaker → Bulwark → Repair → Cool Under Pressure → Damage Control → Hunter Protocol.</p>
+<ul><li>Casey wants SPARK early because its relative power is enormous in the early campaign and early acquisition gives it time to level.</li><li>Hybrid purpose: tank + overwatch + damage rather than pure offense.</li><li>Bulwark + Damage Control + Repair is the late-game durability core.</li><li>Hunter Protocol + CUP creates free activation shots; best Expanded Magazine is important.</li><li>Rainmaker upgrades the heavy weapon into multi-target cover destruction.</li><li>SPARK can carry a weaker squad, making it a good escort for soldiers you want to power-level.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-spark">Casey source</a>
+
+<div class="xcom-guide"><h4>XCOM-row note — SPARK</h4><div class="callout"><b>No normal randomized XCOM row.</b> Use the current 1.2.3 SPARK perk tree and equipment choices; do not apply human-soldier XCOM-row logic.</div></div>
+<details class="complete-reference"><summary>Complete source notes — SPARK, including legacy material</summary><div class="complete-body">
+<div class="callout warn"><b>Version warning:</b> Andy explicitly marks his 1.2.2 SPARK tree as obsolete after the 1.2.3 rework, and Casey’s older SPARK article also predates the current tree. Preserve the tactical concepts below, but use current 1.2.3 perk data for actual selections.</div>
+<ul class="dense-list">
+<li>SPARKs are strongest when they combine <b>tanking with real offensive output</b>. A robot that is nearly invulnerable but cannot advance the mission is a poor build.</li>
+<li>They increase infiltration time, making quick-response/retaliation/story missions especially attractive places to deploy them. They can also perform remote objective hacks, though their Hack stat is usually worse than Specialist.</li>
+<li>One important role is deliberate exposure: stand where ADVENT is tempted to shoot the armored robot rather than a fragile soldier.</li>
+<li>Legacy Andy moved from a mostly ranged tank toward a melee-capable frame because reliable punches plus Overdrive create strong action economy. Damage Control/Shredder were his key defensive/offensive anchors.</li>
+<li>Legacy utility notes still useful in 1.2.x: SPARKs can interact with Smash & Grab crates; cover can help concealment/reveal checks even though it does not grant normal defense; Officer Command cannot target SPARKs.</li>
+<li>Old builds valued Bombard/Concussive Strike/Nova for reusable control/AoE and Disabling Shot for boss control. Treat these as role concepts, not current-tree instructions.</li>
+<li>Because SPARKs are difficult to heal/repair compared with soldiers, survivability still matters—but front-load enough offense that the SPARK meaningfully shortens the battle.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Psi Operative — Control package <span class="tag gold">legacy guide</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Prioritize Fuse → Domination and Solace → Stasis / Null Lance; Phase Walk → Soulstorm is secondary.</b><p>Psi progression is training-order driven rather than a randomized XCOM-row build.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SMG until Phase Walk if Mobility matters, then shotgun becomes attractive. Best Psi Amp + Neurowhip/plating + mission utility. Pistol/Redscreen can add useful downtime actions.</p></div></div>
+<p><b>Ability groups Casey prioritizes:</b> Fuse / Stasis / Domination → Solace / Null Lance → Phase Walk / Soul Storm.</p>
+<ul><li>Do not spread selections randomly across groups if doing so risks losing Domination.</li><li>Stasis is weaker than vanilla but remains excellent, especially against Rulers; it does not work on oversized enemies/Chosen.</li><li>Domination is the payoff: Archon/other low-Will puppet creates both control and a tank.</li><li>Phase Walk is much better than it appears; mobility without ending the turn makes Psi useful almost anywhere.</li><li>Null Lance adds guaranteed offensive output. Soul Storm is powerful but short-ranged and can hurt allies.</li><li>Psi route must start early to justify the facility investment; skipping Psionics entirely is economically valid.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-psi-operative">Casey source</a>
+
+<div class="xcom-guide"><h4>XCOM-row note — Psi Operative</h4><div class="callout"><b>No normal randomized XCOM row.</b> Optimize the Psi training path itself—especially the route toward Domination, Stasis and Null Lance—rather than applying conventional-soldier XCOM-row advice.</div></div>
+<details class="complete-reference"><summary>Complete source notes — Psi Operative</summary><div class="complete-body">
+<ul class="dense-list">
+<li>Psi is not a random-skill tree in practice: prerequisites shape the offered pool. Both authors prioritize paths that reach <b>Domination, Stasis and Null Lance</b>.</li>
+<li>Training time depends on both ability tier and soldier rank. Unlocking a high-tier ability very early can take so long that it is better to grow the Psi first and train the expensive ability around rank 4.</li>
+<li><b>Fuse → Domination</b> is the highest-value track even after Fuse stopped being a free action. Domination removes one enemy and gives ADVENT a high-HP target to shoot.</li>
+<li><b>Solace → Stasis / Null Lance</b> is almost as important. Stasis is elite control but does not work on Sectopod/Gatekeeper; Null Lance becomes the main late guaranteed-damage action and alternates well with Soul Fire cooldowns.</li>
+<li><b>Phase Walk</b> is much better than a mere setup tool: one action can reposition farther than a dash, catch the Psi up after spending both actions casting, line up Null Lance, or enable a point-blank shotgun on cooldown turns.</li>
+<li><b>Soulstorm</b> is risky AoE: damage/cover destruction can underperform and it can wake new pods or harm allies depending on the version/ability details. Best near the end of a map when activation risk is gone.</li>
+<li>Andy ignores the Fortress branch because adding mediocre abilities to the pool can slow access to the core control package. Void Rift is good, but he does not consider Soul Steal worth diluting the route.</li>
+<li><b>Dominate target selection:</b> high HP + low Will. Archons are excellent; Purifiers/Shieldbearers provide armor and attract fire. Chryssalids make durable shields but poison kills can spawn hostile Chryssalids.</li>
+<li><b>Priest warning:</b> Priests will break control—Elite Solace fields can immediately free dominated/hacked units, while other Priests prioritize Stasis on your puppet. Kill/avoid Priests before committing Domination/Full Override.</li>
+<li>Dominating at the edge of vision can activate extra pods. Sometimes that is acceptable because the puppet absorbs fire, but it must be deliberate.</li>
+<li><b>Loadout:</b> SMG until Phase Walk, then Shotgun becomes attractive. Neurowhip + plating + mission utility; pistol perks and Redscreen give useful anti-robot actions while psi abilities cool down.</li>
+<li>Skirmisher Manual Override is exceptionally strong with Psi cooldowns, enabling repeated Null Lance/Stasis/Soul Fire/Phase Walk patterns.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Skirmisher — Monkey Bomber <span class="tag gold">legacy guide</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Total Combat → Packmaster → Chain Shot → Formidable → Manual Override → bank the weak rank → Lethal.</b><p>Andy explicitly banks AP at the weak rank and spends it on useful XCOM-row perks rather than forcing a mediocre class-tree pick.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Bullpup + grenade-heavy utility + plating. Scope helps frequent shooting; upgraded armor matters. Andy does not invest heavily in Ripjack upgrades for this build.</p></div></div>
+<p><b>Build:</b> Total Combat → Packmaster → Chain Shot → Damn Good Ground → Manual Override → save AP at GSGT → Lethal.</p>
+<ul><li>Casey considers Skirmisher one of the strongest day-one soldiers but finesse-heavy.</li><li>Total Combat lets a grenade coexist with shooting and adds mobility/aim.</li><li>Packmaster creates huge grenade endurance; early it can temporarily out-grenade a Grenadier.</li><li>Grapple → grenade → Hit &amp; Run shot → another action is the core “Monkey Bomber” pattern.</li><li>Manual Override can shorten huge cooldowns but requires you to remember and plan around it.</li><li>At GSGT Casey sometimes spends AP on XCOM-row perks instead of selecting an underwhelming class perk.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-skirmisher">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Skirmisher</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Shredder</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Strong general pickup under Andy’s rule and useful because Skirmishers can produce multiple attacks. Keep the Monkey Bomber/action-economy core.</td></tr>
+<tr><td><b>High-value XCOM roll at GSGT</b></td><td><span class="xcom-rank premium">SAVE AP FOR IT</span></td><td>Andy explicitly skips the weak normal-tree rank in his build and banks AP for XCOM-row value. He does not prescribe one universal second perk, so the guide does not invent one.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Skirmisher</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Monkey Bomber remains the core:</b> Total Combat + Packmaster makes Skirmisher a stronger grenade platform than Grenadier for much of the early/midgame while preserving frequent gun attacks.</li>
+<li><b>Grapple is combat power.</b> Do not waste it on routine map movement; save it for turns where positioning suddenly allows grenade + shot + extra action chains.</li>
+<li><b>Total Combat</b> makes grenade sequencing flexible and improves Incendiary radius; <b>Packmaster</b> doubles every grenade and is the true early breakpoint.</li>
+<li><b>Chain Shot</b> wins over support/mobility because Skirmisher’s action economy can produce three-shot turns. Combat Presence is less unique once Officers provide Command.</li>
+<li><b>Formidable vs DGG:</b> high ground is easy with Grapple and DGG helps mediocre Aim, but Andy forgets/forgoes it often; Formidable protects a class whose inventory may be completely filled with grenades instead of plating.</li>
+<li><b>Manual Override</b> is a deep-synergy ability: reset Specialist Haywire/Combat, Psi Null Lance/Stasis/Phase Walk, Reaper Shadow, SPARK abilities, etc. The more experienced the player, the more valuable planning around this becomes.</li>
+<li><b>Skip-a-rank:</b> Andy intentionally buys nothing at the Full Throttle/Judgement/Close Encounters rank and banks AP for randomized XCOM-row perks. This is legal and often more valuable than a weak mandatory choice.</li>
+<li><b>Lethal</b> is boring but consistently adds damage to the many shots a Skirmisher takes; Battlelord is flashy but far less reliable.</li>
+<li><b>Loadout:</b> grenade slots dominate, often leaving no room for special ammo/vest. Incendiary/Frost provide control, Plasma grenades damage/shred. Armor upgrades are high priority because plating may be omitted. Scope helps mediocre base Aim; Ripjack investment is skipped in Andy’s build.</li>
+<li>Skirmisher falls off relative to specialists in late game but remains valuable for action economy, grenade volume and Manual Override support.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Reaper — Shooter <span class="tag red">older build explicitly affected by 1.2 nerfs</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Blood Trail → Shooting Sharp → Serial → Cheap Shot → Banish → Deadeye → Homing Mine / True Predator.</b><p>Treat Casey’s old shooter package as legacy; Andy’s 1.2.2 version is the better practical reference, but the class was still affected by later balance changes.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Vektor + plating/vest + mission-specific special ammo. Andy prefers Auto Loader over an oversized magazine because Banish accuracy deteriorates before giant clips pay off. Carry Medikit if Paramedic makes the Reaper a utility carrier.</p></div></div>
+<p><b>2022 build:</b> Blood Trail → Shooting Sharp → Serial → Cheap Shot → Banish → Light 'Em Up → Rend the Marked.</p>
+<ul><li>Reaper normal concealment is not the same as Shadow; Shadow has reduced detection but is time-limited.</li><li>Reaper can detect enemies through LOS blockers, valuable on blind-corner maps.</li><li>2022 shooter build stacks multi-shot actions and boss damage; Banish is the signature power.</li><li>Paramedic is good but competes with the vest/ammo slots a shooter wants.</li><li><b>1.2 warning:</b> Casey's 1.2 notes say the old shooty Reaper has been nerfed. Do not blindly follow this build as current.</li></ul>
+<a href="https://xcom.substack.com/p/lwotc-class-builds-reaper">Casey source</a>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Reaper</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Shredder</b></td><td><span class="xcom-rank premium">PREMIUM</span></td><td>Fits Andy’s general “auto-include” rule and improves the shooter/boss role without changing the core tree.</td></tr>
+<tr><td><b>Paramedic</b></td><td><span class="xcom-rank value">GOOD VALUE</span></td><td>Useful if your squad needs a carrier, but Reaper equipment slots are competitive. Keep the shooter/scout build and add a Medikit only when the team benefits.</td></tr>
+<tr><td><b>Other rolls</b></td><td><span class="xcom-rank value">CASE-BY-CASE</span></td><td>No strong current source-backed reroute is documented; treat most good rolls as additions rather than reasons to rebuild the class.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Reaper</summary><div class="complete-body">
+<ul class="dense-list">
+<li>1.2 intentionally reduced the old “best scout + best sniper” Reaper. Shadow remains excellent, but lower long-range accuracy/damage forces more participation near the main squad.</li>
+<li><b>Shadow expiration trick:</b> if a new pod activates when Shadow ends, the rest of the squad can already be on Overwatch, producing a pseudo-Beaglerush activation before your next turn.</li>
+<li><b>Blood Trail</b> is reliable early damage and sets up Cheap Shot. Ghost Grenade became less attractive to Andy because limited Shadow duration reduces the value of extra concealment tricks.</li>
+<li><b>Shooting Sharp</b> solves the sharper 1.2 range falloff. Predator is excellent but more “win-more” and particularly tied to Banish on flanked targets.</li>
+<li><b>Serial</b> is cleanup action economy. Silent Killer matters less when Shadow is temporary rather than permanent concealment.</li>
+<li><b>Cheap Shot</b> pairs naturally with Blood Trail by turning wounded-target shots into free movement.</li>
+<li><b>Banish</b> is still class-defining even nerfed: with Bluescreen/Shredder ammo it can serve as a mechanical/boss-killing package.</li>
+<li><b>Deadeye</b> is consistent; Soul Harvest demands extra attention to optimize and can be forgotten.</li>
+<li><b>MSGT choices are all viable:</b> Homing Mine enables a guaranteed-hit interaction after the mine is attached; True Predator strengthens Banish; Rend the Marked belongs to the knife build.</li>
+<li>Andy tested Knife Reaper and found it viable with interesting action loops, but Mobility roll matters heavily and the perk choices diverge substantially from shooter Reaper.</li>
+<li><b>Loadout:</b> mission-specific special ammo, Auto-loader over giant magazine because late Banish shots miss more often and the class alternates single-shot turns with occasional five-shot turns. Medikit is reasonable because Reaper often avoids direct fire.</li>
+</ul></div></details></div></details>
+<details class="classbox searchable"><summary>Templar — Tank / Control <span class="tag gold">Andy 1.2.2 baseline</span></summary><div class="body">
+<div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Indomitable → Stun Strike → Overcharge → Channel → Superior Aptitude → Bladestorm → Apotheosis.</b><p>Casey has not published a current Templar build, so this is the strongest source-backed practical baseline in the merged guide rather than an invented “Casey build.”</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>Gauntlet + plating/Nanoscale/Tactical Armor. Mobility PCS is especially valuable. Medikit or Mindshield according to mission; pistol + Redscreen can add robot utility late.</p></div></div>
+<ul><li><b>Role:</b> frontline tank + control + guaranteed damage.</li><li><b>Stun Strike:</b> important because it gives hard control that can work on robots.</li><li><b>Channel / Superior Aptitude:</b> support Focus economy and keep the class relevant through long missions.</li><li><b>Bladestorm / Apotheosis:</b> turn the late Templar into a powerful melee-control piece rather than a pure glass cannon.</li><li><b>XCOM-row watch:</b> Andy is especially excited to roll Field Medic or Paramedic because the Templar is already operating near wounded front-line soldiers.</li></ul>
+
+<div class="xcom-guide"><h4>Best XCOM-row perks — Templar</h4>
+<table><thead><tr><th>Perk</th><th>Priority</th><th>How it affects the build</th></tr></thead><tbody>
+<tr><td><b>Field Medic</b></td><td><span class="xcom-rank premium">TOP PICK</span></td><td>Andy specifically likes medical rolls on Templars. Adds support to a durable front-line control unit without changing the normal tree.</td></tr>
+<tr><td><b>Paramedic</b></td><td><span class="xcom-rank premium">TOP PICK</span></td><td>Same logic: emergency healing is highly useful on a mobile frontliner. Carry a Medikit.</td></tr>
+<tr><td><b>Shredder</b></td><td><span class="xcom-rank value">NOT A PRIORITY</span></td><td>Andy’s general Shredder recommendation explicitly excludes Templar/Shinobi, so do not buy it automatically.</td></tr>
+</tbody></table></div>
+<details class="complete-reference"><summary>Complete source notes — Templar</summary><div class="complete-body">
+<ul class="dense-list">
+<li><b>Role mix:</b> tank + guaranteed damage + control. The Focus requirement can make early-pod participation awkward because an unsafe melee to generate Focus risks waking another pod.</li>
+<li><b>Shield discipline:</b> after Rend, throwing up the shield is usually correct, but ADVENT is not obliged to shoot the Templar—everyone else still needs proper cover.</li>
+<li><b>Indomitable</b> stabilizes Focus generation and therefore makes the class useful sooner. Invert/Amplify are more situational.</li>
+<li><b>Stun Strike</b> became Andy’s preferred second-tier choice after testing; it adds hard control and can even work on robots. Brawler is pure tanking; Soul Shot spends Focus on a non-guaranteed attack.</li>
+<li><b>Overcharge</b> solves mediocre melee hit chances. Sustain is attractive emergency insurance, but Andy prefers prevention over planning around death.</li>
+<li><b>Channel</b> creates more Focus and can occasionally double-dip after Rend kills. Void Conduit is restricted to humanoids and misses many of the enemies you most want to control.</li>
+<li><b>Superior Aptitude vs Crusader’s Rage:</b> Aptitude is more consistently useful for Focus economy; Crusader can improve wound recovery after the 1.2 ablative changes but its damage benefit is less common.</li>
+<li><b>Bladestorm</b> is preferred because it repeatedly fixes near-miss Rend outcomes and adds free attacks. Terrorize is viable but less frequently impactful; Impact Compensation is a strong pure-tank alternative.</li>
+<li><b>Apotheosis</b> creates explosive damage turns and often refunds enough Focus through kills to sustain itself. Ionic Storm is also strong; Ghost is more mechanically demanding.</li>
+<li><b>Loadout:</b> Mobility PCS is close to mandatory on slow rolls; Nanoscale/crit protection and Medikit are common. Mindshield protects a frontliner who is disastrous when mind-controlled/dazed. Field Medic/Paramedic XCOM rolls are excellent. Pistol + Redscreen + Quickdraw/Lightning Hands gives productive anti-robot turns without spending Focus.</li>
+</ul></div></details></div></details>
+
+<div class="source-note">Build sources: Casey’s current 1.2 class guides where available; Andy’s <a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide 1.2.2</a> for current practical comparisons and uncovered classes; current LWOTC soldier mechanics for XCOM-row eligibility.</div>
+</section>
+<section class="searchable" id="squads">
+<h2>11. Squad construction &amp; bonds</h2>
+<h3>Role order</h3>
+<table><tr><th>Approx. priority</th><th>Role</th><th>Examples</th></tr>
+<tr><td>1</td><td>Killer</td><td>Assault, Shinobi, Ranger, Skirmisher</td></tr>
+<tr><td>2</td><td>Control</td><td>Grenadier, Psi, Assault, Technical, Gunner suppression</td></tr>
+<tr><td>3</td><td>Officer</td><td>1.2: Specialist rises sharply; legacy Casey used Shinobi</td></tr>
+<tr><td>4</td><td>Scout / information</td><td>1.2 Specialist Scanner, Shinobi, Reaper</td></tr>
+<tr><td>5</td><td>Shooter</td><td>Ranger, Gunner, Sharpshooter, Reaper, SPARK</td></tr>
+<tr><td>6</td><td>Hacker</td><td>Specialist; SPARK can fill some mechanical utility</td></tr>
+<tr><td>7</td><td>Boss killer</td><td>Gunner/Ranger/Reaper with shred/multi-shot/Bluescreen</td></tr>
+<tr><td>8</td><td>Cover destruction</td><td>Grenadier, Technical, SPARK heavy weapon</td></tr>
+<tr><td>Situational</td><td>Squadsight / Overwatch / Healer / Tank</td><td>Mission-dependent</td></tr></table>
+<h3>Casey's example squads</h3>
+<div class="grid">
+<div class="card"><h4>Early Squad 1</h4><p><b>Shinobi · Ranger · Grenadier · Assault · Specialist</b></p><p>Hack mission capable, Ever Vigilant option, solid killer distribution.</p></div>
+<div class="card"><h4>Early Squad 2</h4><p><b>Shinobi · Gunner · Technical · Skirmisher · Sharpshooter</b></p><p>Stronger raw combat with Technical + Skirmisher; no Specialist objective utility.</p></div>
+<div class="card"><h4>Mid/Late Squad 1</h4><p><b>Shinobi + Ranger · Assault + Specialist · Grenadier + Reaper</b></p><p>Healer, cover destruction, control, strong killing.</p></div>
+<div class="card"><h4>Mid/Late Squad 2</h4><p><b>Shinobi + Gunner · Skirmisher + Psi · Sharpshooter · SPARK</b></p><p>Tank, shooters, control, boss killing.</p></div>
+</div>
+<div class="callout"><b>Officers moved:</b> the complete training requirements, standard abilities, seven-rank perk tree and Casey/Andy build differences are now in <a href="#officers">Officer perks &amp; progression</a>.</div>
+<h3>Bonds</h3>
+<ul>
+<li><b>Good classic pairings:</b> Shinobi + Ranger/Gunner/Assault; Specialist + Ranger/Gunner/Assault; Grenadier + Reaper/Templar; Skirmisher + Ranger/Gunner.</li>
+<li><b>Legacy weak pairings:</b> Grenadier + Technical (role redundancy), Gunner + Ranger (role redundancy), Reaper + Ranger/Assault/Gunner (action-sharing issues or redundancy).</li>
+<li><b>1.2 correction:</b> Technical is no longer a bad bondmate in Casey's view because Fire in the Hole improves one-action rocket value.</li>
+<li>Do not let bond optimization make roster management miserable. Casey explicitly notes that bonds complicate haven advisors, covert actions, training and squad interchangeability.</li>
+</ul>
+<h3>Power-level targets</h3>
+<ul><li>Get several soldiers to <b>SGT quickly</b>: faction influence/contact options and Trial by Fire depend on it.</li><li>Reserve frequent mission slots for classes that explode in value at high rank: Casey highlights Reaper, Assault, Grenadier and Psi in the older squad guide.</li><li>Push <b>three soldiers to MSGT</b> in time to reveal and assault Chosen Strongholds before Avenger Defense becomes unavoidable.</li></ul>
+
+<h3>Bond logic beyond compatibility score</h3>
+<ul><li>Casey is willing to force a lower-compatibility bond when the <b>role pairing</b> makes the squad easier to build.</li><li><b>Shinobi + shooter</b> remains excellent because the shooter converts an extra action into reliable damage while the Shinobi may have spare actions when scouting.</li><li><b>Grenadier + Specialist</b> is explicitly reaffirmed in 1.2: Airdrop and Bluescreen Bomb → Hack create direct mechanical synergy.</li><li>Shooter pairs gain value from bond Aim and Advanced Teamwork because they can almost always spend the extra action productively.</li><li>1.2 Technical is no longer a bad bondmate: Fire in the Hole makes one-action rockets practical, so the class can give or receive bond actions without becoming inert.</li></ul>
+
+<h3>Andy squad-role minimums <span class="v6flag">v6</span></h3>
+<table><tr><th>Need</th><th>Typical classes</th></tr><tr><td>Scout</td><td>Shinobi / Reaper</td></tr><tr><td>Control</td><td>Technical / Gunner / Electroshock Assault / Templar / Grenadier</td></tr><tr><td>Ranged hack for hack missions</td><td>Specialist / SPARK</td></tr><tr><td>Guaranteed damage</td><td>Psi / Shinobi / Assault / Technical / Grenadier / Combat Protocol / Templar</td></tr><tr><td>Repeatable shooter</td><td>Ranger / Sharpshooter / Gunner / Reaper / Skirmisher</td></tr></table>
+<div class="callout"><span class="src-badge src-andy">ANDY</span> He has increasingly stopped using rigid permanent squads because the infiltration bonus is modest and mission-specific role coverage matters more. <span class="src-badge src-synth">SYNTHESIS</span> Keep named squads for officer familiarity / organization if you like them, but build the deployed team around the mission.</div>
+<h3>Andy bond logic</h3>
+<div class="compare4"><div class="card"><h4>Givers</h4><p>Shinobi, Specialist, Grenadier, Gunner, Technical.</p></div><div class="card"><h4>Takers</h4><p>Ranger, Gunner, Assault, Reaper, Templar.</p></div><div class="card"><h4>Neutral</h4><p>Sharpshooter and Psi often consume exactly two useful actions and are less natural bond engines.</p></div><div class="card"><h4>Tier value</h4><p>Tier 1 Teamwork provides much of the practical value. Tier 2 lagging pairs can become excellent Covert Op teams because of reduced duration.</p></div></div>
+
+<details class="complete-reference"><summary>Complete squad-role & bond doctrine</summary><div class="complete-body">
+<ul class="dense-list">
+<li>Squad construction is about <b>roles, not class quotas</b>. High-priority roles are reliable killer, control, officer, scouting/information, repeatable shooting, hack/objective access, boss damage/shred and cover destruction. Healer/tank/Overwatch become more mission-specific.</li>
+<li>Bring redundancy in the highest-value roles. Two different forms of control are generally better than filling a niche low-priority role perfectly.</li>
+<li>Permanent squads are optional. Casey used stable squad examples; Andy increasingly stopped rigid squads because infiltration familiarity is modest and mission-specific role coverage is more important.</li>
+<li><b>Bond logic:</b> Advanced Teamwork is the main reason to care. Pair “givers” whose own action is sometimes low value with “takers” who can reliably convert another action into damage/control.</li>
+<li>Common givers: concealed Shinobi, Specialist, Grenadier and some Gunners/Holobots. Common takers: Ranger, Assault, Gunner, Reaper, Templar and other high-value attackers. Psi/Sharpshooter are often more neutral because their turn is already structured around two useful actions.</li>
+<li>Role synergy can justify forcing a lower-compatibility bond. A Shinobi + shooter pairing works because the hidden scout can donate action economy while the shooter almost always has a productive target.</li>
+<li>Grenadier + Specialist remains a direct mechanical partnership: Airdrop extends grenade endurance; Bluescreen Bomb improves Hack; Specialist can then take over the softened mechanical.</li>
+<li>Technical is a better bond partner in current 1.2 than older Casey material suggested because Fire in the Hole/one-action unique attacks make action sharing less awkward.</li>
+<li>Do not let bond optimization damage roster flexibility. Training, wounds, haven advising and covert ops constantly break perfect pairs. Tier-1 Teamwork captures much of the practical value.</li>
+<li>Power-level several soldiers to SGT for faction contacts/Trial by Fire and three soldiers toward MSGT for Stronghold access, but continue bringing lower-rank troops on forgiving missions so the campaign has a functioning B/C team.</li>
+</ul>
+</div></details>
+
+<details class="complete-reference"><summary>Bond receiver exceptions & why some pairings underperform</summary><div class="complete-body">
+<ul class="dense-list">
+<li>Casey’s “giver” label means a class can donate an action without seriously reducing its own turn; it does <b>not</b> mean that class cannot also make good use of an extra action.</li>
+<li><b>DFA Sharpshooter</b> is a weak Advanced Teamwork receiver because its normal firing loop wants both actions and is tightly tied to Steady Weapon/DFA sequencing.</li>
+<li><b>Technical</b> is often a weak receiver because accurate rockets want a full-action setup and flamethrower uses are limited/positional; one extra action frequently cannot be converted cleanly.</li>
+<li><b>Psi Operative</b> can be a weak receiver because the best psi abilities are gated by cooldowns, so an extra action does not always create an extra premium ability use. Bonding a Psi is still worthwhile for the other bond bonuses and roster flexibility.</li>
+<li>Gunner, Ranger, Assault, Shinobi, Grenadier and Skirmisher generally convert extra actions more directly into damage/control. Shooter-to-shooter bonds can also exploit the bondmate Aim bonus against a shared target.</li>
+<li>Casey explicitly warns that optimizing bonds by class can force low-compatibility pairings and creates roster-management complexity. A “perfect” bond map is not worth making the campaign tedious.</li>
+</ul>
+</div></details>
+</section>
+<section class="searchable" id="officers">
+<h2>11A. Officers — full progression, perks &amp; practical builds <span class="v6flag">EXPANDED v9</span></h2>
+<div class="callout good"><b>Verified against the stable LWOTC officer config.</b> This replaces the previous abbreviated officer notes. Only the <b>leading officer</b> on a mission gets officer abilities; the game chooses the highest officer rank, then combat rank, then Will for ties. SPARKs cannot train as officers, and Command cannot target robotic allies such as SPARKs.</div>
+
+<h3>Officer training progression</h3>
+<table><thead><tr><th>Officer rank</th><th>Minimum soldier rank</th><th>Base training time</th><th>Command charges</th><th>Choice</th></tr></thead><tbody>
+<tr><td><b>2nd Lieutenant</b></td><td>Lance Corporal</td><td>6 days</td><td>1</td><td>Oscar Mike / Focus Fire</td></tr>
+<tr><td><b>1st Lieutenant</b></td><td>Corporal</td><td>6 days</td><td>1</td><td>Incoming! / Get Some</td></tr>
+<tr><td><b>Captain</b></td><td>Sergeant</td><td>8 days</td><td>2</td><td>Trial By Fire / Jammer</td></tr>
+<tr><td><b>Major</b></td><td>Staff Sergeant</td><td>8 days</td><td>2</td><td>Lead By Example / Collector</td></tr>
+<tr><td><b>Lieutenant Colonel</b></td><td>Tech Sergeant</td><td>8 days</td><td>3</td><td>Fire Discipline / Defilade</td></tr>
+<tr><td><b>Colonel</b></td><td>Gunnery Sergeant</td><td>10 days</td><td>3</td><td>Air Controller / Infiltrator</td></tr>
+<tr><td><b>Field Commander</b></td><td>Master Sergeant</td><td>12 days</td><td>4</td><td>Combined Arms / Scavenger</td></tr>
+</tbody></table>
+<div class="small">Command Range starts at roughly 8 tiles and grows by one tile per officer rank (Rookie has a larger range multiplier). Quick Study can reduce officer training time when available.</div>
+
+<h3>Standard officer abilities — every officer gets these</h3>
+<table><thead><tr><th>Ability</th><th>What it does</th><th>Use it for</th></tr></thead><tbody>
+<tr><td><b>Leadership</b></td><td>Successful missions under that officer build persistent bonuses for participating soldiers: +1 Will per mission (cap +40), +0.5 Dodge (cap +10), and a 0.75% infiltration-time improvement per mission (cap 25%).</td><td>A small long-term benefit for soldiers who repeatedly deploy under the same officer. Useful, but too slow to justify bad squad composition.</td></tr>
+<tr><td><b>Command</b></td><td>Ends the officer's turn and grants a visible eligible ally a bonus action. Charges rise from 1 → 4 as the officer ranks up.</td><td>Give an action to the soldier whose action is worth more: a killer, objective hacker, control unit or wounded soldier who needs to escape.</td></tr>
+<tr><td><b>Intervention</b></td><td>Spend <b>10 Intel</b> and one non-turn-ending action to add <b>2 turns</b> to a compatible mission timer.</td><td>Emergency timer insurance. Intel is precious, so treat it as a rescue tool rather than routine tempo.</td></tr>
+<tr><td><b>Commissar</b></td><td>Pistol shot against a mind-controlled ally; the special shot is designed as a desperation option.</td><td>Last-resort prevention of a disastrous enemy-controlled turn.</td></tr>
+<tr><td><b>Take This</b></td><td>Can hand a conventional pistol to an adjacent civilian ally when the officer is carrying one.</td><td>Rare edge-case utility; not a reason to select an officer candidate.</td></tr>
+</tbody></table>
+
+<h3>Full officer perk tree</h3>
+<div class="table-scroll"><table><thead><tr><th>Rank</th><th>Left perk</th><th>Right perk</th><th>Practical decision</th></tr></thead><tbody>
+<tr><td><b>2LT</b></td><td><b>Oscar Mike</b> — spend an action; all allies in Command Range gain <b>+5 Mobility</b> for the turn; 1 use/mission.</td><td><b>Focus Fire</b> — mark one target; attacks gain <b>+1 armor piercing</b>, and each successive direct attack adds <b>+5 Aim</b>; 3-turn cooldown.</td><td><span class="src-badge src-andy">ANDY</span> Focus Fire. <span class="src-badge src-casey">CASEY</span> calls this close/situational. Focus Fire is the safer general pick; Oscar Mike is excellent for evac/objective movement.</td></tr>
+<tr><td><b>1LT</b></td><td><b>Incoming!</b> — free action; allies in Command Range get <b>4 explosive damage resistance</b> through the next alien turn; 5-turn cooldown.</td><td><b>Get Some</b> — spend an action to give allies in Command Range <b>+20 Crit</b> for the turn; 2 uses/mission.</td><td><span class="src-badge src-andy">ANDY</span> Get Some for offensive tempo. Incoming is stronger when explosives are the immediate threat.</td></tr>
+<tr><td><b>Captain</b></td><td><b>Trial By Fire</b> — after a successful mission, participating soldiers below Sergeant are automatically promoted.</td><td><b>Jammer</b> — once per battle, delay inbound reinforcements by 1 turn.</td><td>Trial By Fire is a major barracks accelerator while you still have low-rank soldiers. Jammer becomes more attractive once the roster is mature or RNF timing is the bigger problem.</td></tr>
+<tr><td><b>Major</b></td><td><b>Lead By Example</b> — allies in Command Range gain half the positive difference between the officer's Aim/Will/Hack and theirs.</td><td><b>Collector</b> — non-human squad kills have a <b>33%</b> chance for +1 Intel, capped at <b>10 Intel/mission</b>, while the officer is healthy.</td><td>High-stat / high-Aim officer: Lead By Example can be excellent. Low-Aim scout officer: Collector gives reliable strategic value without asking the officer to shoot.</td></tr>
+<tr><td><b>Lt. Colonel</b></td><td><b>Fire Discipline</b> — allies in Command Range gain <b>+10 Aim on reaction fire</b>.</td><td><b>Defilade</b> — allies in Command Range gain <b>+5 defense from cover</b>.</td><td><span class="src-badge src-andy">ANDY</span> Defilade. Fire Discipline is the specialized choice for overwatch/reaction-fire squads.</td></tr>
+<tr><td><b>Colonel</b></td><td><b>Air Controller</b> — Skyranger arrives <b>2 turns sooner</b>, subject to minimum evac delay.</td><td><b>Infiltrator</b> — applies a <b>0.85 squad infiltration multiplier</b> (about 15% faster infiltration).</td><td><span class="src-badge src-andy">ANDY</span> Infiltrator. It compounds across almost every infiltrated mission; Air Controller is strongest for evac-heavy or stealth-objective play.</td></tr>
+<tr><td><b>Field Commander</b></td><td><b>Combined Arms</b> — allies in Command Range deal <b>+1 damage</b> on successful attacks.</td><td><b>Scavenger</b> — successful missions gain <b>+30%</b> Supplies/Alloys/Elerium rewards plus a chance for additional Alloy/Elerium recovery.</td><td><span class="src-badge src-andy">ANDY</span> Scavenger earlier when the economy still matters; Combined Arms once late-game combat power is more valuable than additional resources.</td></tr>
+</tbody></table></div>
+
+<h3>Who should become the officer?</h3>
+<div class="compare4">
+<div class="card andybox"><span class="src-badge src-andy">ANDY</span><h4>Shinobi officer</h4><p>Andy trains essentially every Shinobi as an officer. A concealed scout often has spare tactical actions, so spending those actions on Command / Focus Fire / Get Some does not sacrifice your primary damage dealer's turn. His normal path is <b>Focus Fire → Get Some → Trial By Fire → Collector → Defilade → Infiltrator → Scavenger/Combined Arms</b>.</p></div>
+<div class="card caseybox"><span class="src-badge src-casey">CASEY</span><h4>Specialist rose in value in 1.2</h4><p>Older Casey advice favored Shinobi officers. His 1.2 Specialist update makes Specialist a much stronger officer candidate because Scanning Protocol can provide information while the Shinobi is freed to fight. The exact candidate therefore depends on whether your officer should primarily scout or support.</p></div>
+</div>
+<div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> For a first campaign, <b>Shinobi officer is the simplest default</b> because the action economy is intuitive and matches Andy's tested routine. A high-stat Specialist or Holo Sharpshooter can justify a different tree, especially if you want Lead By Example. Do not force the same officer class into every squad if it creates a role gap.</div>
+
+<h3>Officer operational rules</h3>
+<ul>
+<li>Bring an officer on almost every normal mission if roster depth permits; the action economy from Command is valuable immediately.</li>
+<li>Do not stack officers expecting multiple officer kits: only the mission leader's officer abilities function.</li>
+<li><b>Command cannot target SPARKs</b>, so a SPARK-heavy squad reduces one of the officer's strongest tactical tools.</li>
+<li>Keep the officer close enough for Command Range perks when you need them; many aura perks do not buff the officer themself.</li>
+<li>Officer rank also helps a soldier Haven Adviser expose Faceless faster.</li>
+<li>Leadership familiarity bonuses are real but slow. Build squads around mission requirements first; treat repeat-officer bonuses as a bonus, not a constraint.</li>
+</ul>
+<div class="source-note">Current stable mechanics: <a href="https://www.ufopaedia.org/Officers_%28LWOTC%29" target="_blank">UFOpaedia Officers</a> and <a href="https://github.com/long-war-2/lwotc/blob/master/LongWarOfTheChosen/Config/XComLW_OfficerPack.ini" target="_blank">stable Officer config</a>. Strategy: Andy's <a href="https://app.notion.com/p/056e7e2beea382c190b58177e2d5ebf6" target="_blank">Class Guide</a> + <a href="https://app.notion.com/p/5ebe7e2beea3829ab9b3811d0715d644" target="_blank">Strategy Layer</a>, and Casey class/squad notes.</div>
+</section>
+</main>
+<script>
+(function(){
+ const q=document.getElementById('chapterSearch');
+ const clear=document.getElementById('chapterClear');
+ function run(){
+  const term=(q.value||'').trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(sec=>{
+   if(!term){sec.classList.remove('chapter-hidden'); return;}
+   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
+  });
+  document.querySelectorAll('details').forEach(d=>{
+   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
+  });
+ }
+ q.addEventListener('input',run);
+ clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
+ const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){
+  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
+   const s=box.querySelector('summary'); if(!s)return;
+   const name=(s.innerText||'').split(' — ')[0].trim();
+   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
+  });
+ }
+})();
+</script></body></html>
