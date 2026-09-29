@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWOTC v13 — Missions, Tactics & Liberation</title><style>
+:root{
+  --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
+  --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+a{color:var(--accent)} a:hover{color:white}.layout{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0b0f14;border-right:1px solid var(--line);padding:18px}
+.sidebar h1{font-size:1.05rem;margin:0 0 8px}.sidebar .sub{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.search{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#141a21;color:white;margin:8px 0 12px}
+.nav a{display:block;text-decoration:none;color:#cbd5e1;padding:6px 8px;border-radius:6px;font-size:.88rem}.nav a:hover{background:var(--panel2);color:white}
+.main{max-width:1260px;padding:30px 34px 80px}.hero{padding:30px;border:1px solid var(--line);background:linear-gradient(135deg,#151c25,#202b38);border-radius:16px;margin-bottom:26px}
+.hero h1{font-size:2rem;margin:0 0 8px}.hero p{color:var(--muted);max-width:950px}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#22303e;border:1px solid #3e5366;color:#d8e6f3;font-size:.78rem;margin:2px 5px 2px 0}
+section{scroll-margin-top:18px;margin:30px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+h2{font-size:1.55rem;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin-top:22px;color:#dfe9f3}h4{margin-bottom:6px}
+.callout{border-left:4px solid var(--accent);background:#13202a;padding:12px 14px;border-radius:6px;margin:12px 0}.warn{border-left-color:var(--danger);background:#26191c}.good{border-left-color:var(--good);background:#14241c}.gold{border-left-color:var(--accent2);background:#2a2414}.purple{border-left-color:var(--purple);background:#20192b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}th{color:#e8f1fa;background:#111820;position:sticky;top:0;z-index:1}.small{font-size:.84rem;color:var(--muted)}
+.mission,.classbox,.sourceguide{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}.mission summary,.classbox summary,.sourceguide summary{cursor:pointer;padding:14px 16px;font-weight:700;background:#141b23}.mission .body,.classbox .body,.sourceguide .body{padding:14px 16px}.tag{font-size:.72rem;padding:3px 7px;border-radius:999px;background:#293644;border:1px solid #3c4d5d;margin-right:4px;white-space:nowrap}.tag.red{background:#3a2023}.tag.green{background:#183425}.tag.gold{background:#3a3218}.tag.purple{background:#322547}
+.sourcebox{background:#0c1117;border:1px dashed #425163;padding:14px;border-radius:8px}.check li{margin:6px 0}.topbtn{position:fixed;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--accent);color:#061017;font-weight:800;padding:11px 14px;cursor:pointer;box-shadow:0 4px 18px #0008}.hidden{display:none!important}
+.kpi{font-size:1.25rem;font-weight:800}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{color:var(--muted)}
+.phase{border-left:4px solid var(--accent2)}.dangerrow td:first-child{color:var(--danger);font-weight:700}.priority{font-weight:700;color:var(--accent2)}
+.imgplaceholder{border:1px dashed #58697a;border-radius:10px;padding:22px;text-align:center;color:var(--muted);background:#10161c}
+@media(max-width:950px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{columns:2}.main{padding:20px}.topbtn{right:12px;bottom:12px}}
+@media(max-width:600px){.nav{columns:1}.hero{padding:20px}.hero h1{font-size:1.55rem}.main{padding:14px}table{font-size:.81rem;display:block;overflow-x:auto}}
+
+/* --- Mobile-first usability layer --- */
+.mobilebar{display:none;position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid var(--line);padding:9px 10px;gap:8px;align-items:center}
+.mobilebar button,.quickjump{border:1px solid var(--line);background:#18212b;color:var(--text);border-radius:9px;padding:10px 12px;font-weight:700}
+.mobilebar .brand{font-weight:800;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.decision-grid label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px}
+.decision-grid select{width:100%;background:#10171e;color:var(--text);border:1px solid var(--line);padding:11px 10px;border-radius:9px}
+.decision-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.decision-actions button{background:var(--accent);color:#061017;border:0;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
+#decisionResult{margin-top:12px;padding:14px;border-radius:10px;background:#10171e;border:1px solid var(--line)}
+.result-take{border-left:5px solid var(--good)!important}.result-consider{border-left:5px solid var(--accent2)!important}.result-skip{border-left:5px solid var(--danger)!important}
+.matrix-badge{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 7px;border-radius:999px;margin-right:4px}.take{background:#173a27;color:#9af0bd}.maybe{background:#3a3218;color:#ffe38d}.skip{background:#3b2023;color:#ffabab}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.phase-card h3{margin:0 0 8px}.phase-card ul{padding-left:18px;margin:6px 0}.phase-card li{margin:5px 0}
+.rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rule{background:#111820;border:1px solid var(--line);border-radius:10px;padding:12px}.rule b{display:block;margin-bottom:4px}
+.mobile-tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0b0f14eF;border-top:1px solid var(--line);padding:6px;grid-template-columns:repeat(4,1fr);gap:4px;backdrop-filter:blur(8px)}
+.mobile-tabs a{text-align:center;text-decoration:none;color:#dbe7f2;font-size:.68rem;padding:7px 3px;border-radius:8px;background:#141b23}.mobile-tabs span{display:block;font-size:1rem}
+@media(max-width:950px){
+  body{padding-bottom:68px}.mobilebar{display:flex}.sidebar{display:none;position:fixed;z-index:70;top:52px;left:0;right:0;height:calc(100vh - 52px);overflow:auto;border:0;padding:14px;background:#0b0f14}.sidebar.open{display:block}.nav{columns:1}.mobile-tabs{display:grid}.main{max-width:none;padding:14px 12px 86px}.hero{padding:18px 15px;border-radius:12px;margin-top:8px}.hero h1{font-size:1.45rem}.hero p{font-size:.92rem}.grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr 1fr}section{margin:22px 0;scroll-margin-top:64px}h2{font-size:1.3rem}.topbtn{bottom:76px;right:10px;padding:9px 11px}
+  details summary{touch-action:manipulation;min-height:48px;display:flex;align-items:center}
+  table{display:block;overflow-x:auto;white-space:normal;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:#11161d} th,td{min-width:145px;padding:9px 8px} th:first-child,td:first-child{position:sticky;left:0;background:#111820;z-index:2;min-width:128px} th:first-child{z-index:3}
+}
+@media(max-width:600px){
+  .decision-grid{grid-template-columns:1fr}.phase-grid{grid-template-columns:1fr}.rulegrid{grid-template-columns:1fr}.card,.mission .body,.classbox .body,.sourceguide .body{padding:12px}.mission summary,.classbox summary,.sourceguide summary{padding:12px;font-size:.95rem}.pill{font-size:.71rem}.callout{padding:10px 11px}.main{padding-left:10px;padding-right:10px}table{font-size:.78rem}.sourcebox{overflow-wrap:anywhere}
+}
+
+.refnote{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}.tight td,.tight th{padding:6px 8px}.status-full{color:var(--good);font-weight:800}.status-legacy{color:var(--accent2);font-weight:800}
+
+.order-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#061017;font-weight:900;margin-right:8px}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0c1117;border:1px solid var(--line);padding:10px 12px;border-radius:8px;overflow:auto}
+.calcbox{background:#101820;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.calcrow{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:center;padding:5px 0}
+.calcrow input[type=number]{width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:#0f141a;color:var(--text)}
+.source-note{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+.audit-ok{color:var(--good);font-weight:800}.audit-limit{color:var(--accent2);font-weight:800}
+@media(max-width:700px){.calcrow{grid-template-columns:1fr 75px 90px;font-size:.86rem}.order-num{width:24px;height:24px}table{font-size:.84rem}}
+
+/* v6 source comparison additions */
+.source-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}.src-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+.src-official{background:#143423;color:#9ff0bf;border-color:#285c40}.src-casey{background:#183245;color:#9edfff;border-color:#315b76}.src-andy{background:#3c2d13;color:#ffd982;border-color:#725929}.src-synth{background:#33284a;color:#d8c1ff;border-color:#5b4a7e}.src-legacy{background:#3a2020;color:#ffb3b3;border-color:#6e3939}
+.compare4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.compare4 .card{margin:0}.andybox{border-left:4px solid #f3c95c;background:linear-gradient(90deg,rgba(243,201,92,.08),transparent)}.officialbox{border-left:4px solid #7be0a8}.synthbox{border-left:4px solid #c7a7ff}.caseybox{border-left:4px solid #63d0ff}
+.details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
+.v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
+@media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
+
+/* --- v10 predictive search + campaign companion --- */
+.home-campaign-summary{display:flex;flex-direction:column;gap:3px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#111a22}
+.home-campaign-summary span{color:var(--muted);font-size:.82rem}
+.companion-tool{background:linear-gradient(180deg,#121922,#0f151b);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tool-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}.tool-grid label{font-size:.77rem;color:var(--muted);font-weight:800}
+.tool-grid input,.tool-grid select,.lookup-row input{width:100%;margin-top:5px;background:#0e151c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+.tracker-details{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#10171e}.tracker-details summary{cursor:pointer;padding:11px 12px;font-weight:800}.tracker-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}.tracker-check{display:flex;gap:7px;align-items:center;padding:7px 8px;border-radius:8px;background:#151e27;font-size:.8rem}.tracker-check input{accent-color:var(--accent)}
+.tool-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.primary-btn,.secondary-btn,.icon-btn{border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-family:inherit}.primary-btn{border:0;background:var(--accent);color:#061017}.secondary-btn,.icon-btn{border:1px solid var(--line);background:#18212b;color:var(--text)}
+.what-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-top:10px}.next-card{border:1px solid var(--line);background:#111820;border-radius:10px;padding:12px}.next-card b{display:block;margin-bottom:4px}.next-card a{font-size:.8rem}
+.lookup-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.lookup-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.lookup-suggestions button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:6px 9px;font-size:.78rem;cursor:pointer}.lookup-result{border:1px solid var(--line);background:#10171e;border-radius:12px;padding:14px;min-height:72px}.decision-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;margin-bottom:8px}.decision-keep{background:#163b27;color:#9ff0bf}.decision-caution{background:#3a3218;color:#ffe38d}.decision-sell{background:#3b2023;color:#ffb4b4}
+.class-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0}.class-pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:#111820;border-radius:10px;padding:10px}.class-pick small{display:block;color:var(--muted);margin-top:2px}.counter{display:grid;grid-template-columns:30px 28px 30px;align-items:center;text-align:center}.counter button{height:30px;border:1px solid var(--line);background:#19242e;color:var(--text);font-weight:900;cursor:pointer}.counter button:first-child{border-radius:8px 0 0 8px}.counter button:last-child{border-radius:0 8px 8px 0}.counter span{height:30px;line-height:30px;background:#0c1319;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin:9px 0}.coverage{padding:9px;border:1px solid var(--line);border-radius:9px;background:#121a22}.coverage.ok{border-left:4px solid var(--good)}.coverage.miss{border-left:4px solid var(--danger)}.coverage.optional{border-left:4px solid var(--accent2)}
+.search-overlay{display:none;position:fixed;inset:0;z-index:200}.search-overlay.open{display:block}.search-backdrop{position:absolute;inset:0;background:#02060acd;backdrop-filter:blur(4px)}.search-panel{position:relative;width:min(820px,calc(100% - 24px));max-height:min(760px,calc(100vh - 30px));overflow:auto;margin:15px auto;background:#0d141b;border:1px solid #3b4b5d;border-radius:16px;padding:16px;box-shadow:0 24px 80px #000c}
+.search-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.search-head h2{border:0;padding:0;margin:2px 0 8px}.icon-btn{font-size:1.25rem;padding:5px 11px}.global-search-wrap{display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid #476177;background:#101a23;border-radius:12px;padding:2px 9px}.global-search-wrap input{border:0;outline:0;background:transparent;color:white;font-size:1rem;padding:12px 5px;width:100%}.global-search-wrap kbd{border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--muted);font-size:.72rem}.search-help{margin:7px 2px 10px}.recent-searches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-searches button{background:#161f28;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 8px;cursor:pointer}.search-results{display:grid;gap:6px}.search-result{display:grid;grid-template-columns:auto 1fr;gap:9px;text-align:left;border:1px solid transparent;background:#111820;color:var(--text);border-radius:10px;padding:10px;cursor:pointer;width:100%}.search-result:hover,.search-result.active{border-color:#4e718c;background:#16232e}.search-type{font-size:.65rem;font-weight:900;letter-spacing:.05em;padding:3px 6px;border-radius:6px;background:#223242;color:#bde9ff;align-self:start}.search-result b{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px;line-height:1.3}.search-result mark{background:#594b1d;color:#fff2b0;border-radius:2px}.search-hit{animation:searchFlash 1.7s ease}@keyframes searchFlash{0%,35%{outline:3px solid var(--accent2);outline-offset:4px;background-color:#2b2515}100%{outline-color:transparent}}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracker-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.search-panel{margin:8px auto;max-height:calc(100vh - 16px);padding:12px}}
+@media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
+
+
+/* --- v13 combined soldier builds --- */
+.build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
+.merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
+
+@media(max-width:760px){.merged-build-meta{grid-template-columns:1fr}}
+.xcom-overview,.xcom-guide{border:1px solid #40576b;background:#0e1821;border-radius:12px;padding:12px;margin:13px 0}
+.xcom-overview h3,.xcom-guide h4{margin:0 0 8px}
+.xcom-key{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:center;font-size:.8rem}
+.xcom-rank{display:inline-block;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
+.xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
+
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
+
+
+.chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
+.chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
+.chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chapter-title{font-weight:900;margin-right:auto}
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
+.chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
+.chapter-search{max-width:1180px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
+.chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
+.chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
+.chapter-intro h1{margin:.15rem 0 .35rem}
+.chapter-hidden{display:none!important}
+.read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
+@media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a class="active" href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
+<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell">
+<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Missions, Tactics & Liberation</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
+<a class="read-tool-link" href="index.html#missiondecision"><b>Interactive mission decision tool →</b><br><span class="small">Use the master guide for the live decision matrix.</span></a>
+<section class="searchable" id="missionsquads">
+<h2>6. Recommended squad by mission</h2>
+<p class="small"><b>Guide synthesis:</b> these squads combine Casey's role priorities, his explicit examples, 1.2 class changes and mission mechanics. Substitute equivalent roles when the named class is wounded or unavailable.</p>
+<table>
+<tr><th>Mission</th><th>Recommended core</th><th>Why / substitutions</th></tr>
+<tr><td><b>Hack Workstation / Recover Item</b></td><td>Specialist + Grenadier/Technical + Ranger + Shinobi + Gunner/Assault</td><td>Specialist is mandatory-value for remote objective and Scanner; long-range cover destruction prevents objective pushes from becoming melee overextensions.</td></tr>
+<tr><td><b>Destroy Relay / Sabotage</b></td><td>Specialist or Shinobi scout + Technical/Grenadier + Ranger + Assault + shooter</td><td>Get deep while concealed, then destroy cover/objective fast. Mobile killer is useful once final pod location is known.</td></tr>
+<tr><td><b>Rescue / Extract VIP</b></td><td>Ranger + Assault + control class + shooter + Specialist if objective benefits</td><td>Immediate RNF pressure means tempo matters more than perfect stealth. Bring mobility and reliable kills.</td></tr>
+<tr><td><b>Neutralize VIP</b></td><td>Ranger/Assault + Sharpshooter/Gunner + control + scout + officer</td><td>Kill the VIP at range or with a controlled dash. Do not sacrifice squad position for a capture bonus.</td></tr>
+<tr><td><b>Jailbreak</b></td><td>Ranger + Assault/Shinobi + Technical/Grenadier + Specialist + shooter</td><td>Fast damage and mobile control while escorting rescued personnel. RNFs punish slow clearing.</td></tr>
+<tr><td><b>Smash &amp; Grab</b></td><td><b>Shinobi + Grenadier + Gunner</b> + Ranger/rookies</td><td>This mirrors Casey's early example: no normal concealment makes Shinobi scouting more valuable; Technical loses concealed flamethrower opening value.</td></tr>
+<tr><td><b>Extract ADVENT Supplies</b></td><td>Specialist + Shinobi + Technical/Grenadier + Ranger + Gunner</td><td>Locate multiple pods before reveal, then accelerate. Scanner prevents moving blind once the objective clock starts.</td></tr>
+<tr><td><b>Supply Raid / Train / Convoy</b></td><td>Gunner + Grenadier/Technical + Specialist + Ranger + Psi/Reaper + flexible killer</td><td>High-value endurance fight: shred + control + sustained damage. Do not take a consumable-only team.</td></tr>
+<tr><td><b>Troop Column / Troop Ambush</b></td><td>Gunner + Psi + Specialist + Grenadier + Ranger/Reaper + Shinobi/Assault</td><td>Casey cites these as high-enemy-count missions. Bring repeatable control, healing, shred and sustained shooting.</td></tr>
+<tr><td><b>Rendezvous</b></td><td>Assault + Ranger + Shinobi + durable/control soldier + advisor</td><td>Compact Faceless fight; high close-range reliability matters more than elaborate scouting.</td></tr>
+<tr><td><b>Haven Defense / Retaliation</b></td><td>Specialist healer + Gunner + Ranger + Grenadier + SPARK/Templar + Psi/Assault</td><td>Immediate combat, Chosen risk, civilians/rebels to protect. Scouting is less important; healing, overwatch and control rise in value.</td></tr>
+<tr><td><b>Network Tower</b></td><td><b>Specialist + Grenadier + Shinobi + Ranger + Assault</b></td><td>This is Casey's explicit 1.2 composition: Scanner/objective, grenade control, stealth/melee, shooter, mobile killer/stun.</td></tr>
+<tr><td><b>ADVENT HQ</b></td><td>Reaper/Shinobi scout + Specialist healer + Gunner + Psi + Grenadier/Technical + Ranger/Assault + extra shooters as allowed</td><td>Long endurance mission. Preserve consumables, bring medikits, repeatable control and boss damage. Reaper is especially valuable because it can scout while the full squad fights.</td></tr>
+<tr><td><b>Invasion</b></td><td>SPARK/Templar + Specialist + Gunner + Technical/Grenadier + Ranger + Psi + scout</td><td>Durability and long-range objective destruction matter. Ghostwalker-style sneaking and SPARK tanking can solve awkward lanes.</td></tr>
+<tr><td><b>Chosen Stronghold</b></td><td>Gunner + Ranger/Reaper + Specialist healer + Grenadier + Psi + mobile killer</td><td>Arrive at the sarcophagus/final phase with burst damage, healing and consumables intact.</td></tr>
+<tr><td><b>Blacksite / Forge / Psi Gate</b></td><td>Specialist + Gunner + Psi + Grenadier + Ranger/Reaper + Assault/Shinobi</td><td>These are hard, long missions. Casey specifically values Full Override and strong mechanical control for Forge/Psi Gate.</td></tr>
+<tr><td><b>2-person stealth / covert-style objective</b></td><td>Shinobi officer + Specialist or mobile partner</td><td>Only when the map and mission are suitable. Casey warns that sewers/abandoned maps make small stealth teams dangerous; aborting can be correct.</td></tr>
+</table>
+</section>
+<section class="searchable" id="missions">
+<h2>7. Mission-by-mission playbook</h2>
+<details class="mission searchable" open=""><summary>Hack Workstation / Recover Item / Find a Lead</summary><div class="body">
+<span class="tag green">Specialist premium</span><span class="tag">RNF usually starts after reveal</span>
+<ul><li>If RNF is dormant, use concealment to get near the objective before the first fight.</li><li>Remote hacking reduces exposure and wasted movement.</li><li>When you break concealment near the objective, throw the evac flare early enough that extraction is ready when RNFs accelerate.</li><li>Use Scanner after the opening fight rather than wasting a charge before the ambush unless the map is genuinely unsafe.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Destroy Relay / Sabotage Transmitter</summary><div class="body">
+<span class="tag green">Stealth approach</span><span class="tag red">Lib 3 may be campaign-critical</span>
+<ul><li>Move deep before breaking concealment when timer mechanics allow.</li><li>Do not get dragged into a long firefight far from the objective.</li><li>For Lib 3, completing the objective and extracting is better than clearing the map if the situation deteriorates.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Rescue VIP / Extract VIP</summary><div class="body">
+<span class="tag red">RNF pressure begins immediately</span>
+<ul><li>Do not spend multiple turns engineering a perfect first ambush.</li><li>Clear a corridor, move the VIP with the squad, and protect the exit route.</li><li>Lib 2 effectively behaves as though regional Strength is one higher in Casey's older liberation explanation, so bring a real combat team.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Neutralize VIP</summary><div class="body">
+<ul><li>The VIP is the objective; do not allow a capture attempt to activate another pod.</li><li>Long-range shooters can simplify the mission dramatically.</li><li>On Lib 3, speed and survival outrank corpse/loot greed.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Jailbreak</summary><div class="body">
+<span class="tag red">RNF active early</span>
+<ul><li>Move with purpose; overwatch creeping every turn is too slow.</li><li>Keep rescued personnel and combat soldiers close enough that a surprise activation cannot isolate half the group.</li><li>Leave before RNF attrition turns a successful rescue into a wipe.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Smash &amp; Grab</summary><div class="body">
+<ul><li>Casey's early example uses Shinobi + Grenadier + Gunner because the lack of normal concealment raises scouting value and lowers Technical ambush value.</li><li>Supplies are not worth a dead core soldier. Take safe crates.</li><li>Use cover destruction and shooters rather than charging blindly toward distant boxes.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Extract ADVENT Supplies</summary><div class="body">
+<span class="tag gold">Concealment threshold matters</span>
+<ul><li>Casey's key point: timer does not start until concealment breaks, so move farther in and locate more than one pod first.</li><li>After pod 1 dies, immediately transition toward pod 2/objective because the mission accelerates sharply.</li><li>Do not spend every grenade on pod 1; the time pressure after reveal is the real mission.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Supply Raid / Train / Convoy</summary><div class="body">
+<ul><li>Bring a strong combat squad; the reward is large enough to justify good troops.</li><li>Use sustained shooters/control rather than a team that goes empty after one encounter.</li><li>100% infiltration is especially valuable on mission families that only grant squad concealment at the full threshold.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Troop Column / Troop Ambush</summary><div class="body">
+<ul><li>Expect many enemies. Casey's mid/late guide uses Troop Ambush as the model for why control becomes central.</li><li>Sting Grenade + Bluescreen Bomb + Specialist hack is a premier late-game mechanical-pod solution.</li><li>Healers gain unusual value because these fights can run long and include bosses/rulers.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Haven Defense / Retaliation</summary><div class="body">
+<span class="tag red">Chosen risk</span>
+<ul><li>Do not spread extremely wide on turn one; Casey's 1.2 notes say Chosen drop location reacts to your position.</li><li>Healing, overwatch, burst damage and control are more important than preserving a concealed scout.</li><li>Supply Retaliation RNFs were slowed to every three rounds in Casey's 1.2 observations.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Network Tower</summary><div class="body">
+<span class="tag gold">Liberation</span><span class="tag green">Chosen excluded in current config</span>
+<p><b>Casey 1.2 team:</b> Specialist + Grenadier + Shinobi + Ranger + Assault.</p>
+<ul><li>Specialist: scans/objective + possible Airdrop.</li><li>Grenadier: control and cover destruction.</li><li>Shinobi: stealth pathing, sword kill, Combatives.</li><li>Ranger: mobile ranged damage.</li><li>Assault: stun + reliable close kill.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>ADVENT HQ</summary><div class="body">
+<span class="tag red">Endurance</span><span class="tag gold">Liberates region</span>
+<ul><li>Casey recommends heavy medikit coverage; a healer Specialist/Field Medic is extremely valuable.</li><li>EXO/heavy-weapon ordinance is useful, but preserve at least one major burn/control option for the command pod/General.</li><li>Reaper is especially valuable in LWOTC because it can scout while the rest of the squad fights.</li><li>Opening: work along the entrance, find a defensible roof/side position with long LOS and do not advance too far.</li><li>Do not let pods drag you forward deeper into the map. Maintaining position is more important than preventing every wound.</li><li>Wait patiently for a good Domination/Full Override target rather than taking a mediocre puppet.</li></ul>
+</div></details>
+<details class="mission searchable"><summary>Chosen Stronghold</summary><div class="body">
+<ul><li>Treat the pre-boss stage as an endurance tax. Do not empty every consumable before the showdown.</li><li>Bring burst damage because the Chosen are fundamentally a damage race until late-game power trivializes them.</li><li>Healing and action economy are more valuable than niche utility.</li></ul>
+</div></details>
+
+<h3>Andy mission cards — additional execution rules <span class="v6flag">v6</span></h3>
+<div class="details-grid">
+<details><summary>Smash &amp; Grab vs Extract Advent Supplies</summary><div><p><b>Smash &amp; Grab:</b> revealed start, building/boxes, predictable fixed RNF. You can often clear enemies with a couple of turns to spare; do not manufacture urgency.</p><p><b>Extract Supplies:</b> concealed WOTC-style crate race; Andy considers it substantially riskier. Put the evac near the last collection area, do not chase distant crates into fog, and delay tagging neutral crates so ADVENT may mark them first and let you reclaim them as a free action at the start of your turn.</p><p>Andy’s rough full-haul example is about <b>75 supplies + 14 alloys + 14 Elerium</b>, but 1.2.3 rebalanced these reward schedules; treat the number as historical/illustrative, not a guaranteed current payout.</p></div></details>
+<details><summary>Supply Raid / Troop Ambush</summary><div><p>Exceptional reward, exceptional wipe potential. Andy generally wants <b>&lt;20 expected enemies</b>, a strong team and good equipment. This is one of the few mission families he will boost, send more than six to, or even pull the A-team from another infiltration for.</p><p>Do not hoard rockets/incendiaries when a giant rainbow pod or multiple pods collide. A healthy squad with no consumables is preferable to a wounded squad that “saved” ordinance.</p></div></details>
+<details><summary>Covert Op Ambush</summary><div><p>Always send the covert pair with a <b>medikit</b>. Technicals and Shinobis are strong ambush-risk candidates because Squaddies still bring fire control/scouting. The four-person rescue team values mobility and immediate impact: SPARK, Skirmisher and a Specialist with Medical Protocol can be excellent.</p><p>The stranded pair should avoid waking pods until rescuers close the distance; when forced to fight, use control to buy time rather than expecting a B/C-equipment pair to alpha-strike a full pod.</p></div></details>
+<details><summary>Sabotage Transmitter vs Destroy Relay</summary><div><p><b>Destroy Relay:</b> use concealment to approach and set the ambush; RNF pressure starts after reveal. <b>Sabotage Transmitter:</b> very short objective timer, so take the first decent ambush and use relays to buy time. Do not extend the objective timer so long that the RNF clock kills you.</p></div></details>
+<details><summary>Blacksite / Facility</summary><div><p>Throw evac earlier than intuition suggests; facility evac can be very slow. For Blacksite, Andy prefers clearing the map, staging almost everyone near evac, then sending the fast soldier for the vial because taking the vial starts reinforcement pressure. The 45-turn doom timer is generous: do not rush the map.</p></div></details>
+<details><summary>UFO / Chosen Avenger Defense</summary><div><p>Defense Matrix is extremely valuable: upgraded, staffed turrets can provide eight meaningful shots per turn. On Chosen Defense, do not get sucked into racing the objective; Andy reports enough Avenger power for careful play. The 1.2 version is far more beatable than old LWOTC versions.</p></div></details>
+</div>
+
+<details class="complete-reference" open>
+<summary>Complete mission reference — infiltration, mission-specific quirks, quick response missions & SITREPs</summary>
+<div class="complete-body">
+<h3>Squad size, over-infiltration and enemy readiness</h3>
+<ul class="dense-list">
+<li>Plan normal missions around roughly <b>five soldiers</b>. Six is comfortable when the timer allows and can carry a trainee. Seven is usually too strategically expensive for ordinary guerrilla ops unless the mission is critical or untimed.</li>
+<li>Over-infiltration can effectively reduce the mission’s regional-Strength contribution and sometimes enemy detection radius, but the exact breakpoint is not guaranteed to occur in clean 25% steps.</li>
+<li>Do not leave soldiers tied up for days merely because a 150% infiltration target exists. Launch when the expected enemy count and concealment conditions are acceptable.</li>
+<li>Always plan for 100% infiltration, but 90–99% can be rational if the displayed enemy count is already where you want it and the mission does not impose a critical sub-100% penalty.</li>
+</ul>
+
+<h3>Jailbreak</h3>
+<ul class="dense-list"><li>RNF pressure can be tight depending on evac placement. Move faster than on a leisurely hack mission, but still avoid blind activations. Jailbreaks are a major reason Recruit jobs are often unnecessary.</li></ul>
+
+<h3>Smash & Grab vs Extract ADVENT Supplies</h3>
+<div class="source-split">
+<div><h4>Smash & Grab</h4><ul class="dense-list"><li>Revealed start; several crates concentrated around an ADVENT structure.</li><li>Usually enough time to clear natural enemies carefully before fixed reinforcements become a serious issue.</li><li>Each soldier physically carrying a crate matters, so squad positioning and evac route planning are important.</li></ul></div>
+<div><h4>Extract ADVENT Supplies</h4><ul class="dense-list"><li>Concealed start; scattered crates and a short post-reveal RNF window.</li><li>Much more prone to baiting the player into unsafe movement for tagged crates. Do not dash into fog just because ADVENT marked one.</li><li>Call evac so that the pickup arrives around the first RNF window and center it near the final cluster of crates.</li><li>Wait to tag neutral crates when possible: if ADVENT marks it on their turn, reclaiming it can become a free action on yours.</li><li>Specialists are good remote crate collectors when the rear area is already scouted because many of their combat actions work at range.</li></ul></div>
+</div>
+
+<h3>Destroy Relay vs Sabotage Transmitter</h3>
+<ul class="dense-list">
+<li><b>Destroy Relay:</b> normal timed-objective logic. RNF pressure begins after concealment breaks, so use concealment to close distance before the first engagement.</li>
+<li><b>Sabotage Transmitter:</b> very short objective timer, extended by shooting relay nodes. Break concealment earlier, use pistols/melee for cheap relay destruction, and remember that extending the objective timer does <b>not</b> stop RNF escalation.</li>
+</ul>
+
+<h3>Covert Op Ambush</h3>
+<ul class="dense-list">
+<li>Never treat a single-digit ambush chance as zero. Send a team that can survive with C/B-tier equipment and give at least one operative a Medikit.</li>
+<li>The stranded pair should avoid waking pods until rescuers arrive; if contact happens early, use control (burn/stun) rather than trying to out-damage a full pod.</li>
+<li>Technical and Shinobi are strong covert operatives because they provide control/scouting even at low rank.</li>
+<li>The rescue team is capped and should prioritize mobility and immediate impact: SPARK Overdrive, Skirmisher grapple, a combat-capable Specialist, etc. A pure healer who contributes no offense is a poor use of a tiny rescue squad.</li>
+<li>Ambushes are also valuable no-infiltration XP opportunities; they are not purely a punishment.</li>
+</ul>
+
+<h3>Supply Raids / Troop Ambushes</h3>
+<ul class="dense-list">
+<li>High strategic value: resources, corpses and regional Strength reduction. No normal objective timer, but maps are compact enough that 20+ enemies can create multi-pod pileups.</li>
+<li>Below ~20 enemies and with adequate infiltration, bring the best team you can. These are among the few mission types where more than six soldiers can be justified if the timer supports it.</li>
+<li>Expect large rainbow pods. Bring AoE control, boss damage and enough ordinance to survive the one turn where multiple pods converge.</li>
+<li>DFA Sharpshooters can be awkward on flat wilderness maps; concealed Shinobi scouting is valuable but dangerous if the scout gets isolated.</li>
+<li>The special Covert Op troop ambush is smaller, has a fixed-ish infiltration window and does not reduce regional Strength in the same way.</li>
+</ul>
+
+<h3>Alien Facility / Blacksite / UFO missions</h3>
+<ul class="dense-list">
+<li><b>Alien Facility:</b> evac can be very long. Call early; do not stealth the objective only to spend several dead turns waiting while the command pod finds you. Usually one or two facilities are enough if Golden Path progress is timely.</li>
+<li><b>Blacksite:</b> long mission with generous doom-RNF grace. Clear the map, move most of the squad toward evac, then have the fastest soldier take the vial so the RNF phase starts with the team already positioned.</li>
+<li><b>Raid UFO:</b> treat it more like a Troop Ambush than a normal timer mission. The post-reveal beacon timer is long enough for controlled clearing; a Specialist can hack the beacon remotely.</li>
+<li><b>UFO Avenger Defense:</b> 12 soldiers and many enemies; Defense Matrix turrets are excellent value. Once RNFs begin they are relentless, even though the UI may not warn you clearly.</li>
+</ul>
+
+<h3>Chosen Avenger Defense</h3>
+<ul class="dense-list">
+<li>Stable 1.2 is substantially more manageable than the notorious older version, but it is still a 40+ enemy endurance battle plus a Chosen.</li>
+<li>Defense Matrix turrets with an Engineer are exceptionally valuable. Andy found the small external guns less important than simply killing enemies efficiently.</li>
+<li>Play slowly; the Avenger power timer is more forgiving than it appears. The mission has no normal reinforcement stream.</li>
+<li>The cleanest prevention plan is still to reveal/assault the Stronghold before the Chosen completes knowledge progress. Avoid kidnappings and save the “Counter Chosen Activity” covert action for the month it actually buys time.</li>
+</ul>
+
+<h3>Retaliations</h3>
+<ul class="dense-list">
+<li>Quick response, no infiltration, short launch window, Chosen present, haven adviser present. Bring the best available squad; SPARKs are especially efficient because infiltration penalties do not matter here.</li>
+<li>Rebels are expendable relative to trained soldiers. Use rebel grenades early rather than assuming the rebel survives long enough to spend them later.</li>
+<li><b>Full Retaliation:</b> continuous RNF begins very early; rescue what you safely can and leave rather than trying to save every rebel.</li>
+<li><b>Data Tap:</b> soldiers and rebels start separated; mobility is crucial. SPARK Overdrive, Phase Walk and long-range fire help bridge the map.</li>
+<li><b>Supply Convoy:</b> survive fixed RNF waves; regrouping matters more than blindly dashing to the rebels.</li>
+<li><b>Recruit Raid:</b> front-loaded RNF waves then relative calm. Smoke/defensible terrain can be unusually valuable here.</li>
+</ul>
+
+<h3>SITREP: Project Miranda</h3>
+<ul class="dense-list"><li>Extremely warping because the accuracy penalty hurts XCOM’s shooter-heavy turns disproportionately. It becomes more manageable later when Psi, Grenadier, Technical, Assault and SPARK can contribute without relying on normal Aim rolls. Still avoid high-enemy-count Miranda missions unless the reward is worth it.</li></ul>
+
+<h3>SITREP: Lost</h3>
+<ul class="dense-list">
+<li>Treat Lost as a serious risk multiplier, not free distraction. They interfere with your movement, explosives, concealment and ammo, and ADVENT is not guaranteed to prioritize them.</li>
+<li>Technical flamethrowers, pistol perks/Faceoff, Shinobi Bladestorm/Reaper and Gunner area suppression are strong tools.</li>
+<li>MEC explosives can create a feedback loop by spawning more Lost. Avoid unnecessary explosions, but do not let a Muton Elite or similarly lethal enemy act merely to avoid another horde.</li>
+<li>Lost Grapplers have Bladestorm. Prioritize Brutes immediately; when the horde is distant, Dashers are often the movement threat, while nearby Grapplers are the immediate melee trap.</li>
+</ul>
+</div></details>
+</section>
+<section class="searchable" id="tactics">
+<h2>8. Tactical operating procedure</h2>
+<h3>Leapfrog movement</h3>
+<p>Move a rear soldier into the lead, then another rear soldier into the lead. You can often move the squad a full blue move while exposing only a few tiles of new fog. This is especially important on 2-man stealth missions and timed maps.</p>
+<h3>Flashbang doctrine</h3>
+<ul><li>Casey takes roughly <b>three flashbangs per mission for the first two months</b>.</li><li>Flash the <b>Sectoid</b>, not the mind-controlled soldier or zombie, to break mind control / dispel the zombie.</li><li>Flashbangs disable Stun Lancer melee and reduce many enemies to low-threat shooters.</li><li>Non-Grenadiers are good flash carriers because flashbang throw range is naturally long; let Grenadiers use their range advantage on actual grenades.</li></ul>
+<h3>RNF timer rule</h3>
+<div class="callout"><b>If RNF is already ticking:</b> take a good first fight quickly. <b>If RNF begins on reveal:</b> move close to the objective before breaking concealment.</div>
+<h3>Five mission phases</h3>
+<ol>
+<li><b>Move in concealment:</b> preserve concealment, watch hidden civilians, give building corners a wide berth, use SMG mobility, and use Specialist hacks to disable a blocking Drone without necessarily breaking concealment.</li>
+<li><b>Ambush pod 1:</b> do not wait for perfection if RNF is active. Flamethrower can be a dominant opener; grenade ambush is fine, but follow with guaranteed damage. Keep a scout concealed when possible.</li>
+<li><b>Move without concealment:</b> slow down. Scouts need deliberate LOS-safe moves. Use sound cues, LOS-breaking terrain and Scanner. Overwatch creeping every turn is too slow.</li>
+<li><b>Fight pod 2 at range:</b> this is often the hardest fight. Rockets/Grenadier cover destruction, Combat Protocol, Electroshock and suppression matter. Do not hoard ordinance if you need it now.</li>
+<li><b>Final pod / unchained movement:</b> once every remaining enemy location is known, melee and aggressive movement become much safer. This is the Assault/Shinobi moment.</li>
+</ol>
+<h3>1.2 scouting update</h3>
+<ul><li>Scanning Protocol is now Casey's preferred primary information tool on most concealed missions once the Gremlin is upgraded.</li><li>Do not waste scans before the ambush unless necessary; a forward blue move before scanning increases coverage.</li><li>Shinobi still scouts long missions, non-concealed starts, stealth ops and situations where a Sharpshooter needs a spotter.</li><li><b>Bad scouting is worse than no scouting.</b> Casey repeatedly warns that rushing corners/roofs can end campaigns.</li></ul>
+<h3>Control progression</h3>
+<table><tr><th>Stage</th><th>Main control tools</th></tr>
+<tr><td>Day 1</td><td>Flashbang, Suppression, Hack, Arc Thrower stun, Flamethrower burn</td></tr>
+<tr><td>Apr–Jul</td><td>Combatives, Incendiary/Frost, Insanity, stronger hacking, Stun Gunner, better flamethrower</td></tr>
+<tr><td>Aug–Oct</td><td>Stasis, Domination, Sting Grenades, Dragon Rounds, Disabling Shot, Full Override, Chain Lightning</td></tr></table>
+<p>Casey's rough summer goal: <b>about 75% of the barracks should have some form of control</b>.</p>
+<h3>Tanking</h3>
+<p>Mind-controlled enemies are ideal tanks. If unavailable, Templar is Casey's best conventional tank, with SPARK next. Temporary tanking can be created with Aid Protocol, Untouchable, Null Ward, Mind Merge and similar tools.</p>
+<h3>Overwatch rules — decide what ruleset you are playing</h3>
+<div class="callout gold"><b>Casey's beginner recommendation:</b> enable the <i>[WOTC] Revert Overwatch Rules Change</i> mod. Without the revert, single-tile moves can trigger overwatch, merely entering the overwatcher's visibility can trigger it, and the overwatcher receives a substantial aim advantage against units in cover. If you leave the WOTC rules enabled, movement that would be safe in older Long War can draw fire.</div>
+<h3>Concealment → ambush → second pod → final pod: micro rules</h3>
+<div class="grid">
+<div class="card"><h4>While concealed</h4><ul><li>Assume civilians may be hidden behind high-cover objects at the insertion area.</li><li>Give building corners and other LOS blockers a wide berth.</li><li>SMG users can fan out a little while concealed to help find the first pod.</li><li>A Specialist can disable/hack a Drone without necessarily breaking squad concealment.</li><li>If sneaking around pods, the far map edge is often the safest route.</li></ul></div>
+<div class="card"><h4>First ambush</h4><ul><li>If RNF is already ticking, take a <i>good enough</i> ambush instead of wasting turns.</li><li>If RNF has not started, get close to the objective first.</li><li>Preserve the Shinobi/Reaper scout when possible.</li><li>Do not risk soldiers for loot; guaranteed grenade/Combat Protocol damage is worth using to close the fight.</li></ul></div>
+<div class="card"><h4>Moving revealed</h4><ul><li>Yellow-alert enemies can sometimes shoot on activation; avoid exposing flanks to a pod drawn by noise.</li><li>Rooftops can be excellent Shinobi scouting positions when the approach is safe.</li><li>If the RNF warning turns red, hide the concealed Shinobi before the drop and then move/retreat quickly.</li><li>When forced to double-move blind, move a lower-ranked soldier first into strong cover.</li><li>Move two-action fighters such as Sharpshooter and rocket Technical only after safer scouts/movers have shown the path.</li></ul></div>
+<div class="card"><h4>Second pod at range</h4><ul><li>Do not hoard rockets/grenades for a hypothetical later battle; this is often the hardest engagement.</li><li>Electroshock is usually preferable to charging an Assault into unknown fog.</li><li>A Grenadier + Specialist can create guaranteed long-range damage/cover destruction even when ordinary shots are poor.</li></ul></div>
+</div>
+<h3>1.2 edge-case warnings</h3>
+<ul><li>Enemy pods can patrol roughly <b>8 tiles</b> in a straight normal move; do not assume a pod is safely out of reach because it looked distant last turn.</li><li><b>Purifier flamethrower is not disabled by Flashbang.</b></li><li><b>Berserker and Archon melee are not disabled by burning</b> when they can still reach a target.</li><li><b>Stunning a Spectre does not release an already-Shadowbound soldier.</b></li><li>Suppression is not a perfect answer to ADVENT Rocketeers; they can sometimes run it and still launch a rocket.</li><li>Late-game ADVENT can gain <b>Covering Fire</b>; movement/action sequencing around overwatch becomes more dangerous.</li></ul>
+<div class="card"><h3>Early tactical micro Casey explicitly calls out</h3>
+<table><thead><tr><th>Situation</th><th>Rule</th></tr></thead><tbody>
+<tr><td>Deployment zone</td><td>Assume a hidden civilian may be behind nearby high-cover objects; don't sprint blindly into a reveal.</td></tr>
+<tr><td>Buildings / corners</td><td>Give LOS-blocking corners a wide berth. A Shinobi/Reaper scout deserves as much planning time as a combat action.</td></tr>
+<tr><td>Concealed squad</td><td>SMG users can spread slightly to help find the first pod. If a Drone traps a soldier in detection radius, a Specialist can disable/hack it without necessarily breaking concealment.</td></tr>
+<tr><td>First ambush</td><td>If RNF is running, accept a good ambush instead of waiting for perfection. If RNF is not active, move close to the objective before breaking concealment.</td></tr>
+<tr><td>After reveal</td><td>Yellow Alert pods may shoot on activation; keep flanks protected. Rooftops are often good Shinobi scouting positions.</td></tr>
+<tr><td>RNF signal turns red</td><td>Hide the Shinobi while the rest handles the drop, then move fast or retreat.</td></tr>
+<tr><td>Forced double move</td><td>Move a lower-rank soldier first, into high cover, to absorb discovery risk.</td></tr>
+<tr><td>Two-action fighters</td><td>Move Sharpshooter / rocket Technical last, only after you know the move will not activate a pod.</td></tr>
+<tr><td>Second pod at range</td><td>Use rockets/grenades now; do not hoard ordinance for an imagined later fight while the current fight becomes a disaster.</td></tr>
+<tr><td>Final pod</td><td>Once you know it is the last pod, aggressive movement becomes far safer—this is where Assault/Shinobi/Technical can be unleashed.</td></tr>
+</tbody></table></div><div class="card"><h3>Testing abilities / builds without risking the campaign</h3>
+<p>Casey recommends testing unfamiliar builds on an <b>old save with a retaliation mission already pending</b>. This avoids scanning forward and accidentally learning future campaign information.</p>
+<ul class="check"><li><span class="mono">RespecSelectedSoldier</span> — instantly respec the selected soldier.</li><li><span class="mono">LevelUpBarracks</span> — raise soldier ranks so you can test later abilities immediately.</li><li>This method does <b>not</b> properly solve Officer/Psi ability testing.</li></ul>
+</div>
+<h3>Andy’s probability / consistency doctrine <span class="v6flag">v6</span></h3>
+<div class="callout gold"><span class="src-badge src-andy">ANDY</span> A 90% shot is not “guaranteed”; across hundreds of shots, misses are inevitable. Tactical quality means arranging turns so a single miss does not decide the squad’s fate. Distinguish <b>bad outcome from a good decision</b> from <b>bad outcome caused by a bad decision</b>.</div>
+<h3>Equipment / movement micro</h3>
+<ul><li><b>Do not sleep on plating.</b> Ablative HP prevents both deaths and long wound timers.</li><li>An empty utility slot can be treated as an intentional <b>+1 Mobility item</b>.</li><li>For Andy’s control builds, SMGs commonly go to Shinobi, Technical, Grenadier and most Specialists; mobility matters more than rifle damage they rarely use.</li><li>Early AP Rounds are extremely valuable on primary shooters.</li><li>Once Skullmining exists, a Specialist’s Skulljack is also a hack-stat tool, not only a story item.</li><li>Hacking a robot does not break concealment.</li><li>Stunning an enemy removes its detection radius, which can rescue a concealed Shinobi caught too close.</li></ul>
+<h3>Two-person stealth hack — Andy’s execution</h3>
+<ol><li>Use <b>Shinobi + Specialist</b>, usually with SMGs and minimal weight.</li><li>Scout a safe line-of-sight tile to the objective.</li><li>Throw evac before committing; this may reveal the Specialist, so the Shinobi must keep the route safe.</li><li>Hack and, if needed, use <b>Command/Teamwork</b> to pull the Specialist back out.</li><li>A smoke grenade can buy a desperate turn, but if the pair is revealed before evac setup, survival odds collapse.</li></ol>
+<div class="callout warn"><b>Do not generalize stealth hacks to revealed Extract VIP missions.</b> Wandering patrols and overwatch make a lone-scout extraction much less reliable.</div>
+<h3>Hack rewards / failure reminders</h3>
+<p>Andy tracks high-impact hack effects such as all-robot control, temporary enemy control, disorient, action-point refund, concealment, targeting/crit buffs and supply/Intel caches. Failure effects can include Map Alert, Reinforcements or enemy stat buffs. <b>Map Alert is not always disastrous</b> if you are already in a defensive position and prefer enemies to come to you.</p>
+
+<details class="complete-reference" open>
+<summary>Complete merged tactical reference — probability, movement, stealth, control, hacking, loadouts & edge cases</summary>
+<div class="complete-body">
+<h3>Probability discipline</h3>
+<ul class="dense-list">
+<li>Long War is a campaign of hundreds of rolls. A 90–99% shot will eventually miss. The tactical objective is not to eliminate variance; it is to avoid creating turns where a single roll decides the squad’s survival.</li>
+<li>Separate <b>bad luck</b> from <b>bad planning</b>. A strong decision can fail; repeated “unlucky” disasters usually reveal a positioning, scouting, activation or backup-plan problem.</li>
+<li>Prefer guaranteed damage/control and high-probability actions when the consequence of failure is catastrophic. Save speculative shots for turns where a miss is survivable.</li>
+</ul>
+
+<h3>Movement and pod control</h3>
+<ul class="dense-list">
+<li>The governing tactical rule remains <b>fight one pod at a time</b>. Close-range classes tempt you to dash/Fleche/Run & Gun into unrevealed tiles; do not do that unless you are prepared for another pod.</li>
+<li><b>Leapfrog movement:</b> move rear soldiers into the lead rather than repeatedly pushing the current lead farther into fog. You preserve speed while exposing fewer new tiles each action.</li>
+<li>Enemy patrols can cover substantial distance on their turn. When a scout is close to an unseen pod, leave enough space for patrol movement rather than assuming the pod will remain stationary.</li>
+<li>On fully infiltrated missions, do not let fear of reinforcements force reckless movement. A single RNF drop is easier than fighting two natural pods simultaneously.</li>
+</ul>
+
+<h3>Early control and flashbang rules</h3>
+<ul class="dense-list">
+<li>Early flashbangs are campaign-saving utility. They break Sectoid Mind Control/Zombies when the <b>Sectoid</b> is targeted, disable Stun Lancer melee, reduce aim/mobility and combine well with Suppression.</li>
+<li>Not every enemy ability respects flashbang/disorientation: Purifier flamethrowers remain usable, and some late enemies resist or ignore particular control effects.</li>
+<li>Control evolves over the campaign: early Flashbang/Suppression/Hack/Arc Thrower/Flamethrower → midgame Combatives/Incendiary/Frost/Insanity → late Stasis/Domination/Sting/Dragon/Disabling Shot/Full Override/Chain Lightning.</li>
+<li>By summer, a large share of the barracks should contribute some form of reliable control. The point is to avoid turns where every dangerous enemy must be killed outright.</li>
+</ul>
+
+<h3>Loadout doctrine</h3>
+<ul class="dense-list">
+<li><b>Plating is not optional fluff.</b> Ablative HP often converts a lethal hit into survival and also reduces wound duration. Even late, Andy commonly dedicates multiple inventory slots to plating/vest protection.</li>
+<li>An <b>empty slot is an item</b> if the extra Mobility is strategically valuable. Technicals/Shinobis and stealth teams often benefit more from movement than from a marginal grenade or vest.</li>
+<li>SMGs belong on classes whose primary job is not directed fire: Technical, Grenadier, Shinobi and usually Specialist. Ranger is the main conventional rifle user in Andy’s doctrine; Psi uses SMG until Phase Walk, then can exploit a shotgun.</li>
+<li>AP rounds are excellent early on, particularly for Rangers/Sharpshooters against armored mechanicals. Laser sights do not use vanilla distance falloff, so crit Sharpshooters/Assaults can use them without the usual short-range assumption.</li>
+<li>Do not waste autoloader charges before a Codex Psionic Bomb or other forced reload situation if you can avoid it.</li>
+</ul>
+
+<h3>Mechanical hacking package</h3>
+<ul class="dense-list">
+<li>Hacking gets dramatically better when supported. Stack <b>Skulljack/Skullmining Hack bonus + Redscreen + Bluescreen Bombs</b> to move higher-tier MECs into reliable control range.</li>
+<li>Andy’s test case found Redscreen slightly stronger than Bluescreen Bombs for control chance, but both together are the real breakpoint. Because hacking a disoriented robot clears disorientation, sequence your control actions intentionally.</li>
+<li>Permanent/temporary controlled robots also absorb enemy fire, creating defensive value beyond their direct attacks.</li>
+<li>Specialist hacks and Combat Protocol can sometimes be executed via long straight-line line of sight even when the Specialist is not near the fight; search backward as well as forward for valid tiles.</li>
+<li>Hacking a robot does not break concealment.</li>
+</ul>
+
+<h3>Stealth-hack missions</h3>
+<ul class="dense-list">
+<li>Typical team: concealed Shinobi/officer + Specialist or similarly mobile objective unit. Bring SMGs, minimal equipment for Mobility, one Smoke if possible, and a bonded pair when available.</li>
+<li>Scout to a safe tile with line of sight to the objective, call evac early, then keep the hacker concealed until the evac timer is nearly complete. Command/Teamwork can pull the hacker back after an objective action.</li>
+<li>If detected <b>before</b> the evac flare, survival odds collapse. If detected after flare, Smoke and control may buy enough time.</li>
+<li>Spider Suit grapple movement does not break concealment, though Andy often skips Spider Suit research for broader economy reasons.</li>
+<li>Do not try the same trick on every revealed VIP extraction; patrol behavior and overwatch can make an apparently simple Shinobi escort much more dangerous than a standard stealth hack.</li>
+<li>Sewer/abandoned maps can make tiny stealth squads unusually dangerous; aborting a bad map is a valid strategic choice.</li>
+</ul>
+
+<h3>Hack rewards and failure penalties</h3>
+<ul class="dense-list">
+<li>Hack rewards include supply/intel caches, temporary squad buffs (Aim/Crit/Dodge/Squadsight/Run & Gun/concealment/vision), Facility Leads and other tactical effects. Large early Supply rewards can be a meaningful economy swing.</li>
+<li>Failure penalties can include Reinforcements, Map Alert and major enemy stat buffs. Do not chase a marginal bonus if the failure result is campaign-threatening.</li>
+<li>Some reward categories do not stack the way the interface may imply; always judge the actual reward rather than assuming two identical bonuses necessarily double.</li>
+</ul>
+
+<h3>Graze, Overwatch and status edge cases</h3>
+<ul class="dense-list">
+<li>Graze is not simply a miss. On multi-shot/shred/special-ammo classes it can still trigger useful secondary effects, which is why some authors value Grazing Fire more on Gunners than on pure finisher classes.</li>
+<li>Overwatch rules depend on whether the Revert Overwatch Rules mod is enabled. Without the revert, one-tile moves and entering visibility can trigger reaction fire, and cover is less protective against Overwatch.</li>
+<li>Stunning a Spectre does not automatically release Shadowbind; Revival Protocol can wake the bound soldier while the clone persists.</li>
+<li>Disorient disables Andromedon Acid Bomb, but Burning does not stop every melee attack: Berserkers/Archons and Muton counter behavior have important exceptions.</li>
+<li>Suppression is strong but not absolute; certain Rocketeers can run it and still produce a dangerous rocket. Late ADVENT Covering Fire also makes careless movement far more punishing.</li>
+<li>Incendiaries interact badly with water tiles: do not rely on fire effects on targets standing in rivers/fountains.</li>
+</ul>
+
+<h3>Explosives, corpses and loot</h3>
+<ul class="dense-list">
+<li>Full-salvage missions make corpse preservation strategically important. Avoid explosive finishing blows on enemies whose corpses you specifically need when another safe kill exists.</li>
+<li>Early Sectoids are especially valuable potential Elerium Core carriers. If you need Cores for the opening economy, do not casually destroy them with explosives.</li>
+<li>Do not hoard ordinance through a crisis. If three pods activate together, spend the rockets/grenades/incendiaries now; a healthy team with empty consumables is better than a wounded team that “saved” resources.</li>
+</ul>
+</div></details>
+
+<div class="callout"><b>Small mechanics worth preserving:</b> Andy records early hack rewards of roughly <b>35 Supplies for a small cache and 75 for a large cache</b>, making early objective hacks economically meaningful. He also notes a <b>pistol UI bug</b> where the interface can display a movement penalty even when the perk that removes it is functioning correctly; trust the actual Mobility result rather than the misleading display.</div>
+</section>
+<section class="searchable" id="reinforcements">
+<h2>9A. Reinforcements, Snare &amp; hidden doom timers</h2>
+<div class="callout warn"><b>RNF rule:</b> if the timer is already running, tempo is part of the mission objective. If the timer starts only after concealment breaks, spend concealment getting close enough that the first engagement does not consume the whole clock.</div>
+<table><tr><th>Mission / condition</th><th>Casey warning</th><th>Practical response</th></tr>
+<tr><td>Rescue VIP / Jailbreak</td><td>RNF pressure begins immediately in Casey's early-tactics framework.</td><td>Do not spend multiple turns engineering a perfect first ambush.</td></tr>
+<tr><td>Hack / Destroy Relay</td><td>RNF generally begins after concealment breaks.</td><td>Use concealment to approach the objective before opening fire.</td></tr>
+<tr><td>Extract ADVENT Supplies</td><td>Timer begins when concealment breaks; then RNF pressure escalates.</td><td>Locate more than one pod before the first ambush so you can roll immediately into pod two.</td></tr>
+<tr><td><b>Snare</b> in Strength 8+ region</td><td>Looks like a normal Hack but RNF can arrive almost immediately and then every turn.</td><td><b>Do not run routine Hack missions in Strength 8+ regions</b> unless you know exactly what you are accepting.</td></tr>
+<tr><td>Facilities / Blacksite / Forge / sabotage-family objectives</td><td>Casey's older reinforcement guide describes hidden escalation timers on some strategic missions.</td><td>Treat them as endurance missions with a real clock even if the UI does not show one; don't grind indefinitely.</td></tr></table>
+<p class="small">The hidden-timer figures in Casey's reinforcement article predate later LWOTC revisions; use the <b>existence and strategic implication</b> of the hidden timer as the durable warning rather than assuming every historical turn count is unchanged in 1.2.</p>
+
+<h3>Andy’s reinforcement timing reference <span class="v6flag">v6</span></h3>
+<p class="mini-note">Approximate average initial RNF timing by mission Alert Level from Andy’s notes. Use as a pressure gauge, not a deterministic countdown. Rapid Response can effectively worsen the calculation.</p>
+<div class="table-scroll"><table><tr><th>Alert</th><th>Avg. turns</th><th>Alert</th><th>Avg. turns</th><th>Alert</th><th>Avg. turns</th><th>Alert</th><th>Avg. turns</th></tr>
+<tr><td>1</td><td>5.0</td><td>6</td><td>3.1</td><td>11</td><td>2.2</td><td>16</td><td>1.7</td></tr>
+<tr><td>2</td><td>4.4</td><td>7</td><td>2.8</td><td>12</td><td>2.1</td><td>17</td><td>1.7</td></tr>
+<tr><td>3</td><td>3.9</td><td>8</td><td>2.7</td><td>13</td><td>2.0</td><td>18</td><td>1.6</td></tr>
+<tr><td>4</td><td>3.6</td><td>9</td><td>2.5</td><td>14</td><td>1.9</td><td>19</td><td>1.5</td></tr>
+<tr><td>5</td><td>3.3</td><td>10</td><td>2.4</td><td>15</td><td>1.8</td><td>20</td><td>1.5</td></tr></table></div>
+<h3>RNF behavior by mission family</h3>
+<table><tr><th>Behavior</th><th>Mission families Andy flags</th><th>Operational rule</th></tr>
+<tr><td>Timer running immediately</td><td>Extract VIP, Rescue VIP, Neutralize Target, Jailbreak</td><td>Do not spend the opening drifting; still avoid reckless pod activation.</td></tr>
+<tr><td>Starts when concealment breaks</td><td>Hack Workstation, Recover Item, Hack Vehicle, Destroy Relay, Network Tower, Interrupt Psionic Relay, Extract Supplies</td><td>Use concealment to position; then commit with objective + evac timing in mind.</td></tr>
+<tr><td>No normal RNF</td><td>Troop Ambush, Haven Retaliation, Rendezvous, ADVENT HQ, Psi Gate</td><td>Tempo is governed more by pod density / mission mechanics.</td></tr>
+<tr><td>Fixed / limited</td><td>Smash &amp; Grab, Data Tap</td><td>Know the scripted pressure and leave on schedule.</td></tr>
+<tr><td>Doom RNF</td><td>Monument / Facility / Blacksite / Forge families</td><td>Very long grace period; never rush early pods because of a timer that is dozens of turns away.</td></tr></table>
+<div class="callout warn"><b>Strength ≥8 Snare rule:</b> normal-looking hack missions can become traps with relentless RNF after reveal. Andy’s practical rule is simpler: <b>do not operate in Strength 8 regions.</b></div>
+</section>
+<section class="searchable" id="liberation">
+<h2>12. Liberation playbook</h2>
+<table><tr><th>Step</th><th>Mission</th><th>Casey play</th></tr>
+<tr><td>Lib 1</td><td>Start Liberating Region / Hack</td><td>Stealth-friendly; develop 1–2 person stealth-hack skills because detection windows can be short.</td></tr>
+<tr><td>Lib 2</td><td>Rescue / Extract VIP</td><td>Hard to detect. Casey wants 5+ days and is willing to spend an Intel boost on this campaign-critical mission.</td></tr>
+<tr><td>Lib 3</td><td>Neutralize VIP / Destroy Relay / Sabotage</td><td>One of the hardest links. Wait for a good infiltration window; use a strong team. 1.2 fixed the old immediate-respawn detection exploit, so do not rely on the older bug.</td></tr>
+<tr><td>4</td><td>Network Tower</td><td>Does not expire once unlocked. Use the 1.2 five-class team listed above.</td></tr>
+<tr><td>5</td><td>ADVENT HQ</td><td>Endurance. Defensive position, scout carefully, preserve consumables, do not get dragged deeper.</td></tr>
+<tr><td>6</td><td>Possible Invasion</td><td>Can only occur after liberation delay; prepare a tank/objective solution.</td></tr></table>
+<div class="callout warn"><b>Liberation mistake that snowballs:</b> over-farming side missions in the target region raises Vigilance/Strength, shortening timers and increasing enemy pressure on the exact missions you need to win.</div>
+<h3>Progress UI and mission availability</h3>
+<ul><li>Resistance Management dots: <b>0</b> = no progress, <b>1</b> = Lib 1 complete, <b>2</b> = Lib 2 complete. There is no third dot; after Lib 3 the Network Tower appears.</li><li>The dot/status may not refresh until you return to the strategy map.</li><li>Once unlocked, <b>Network Tower and HQ do not expire</b>. Intel pressure is mainly about finding Lib 1–3 with enough time.</li></ul>
+<h3>Lib 2 — detection and tempo</h3>
+<div class="callout gold">Casey's classic Legend target is roughly <b>5+ days</b> of detection time before committing a real squad; he was willing to use a <b>30-Intel boost</b> on this campaign-critical step. Treat those figures as Casey's difficulty/version benchmark, not a universal fixed 1.2 price.</div>
+<p>Lib 2 effectively behaves as though regional Strength were about <b>+1</b> for reinforcement pressure. That makes a weak timer worse than it looks. Waiting for a better detection roll is often cheaper than forcing a bad one.</p>
+<h3>Lib 3 — +2 effective Strength and finesse variants</h3>
+<ul><li>Lib 3 behaves at roughly <b>+2 regional Strength</b> for RNF pressure in Casey's framework.</li><li><b>Destroy Relay:</b> sneak almost all the way to the objective before breaking concealment.</li><li><b>Neutralize VIP:</b> RNF begins immediately; Hidden Faceless density can make the extraction zone much nastier than the visible enemy count suggests.</li><li>A long-range assassination/finesse plan can be safer than clearing the map: Sharpshooter shots, vehicle explosions and rooftop Death From Above can solve the VIP while the squad avoids unnecessary pods.</li></ul>
+<h3>Network Tower — exact setup</h3>
+<ol><li>Run it soon after revealing it; ADVENT Strength can continue climbing.</li><li>Casey likes extra infiltration when it meaningfully lowers enemy activity/detection radius, but in LWOTC he is less willing to burn Intel just to push an already-manageable Tower from Light-Moderate to Light.</li><li>A <b>Ghostwalker + Covert Shinobi</b> remains uniquely good because this mission is about physically slipping past pods, not merely knowing where they are.</li><li><b>Spider Suit</b> is a specific escape trick: Grapple can pull the Shinobi out of a detection trap without alerting the pod.</li><li>When the Shinobi can reach the console in one turn, reposition the other four soldiers—ideally toward the Command Center.</li><li>Triggering the console creates a <b>two-turn enemy stun window</b>. Use it to erase the Command Pod and nearby pods before they recover.</li><li>The Assault is especially good at immediately deleting the Command Pod once the stun lands.</li></ol>
+<h3>ADVENT HQ — endurance doctrine</h3>
+<ul><li>Expect roughly <b>40+ enemies</b>; Casey recommends a full LWOTC team around eight soldiers for a first/serious attempt.</li><li>Bring many Medkits and expect to use them. EXO suits/extra ordnance are strong, but preserve at least one serious control charge for the General.</li><li>Find a strong defensive roof/position and let multiple pods come to you rather than advancing after every kill.</li><li>Avoid pulling double-Drone pods or the Command Pod into the main firefight if you can help it.</li><li>Only hunt the Command Pod after the rest of the map is nearly cleared.</li></ul>
+<h4>General control cheat sheet</h4>
+<p><b>Assault Stun · Flamethrower · Incendiary · Stasis · Sting</b>. Casey's cleanest loop is <b>Stun → Stasis → Stun</b>, exploiting Stun's one-turn cooldown. An aggressive alternative is Shred → Rapid Fire Assault → Officer Command.</p>
+<h3>Invasion — timing and preparation</h3>
+<ul><li>An Invasion cannot occur until at least <b>21 days after Liberation</b>.</li><li>It also requires a neighboring region around <b>Strength 8+</b>; a growing adjacent strength stack is your warning that an invasion force may be forming.</li><li>Once the 21-day window opens, put a <b>strong, equipped soldier</b> in the liberated haven as advisor.</li><li>Primary beacon plan: Stealth Shinobi gets vision while Sharpshooter destroys the beacon. Roofed beacons can sometimes be solved by destroying the support/roof or by long-range rifle fire.</li><li>Fallbacks include rockets/Bombard, a stealth melee approach, or brute-force mobile killers.</li><li>LWOTC version is milder than old LW2; Casey sometimes recommends delaying the final beacon kill long enough to farm a few safe reinforcement drops/corpses, then ending it before the battle becomes unstable.</li></ul>
+
+<h3>Andy’s Network Tower execution <span class="v6flag">v6</span></h3>
+<ul><li>Andy treats Tower as the one mission that is effectively <b>stealth-mandatory</b>: only five soldiers and aggressive post-reveal RNF.</li><li>Move the Shinobi decisively; excessive dawdling creates more patrol risk. Sergeant/Covert is valuable, Ghostwalker Shinobi is an ideal specialist if you happen to have one.</li><li><b>Approach the final building from the right</b> (right while facing it from spawn): Andy notes the left side can contain a turret while the right side does not in his observed layouts.</li><li>Stage combat troops so each is within a blue move of a pod before hacking. The stun window is wasted if everyone must spend it running.</li><li>Trigger the computer on the <b>first action of the turn</b> whenever possible.</li><li>Andy describes the stun as effectively giving three XCOM turns of advantage: activation turn, following stunned turn, then the enemy’s wake-up turn without normal action before XCOM acts again.</li><li>Codices and Sustaining Priests can behave as exceptions; plan them as priority cleanup.</li><li>Do not put SMGs on the entire team just to sneak; after the hack you still must kill the map.</li></ul>
+<div class="compare4"><div class="card caseybox"><span class="src-badge src-casey">CASEY</span><p>Specialist + Grenadier + Shinobi + Ranger + Assault is the published 1.2 recommendation.</p></div><div class="card andybox"><span class="src-badge src-andy">ANDY</span><p>Shinobi core; Reaper (preferably Banish), Skirmisher, Assault/Ranger, Grenadier, with SPARK/offensive Psi/early Technical as alternatives. Andy questions a Specialist because the objective placement prevents the “safe remote hack” people imagine and he values post-hack damage.</p></div></div>
+<h3>Andy’s HQ Assault operating doctrine</h3>
+<ul><li>Aim for roughly <b>8 strong soldiers</b>; 9 is possible, 10 often imposes too much infiltration opportunity cost.</li><li>Claim a defensible building early and make pods come to you.</li><li>Keep the Shinobi concealed until you are approaching the General / final critical engagement.</li><li>Prefer repeatable cooldown abilities and extended magazines; long missions exhaust limited consumables and auto-loader charges.</li><li>Use consumables without guilt on the critical turn when two or three pods collide.</li><li>HQ destroys up to 5 regional Strength; doing it at Strength 5 maximizes that effect, but never delay an important first liberation just to optimize the number.</li><li>Completing HQ gives other active infiltrations in the region an immediate <b>+50% infiltration</b>, but they must be launched or aborted then—occasionally exploitable when planning parallel missions.</li></ul>
+<h3>Invasion</h3>
+<p>Andy also uses the 21-day post-liberation floor and adjacent Strength 8+ spike as the warning. Unlike some older LW2 advice, he does not consider a soldier advisor mandatory solely for the invasion and prefers an Engineer for liberated-region supplies until the fight is actually coming. Once the mission starts, advance aggressively enough to destroy the beacon shortly after constant RNF begins; killing the Chosen early simplifies the entire defense.</p>
+
+<details class="complete-reference" open><summary>Complete merged Liberation mechanics & tactical playbook</summary><div class="complete-body">
+<h3>Strategic sequence and detection</h3>
+<ul class="dense-list">
+<li>First Liberation is a major campaign objective and gets harder as time/Strength rise. Legend suppresses Liberation mission appearance very early in the campaign, but once available there is always a current chain mission in each contacted region; the challenge is detection.</li>
+<li>Progress display: 0 dots → no progress; 1 → Lib1 complete; 2 → Lib2 complete; Lib3 does not show as a third dot because the Network Tower appears instead. The screen may not refresh until returning to geoscape after completing a step.</li>
+<li><b>Lib1:</b> hack-for-Intel mission, strong stealth candidate.</li>
+<li><b>Lib2:</b> Rescue/Extract Defector; roughly +1 Strength relative to a normal mission and much harder to detect. Put the haven on Intel, scan with Avenger, and boost when necessary to fit a real squad.</li>
+<li><b>Lib3:</b> Neutralize VIP or Destroy Relay/Sabotage-style mission, roughly +2 Strength. It is the most dangerous detection/infiltration gate; Faceless civilians can be a major complication. Taking side missions while fishing for Lib3 can spike Vigilance/Strength and sabotage the chain.</li>
+<li>After Lib3, Network Tower/HQ no longer expire like detected guerrilla ops, but Strength continues rising, so do not postpone them indefinitely.</li>
+</ul>
+
+<h3>Network Tower — stealth setup and three-turn payoff</h3>
+<ul class="dense-list">
+<li>Five-soldier cap and very aggressive RNF once revealed. This is the Liberation mission most dependent on <b>stealthing the hack</b>.</li>
+<li>If the computer is hacked before concealment breaks, map enemies are stunned without scattering. That creates an enormous opening for grenades/AoE against intact pods.</li>
+<li>150% infiltration can reduce enemy count; going beyond can improve detection radius but often ties up the squad too long to be worth chasing.</li>
+<li><b>Move with purpose.</b> Andy’s lesson from DerAva is that excessive dawdling gives patrols more opportunities to close off routes. Fast does not mean blind—advance as far as safely scouted each turn.</li>
+<li>Shinobi is the natural infiltrator; Ghostwalker/Covert are bonuses but not mandatory. Reaper is viable if damage output is sufficient (Banish materially helps). Specialist can be awkward because the terminal cannot simply be remote-hacked from outside and their mop-up damage is weak.</li>
+<li>Do not force the whole squad to follow the hacker. Stage the other four near pods/command-room approaches so they can exploit the stun immediately.</li>
+<li>Enemies effectively lose multiple actions after the hack. To maximize that window, hack with the infiltrator’s <b>first action</b>, not last.</li>
+<li>Extra actions—Command/Teamwork/Grapple/Phase Walk—should support the infiltrator. A bonded pair can be more useful than a nominally “perfect” class mix.</li>
+<li>Patrols can move roughly eight tiles; include that potential movement in your detection-radius planning.</li>
+<li>Map-specific heuristics from Andy: the right side of the final building is generally safer from the left-side turret spawn; side bridge ledges are often useful hiding lanes; a pod on the roof can imply the command room itself is emptier.</li>
+<li><b>Enemy exceptions:</b> Priest Sustain can break the expected stun flow; Codex can clear stun and act sooner than expected. Do not assume every enemy stays inert for the full same duration.</li>
+<li>Mop-up squad ideas: Shinobi + strong shooters/control (Ranger/Assault/Grenadier/Skirmisher); SPARK can be excellent; Psi becomes viable when Phase Walk + real offensive abilities are online; early Technical can solve clustered pods.</li>
+</ul>
+
+<h3>HQ Assault</h3>
+<ul class="dense-list">
+<li>Huge full-salvage map with many enemies and one of the best corpse hauls in the campaign. Large map size makes one-pod-at-a-time play possible if you stay disciplined.</li>
+<li>HQ removes up to a large chunk of regional Strength; doing it at high enough Strength maximizes strategic reduction, but <b>do not delay the first Liberation</b> merely to optimize that number.</li>
+<li>Ten soldiers takes extremely long to infiltrate. Andy commonly aims for ~8 strong soldiers, sometimes nine, and often boosts. Use A-team gear; this mission competes heavily with all other infiltrations.</li>
+<li>Claim defensible terrain early and let pods come to you. Do not let Assault/Shinobi “easy button” attacks drag the squad forward into additional pods. Keep the scout concealed until the General pod if possible.</li>
+<li>Turrets can accidentally join fights; identify/disable them before activating nearby pods. Specialist/Trojan is valuable even on a healer-oriented soldier.</li>
+<li>Repeatable cooldown abilities outperform consumables over the whole mission, but when multiple pods converge, spend every grenade/rocket needed to regain control. The correct resource metric is surviving the critical turn.</li>
+<li>Sharpshooters/Reapers are excellent; two snipers can be reasonable. Extended Mag beats Auto-loader because the mission gives you time to reload/regroup between engagements.</li>
+<li>Pause between fights to heal, move rear soldiers forward and reset cooldowns. Doom RNF is so late that patient play is rewarded.</li>
+<li>Completing HQ can immediately boost another active infiltration in the region; this rare interaction can be exploited deliberately if another mission is waiting.</li>
+</ul>
+
+<h3>Invasion</h3>
+<ul class="dense-list">
+<li>Can occur starting about 21 days after Liberation and requires ADVENT staging from a nearby high-Strength region; a sudden nearby Strength spike is a warning.</li>
+<li>LWOTC Invasion is much more manageable than old LW2, but it is still an A-team quick-response mission with a Chosen.</li>
+<li>Keep moving toward the beacon. A short grace period becomes frequent RNFs; once every-turn drops begin, spending multiple turns cleaning every pod is a losing plan.</li>
+<li>Kill the Chosen early when possible, then destroy the beacon. After the beacon falls, only the final scheduled RNF remains and the mission ends after the remaining threat is resolved; you do not need to shepherd every rebel back to evac.</li>
+<li>Andy generally does not hunt the precursor mission because it would require Intel workers in a liberated haven that could instead generate Supplies, and the full Invasion itself yields valuable corpses.</li>
+</ul>
+</div></details>
+
+<div class="callout"><b>Liberation detection/refresh details:</b> after completing a liberation mission, the Resistance Management dots may not update until you return to the strategy map and reopen the screen; no extra scan is required. Lib missions respawn after expiry, and in current LWOTC repeated Lib 3 discovery becomes easier rather than relying on the old LW2 instant-rediscovery bug. Once Lib 3 is complete, the Network Tower and then HQ are persistent and do not require further Intel detection.</div>
+</section>
+</main>
+<script>
+(function(){
+ const q=document.getElementById('chapterSearch');
+ const clear=document.getElementById('chapterClear');
+ function run(){
+  const term=(q.value||'').trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(sec=>{
+   if(!term){sec.classList.remove('chapter-hidden'); return;}
+   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
+  });
+  document.querySelectorAll('details').forEach(d=>{
+   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
+  });
+ }
+ q.addEventListener('input',run);
+ clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
+ const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){
+  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
+   const s=box.querySelector('summary'); if(!s)return;
+   const name=(s.innerText||'').split(' — ')[0].trim();
+   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
+  });
+ }
+})();
+</script></body></html>
