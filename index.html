@@ -564,6 +564,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Do not research every alien-hunter weapon early. Andy mainly values the Frost Bomb from that package before the PG economy is comfortable.</li>
 </ul>
 </div></details>
+
+<div class="callout"><b>Basic Research / Engineering:</b> Andy considers these poor uses of time in his normal 1.2.2 route, and Casey explicitly backed away from an early Basic Research rush. Treat them as gap-fillers when normal research is temporarily blocked, not default opening priorities.</div>
 </section>
 <section class="searchable" id="masterorders">
 <h2>2B. Casey's facility &amp; cost plan</h2>
@@ -718,6 +720,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </div>
 <div class="callout purple"><b>Need the next dependency?</b> Use <a href="#researchroadmap">Research Roadmap</a> for tech prerequisites, <a href="#masterorders">Facility &amp; Cost Plan</a> for Avenger construction, and <a href="#andyorders">Andy deltas</a> for his Proving Ground / Black Market preferences.</div>
 <p class="small">Sources: <a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</p>
+
+<div class="callout"><b>Timing details that affect value:</b> <b>Wet Work is not retroactive</b>, so buying it earlier increases total campaign XP value. Conversely, do not buy an upgrade merely because it is available: several late GTS/PG projects have low marginal value compared with weapons, armor, Alloys/Elerium and critical facilities.</div>
 </section>
 <section class="searchable" id="strategy">
 <h2>4. Regions, havens and expansion</h2>
@@ -843,6 +847,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Keep a campaign journal. Andy explicitly uses it to identify patterns in failed missions, track Troop Ambush timing, and remember when strategic choices created later problems.</li>
 </ul>
 </div></details>
+
+<div class="callout"><b>Troop Ambush global-cap edge case:</b> Casey notes that only <b>two Troop Ambushes can be active globally at once</b>. If a high-Strength region seems overdue for one, check whether two are already active elsewhere before assuming your Intel setup is failing.</div>
 </section>
 <section class="searchable" id="personnel">
 <h2>4A. Stats, class selection, fatigue &amp; promotion tempo</h2>
@@ -1340,6 +1346,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Do not hoard ordinance through a crisis. If three pods activate together, spend the rockets/grenades/incendiaries now; a healthy team with empty consumables is better than a wounded team that “saved” resources.</li>
 </ul>
 </div></details>
+
+<div class="callout"><b>Small mechanics worth preserving:</b> Andy records early hack rewards of roughly <b>35 Supplies for a small cache and 75 for a large cache</b>, making early objective hacks economically meaningful. He also notes a <b>pistol UI bug</b> where the interface can display a movement penalty even when the perk that removes it is functioning correctly; trust the actual Mobility result rather than the misleading display.</div>
 </section>
 <section class="searchable" id="reinforcements">
 <h2>9A. Reinforcements, Snare &amp; hidden doom timers</h2>
@@ -1861,6 +1869,17 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Power-level several soldiers to SGT for faction contacts/Trial by Fire and three soldiers toward MSGT for Stronghold access, but continue bringing lower-rank troops on forgiving missions so the campaign has a functioning B/C team.</li>
 </ul>
 </div></details>
+
+<details class="complete-reference"><summary>Bond receiver exceptions & why some pairings underperform</summary><div class="complete-body">
+<ul class="dense-list">
+<li>Casey’s “giver” label means a class can donate an action without seriously reducing its own turn; it does <b>not</b> mean that class cannot also make good use of an extra action.</li>
+<li><b>DFA Sharpshooter</b> is a weak Advanced Teamwork receiver because its normal firing loop wants both actions and is tightly tied to Steady Weapon/DFA sequencing.</li>
+<li><b>Technical</b> is often a weak receiver because accurate rockets want a full-action setup and flamethrower uses are limited/positional; one extra action frequently cannot be converted cleanly.</li>
+<li><b>Psi Operative</b> can be a weak receiver because the best psi abilities are gated by cooldowns, so an extra action does not always create an extra premium ability use. Bonding a Psi is still worthwhile for the other bond bonuses and roster flexibility.</li>
+<li>Gunner, Ranger, Assault, Shinobi, Grenadier and Skirmisher generally convert extra actions more directly into damage/control. Shooter-to-shooter bonds can also exploit the bondmate Aim bonus against a shared target.</li>
+<li>Casey explicitly warns that optimizing bonds by class can force low-compatibility pairings and creates roster-management complexity. A “perfect” bond map is not worth making the campaign tedious.</li>
+</ul>
+</div></details>
 </section>
 
 <section class="searchable" id="officers">
@@ -2000,6 +2019,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Andy generally does not hunt the precursor mission because it would require Intel workers in a liberated haven that could instead generate Supplies, and the full Invasion itself yields valuable corpses.</li>
 </ul>
 </div></details>
+
+<div class="callout"><b>Liberation detection/refresh details:</b> after completing a liberation mission, the Resistance Management dots may not update until you return to the strategy map and reopen the screen; no extra scan is required. Lib missions respawn after expiry, and in current LWOTC repeated Lib 3 discovery becomes easier rather than relying on the old LW2 instant-rediscovery bug. Once Lib 3 is complete, the Network Tower and then HQ are persistent and do not require further Intel detection.</div>
 </section>
 <section class="searchable" id="chosen">
 <h2>13. Chosen and Alien Rulers</h2>
@@ -2083,6 +2104,9 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <li>Typical clean script: scout → kill podmate from outside sight → Arc stun → burst attacks while stun actions tick down → Disabling Shot next turn → more burst → force retreat/kill.</li>
 </ul>
 </div></details>
+
+<div class="callout warn"><b>Chosen damage rule:</b> treat Chosen as <b>functionally near-immune to critical-damage strategies</b>. They also reposition when damaged while flanked, so normal “destroy cover then crit them repeatedly” logic is unreliable. Non-damaging cover removal such as Demolition can still be useful because it does not trigger that reposition before the follow-up shot.</div>
+<div class="callout"><b>General Chosen tanking:</b> hacked MECs/Drones are excellent disposable targets, followed by SPARK/Templar and then rebels. A Specialist is valuable not only for mechanical control but because it can heal soldiers and resistance personnel during the attrition fight.</div>
 </section>
 <section class="searchable" id="enemies"><h2>14. Enemy quick reference</h2><div class="callout"><b>Control principle:</b> by summer Casey wants a large share of the barracks—roughly three quarters in his example—to have some form of control. Killing remains best, but late enemies are too durable to assume every active threat dies this turn.</div>
 <table><thead><tr><th>Enemy</th><th>Preferred answer</th><th>Casey edge cases / traps</th></tr></thead><tbody>
