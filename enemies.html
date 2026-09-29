@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWOTC v13 — Enemies, Chosen & Alien Rulers</title><style>
+:root{
+  --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
+  --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+a{color:var(--accent)} a:hover{color:white}.layout{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0b0f14;border-right:1px solid var(--line);padding:18px}
+.sidebar h1{font-size:1.05rem;margin:0 0 8px}.sidebar .sub{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.search{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#141a21;color:white;margin:8px 0 12px}
+.nav a{display:block;text-decoration:none;color:#cbd5e1;padding:6px 8px;border-radius:6px;font-size:.88rem}.nav a:hover{background:var(--panel2);color:white}
+.main{max-width:1260px;padding:30px 34px 80px}.hero{padding:30px;border:1px solid var(--line);background:linear-gradient(135deg,#151c25,#202b38);border-radius:16px;margin-bottom:26px}
+.hero h1{font-size:2rem;margin:0 0 8px}.hero p{color:var(--muted);max-width:950px}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#22303e;border:1px solid #3e5366;color:#d8e6f3;font-size:.78rem;margin:2px 5px 2px 0}
+section{scroll-margin-top:18px;margin:30px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+h2{font-size:1.55rem;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin-top:22px;color:#dfe9f3}h4{margin-bottom:6px}
+.callout{border-left:4px solid var(--accent);background:#13202a;padding:12px 14px;border-radius:6px;margin:12px 0}.warn{border-left-color:var(--danger);background:#26191c}.good{border-left-color:var(--good);background:#14241c}.gold{border-left-color:var(--accent2);background:#2a2414}.purple{border-left-color:var(--purple);background:#20192b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}th{color:#e8f1fa;background:#111820;position:sticky;top:0;z-index:1}.small{font-size:.84rem;color:var(--muted)}
+.mission,.classbox,.sourceguide{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}.mission summary,.classbox summary,.sourceguide summary{cursor:pointer;padding:14px 16px;font-weight:700;background:#141b23}.mission .body,.classbox .body,.sourceguide .body{padding:14px 16px}.tag{font-size:.72rem;padding:3px 7px;border-radius:999px;background:#293644;border:1px solid #3c4d5d;margin-right:4px;white-space:nowrap}.tag.red{background:#3a2023}.tag.green{background:#183425}.tag.gold{background:#3a3218}.tag.purple{background:#322547}
+.sourcebox{background:#0c1117;border:1px dashed #425163;padding:14px;border-radius:8px}.check li{margin:6px 0}.topbtn{position:fixed;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--accent);color:#061017;font-weight:800;padding:11px 14px;cursor:pointer;box-shadow:0 4px 18px #0008}.hidden{display:none!important}
+.kpi{font-size:1.25rem;font-weight:800}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{color:var(--muted)}
+.phase{border-left:4px solid var(--accent2)}.dangerrow td:first-child{color:var(--danger);font-weight:700}.priority{font-weight:700;color:var(--accent2)}
+.imgplaceholder{border:1px dashed #58697a;border-radius:10px;padding:22px;text-align:center;color:var(--muted);background:#10161c}
+@media(max-width:950px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{columns:2}.main{padding:20px}.topbtn{right:12px;bottom:12px}}
+@media(max-width:600px){.nav{columns:1}.hero{padding:20px}.hero h1{font-size:1.55rem}.main{padding:14px}table{font-size:.81rem;display:block;overflow-x:auto}}
+
+/* --- Mobile-first usability layer --- */
+.mobilebar{display:none;position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid var(--line);padding:9px 10px;gap:8px;align-items:center}
+.mobilebar button,.quickjump{border:1px solid var(--line);background:#18212b;color:var(--text);border-radius:9px;padding:10px 12px;font-weight:700}
+.mobilebar .brand{font-weight:800;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.decision-grid label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px}
+.decision-grid select{width:100%;background:#10171e;color:var(--text);border:1px solid var(--line);padding:11px 10px;border-radius:9px}
+.decision-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.decision-actions button{background:var(--accent);color:#061017;border:0;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
+#decisionResult{margin-top:12px;padding:14px;border-radius:10px;background:#10171e;border:1px solid var(--line)}
+.result-take{border-left:5px solid var(--good)!important}.result-consider{border-left:5px solid var(--accent2)!important}.result-skip{border-left:5px solid var(--danger)!important}
+.matrix-badge{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 7px;border-radius:999px;margin-right:4px}.take{background:#173a27;color:#9af0bd}.maybe{background:#3a3218;color:#ffe38d}.skip{background:#3b2023;color:#ffabab}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.phase-card h3{margin:0 0 8px}.phase-card ul{padding-left:18px;margin:6px 0}.phase-card li{margin:5px 0}
+.rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rule{background:#111820;border:1px solid var(--line);border-radius:10px;padding:12px}.rule b{display:block;margin-bottom:4px}
+.mobile-tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0b0f14eF;border-top:1px solid var(--line);padding:6px;grid-template-columns:repeat(4,1fr);gap:4px;backdrop-filter:blur(8px)}
+.mobile-tabs a{text-align:center;text-decoration:none;color:#dbe7f2;font-size:.68rem;padding:7px 3px;border-radius:8px;background:#141b23}.mobile-tabs span{display:block;font-size:1rem}
+@media(max-width:950px){
+  body{padding-bottom:68px}.mobilebar{display:flex}.sidebar{display:none;position:fixed;z-index:70;top:52px;left:0;right:0;height:calc(100vh - 52px);overflow:auto;border:0;padding:14px;background:#0b0f14}.sidebar.open{display:block}.nav{columns:1}.mobile-tabs{display:grid}.main{max-width:none;padding:14px 12px 86px}.hero{padding:18px 15px;border-radius:12px;margin-top:8px}.hero h1{font-size:1.45rem}.hero p{font-size:.92rem}.grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr 1fr}section{margin:22px 0;scroll-margin-top:64px}h2{font-size:1.3rem}.topbtn{bottom:76px;right:10px;padding:9px 11px}
+  details summary{touch-action:manipulation;min-height:48px;display:flex;align-items:center}
+  table{display:block;overflow-x:auto;white-space:normal;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:#11161d} th,td{min-width:145px;padding:9px 8px} th:first-child,td:first-child{position:sticky;left:0;background:#111820;z-index:2;min-width:128px} th:first-child{z-index:3}
+}
+@media(max-width:600px){
+  .decision-grid{grid-template-columns:1fr}.phase-grid{grid-template-columns:1fr}.rulegrid{grid-template-columns:1fr}.card,.mission .body,.classbox .body,.sourceguide .body{padding:12px}.mission summary,.classbox summary,.sourceguide summary{padding:12px;font-size:.95rem}.pill{font-size:.71rem}.callout{padding:10px 11px}.main{padding-left:10px;padding-right:10px}table{font-size:.78rem}.sourcebox{overflow-wrap:anywhere}
+}
+
+.refnote{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}.tight td,.tight th{padding:6px 8px}.status-full{color:var(--good);font-weight:800}.status-legacy{color:var(--accent2);font-weight:800}
+
+.order-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#061017;font-weight:900;margin-right:8px}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0c1117;border:1px solid var(--line);padding:10px 12px;border-radius:8px;overflow:auto}
+.calcbox{background:#101820;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.calcrow{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:center;padding:5px 0}
+.calcrow input[type=number]{width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:#0f141a;color:var(--text)}
+.source-note{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+.audit-ok{color:var(--good);font-weight:800}.audit-limit{color:var(--accent2);font-weight:800}
+@media(max-width:700px){.calcrow{grid-template-columns:1fr 75px 90px;font-size:.86rem}.order-num{width:24px;height:24px}table{font-size:.84rem}}
+
+/* v6 source comparison additions */
+.source-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}.src-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+.src-official{background:#143423;color:#9ff0bf;border-color:#285c40}.src-casey{background:#183245;color:#9edfff;border-color:#315b76}.src-andy{background:#3c2d13;color:#ffd982;border-color:#725929}.src-synth{background:#33284a;color:#d8c1ff;border-color:#5b4a7e}.src-legacy{background:#3a2020;color:#ffb3b3;border-color:#6e3939}
+.compare4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.compare4 .card{margin:0}.andybox{border-left:4px solid #f3c95c;background:linear-gradient(90deg,rgba(243,201,92,.08),transparent)}.officialbox{border-left:4px solid #7be0a8}.synthbox{border-left:4px solid #c7a7ff}.caseybox{border-left:4px solid #63d0ff}
+.details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
+.v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
+@media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
+
+/* --- v10 predictive search + campaign companion --- */
+.home-campaign-summary{display:flex;flex-direction:column;gap:3px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#111a22}
+.home-campaign-summary span{color:var(--muted);font-size:.82rem}
+.companion-tool{background:linear-gradient(180deg,#121922,#0f151b);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tool-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}.tool-grid label{font-size:.77rem;color:var(--muted);font-weight:800}
+.tool-grid input,.tool-grid select,.lookup-row input{width:100%;margin-top:5px;background:#0e151c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+.tracker-details{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#10171e}.tracker-details summary{cursor:pointer;padding:11px 12px;font-weight:800}.tracker-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}.tracker-check{display:flex;gap:7px;align-items:center;padding:7px 8px;border-radius:8px;background:#151e27;font-size:.8rem}.tracker-check input{accent-color:var(--accent)}
+.tool-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.primary-btn,.secondary-btn,.icon-btn{border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-family:inherit}.primary-btn{border:0;background:var(--accent);color:#061017}.secondary-btn,.icon-btn{border:1px solid var(--line);background:#18212b;color:var(--text)}
+.what-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-top:10px}.next-card{border:1px solid var(--line);background:#111820;border-radius:10px;padding:12px}.next-card b{display:block;margin-bottom:4px}.next-card a{font-size:.8rem}
+.lookup-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.lookup-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.lookup-suggestions button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:6px 9px;font-size:.78rem;cursor:pointer}.lookup-result{border:1px solid var(--line);background:#10171e;border-radius:12px;padding:14px;min-height:72px}.decision-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;margin-bottom:8px}.decision-keep{background:#163b27;color:#9ff0bf}.decision-caution{background:#3a3218;color:#ffe38d}.decision-sell{background:#3b2023;color:#ffb4b4}
+.class-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0}.class-pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:#111820;border-radius:10px;padding:10px}.class-pick small{display:block;color:var(--muted);margin-top:2px}.counter{display:grid;grid-template-columns:30px 28px 30px;align-items:center;text-align:center}.counter button{height:30px;border:1px solid var(--line);background:#19242e;color:var(--text);font-weight:900;cursor:pointer}.counter button:first-child{border-radius:8px 0 0 8px}.counter button:last-child{border-radius:0 8px 8px 0}.counter span{height:30px;line-height:30px;background:#0c1319;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin:9px 0}.coverage{padding:9px;border:1px solid var(--line);border-radius:9px;background:#121a22}.coverage.ok{border-left:4px solid var(--good)}.coverage.miss{border-left:4px solid var(--danger)}.coverage.optional{border-left:4px solid var(--accent2)}
+.search-overlay{display:none;position:fixed;inset:0;z-index:200}.search-overlay.open{display:block}.search-backdrop{position:absolute;inset:0;background:#02060acd;backdrop-filter:blur(4px)}.search-panel{position:relative;width:min(820px,calc(100% - 24px));max-height:min(760px,calc(100vh - 30px));overflow:auto;margin:15px auto;background:#0d141b;border:1px solid #3b4b5d;border-radius:16px;padding:16px;box-shadow:0 24px 80px #000c}
+.search-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.search-head h2{border:0;padding:0;margin:2px 0 8px}.icon-btn{font-size:1.25rem;padding:5px 11px}.global-search-wrap{display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid #476177;background:#101a23;border-radius:12px;padding:2px 9px}.global-search-wrap input{border:0;outline:0;background:transparent;color:white;font-size:1rem;padding:12px 5px;width:100%}.global-search-wrap kbd{border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--muted);font-size:.72rem}.search-help{margin:7px 2px 10px}.recent-searches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-searches button{background:#161f28;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 8px;cursor:pointer}.search-results{display:grid;gap:6px}.search-result{display:grid;grid-template-columns:auto 1fr;gap:9px;text-align:left;border:1px solid transparent;background:#111820;color:var(--text);border-radius:10px;padding:10px;cursor:pointer;width:100%}.search-result:hover,.search-result.active{border-color:#4e718c;background:#16232e}.search-type{font-size:.65rem;font-weight:900;letter-spacing:.05em;padding:3px 6px;border-radius:6px;background:#223242;color:#bde9ff;align-self:start}.search-result b{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px;line-height:1.3}.search-result mark{background:#594b1d;color:#fff2b0;border-radius:2px}.search-hit{animation:searchFlash 1.7s ease}@keyframes searchFlash{0%,35%{outline:3px solid var(--accent2);outline-offset:4px;background-color:#2b2515}100%{outline-color:transparent}}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracker-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.search-panel{margin:8px auto;max-height:calc(100vh - 16px);padding:12px}}
+@media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
+
+
+/* --- v13 combined soldier builds --- */
+.build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
+.merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
+
+@media(max-width:760px){.merged-build-meta{grid-template-columns:1fr}}
+.xcom-overview,.xcom-guide{border:1px solid #40576b;background:#0e1821;border-radius:12px;padding:12px;margin:13px 0}
+.xcom-overview h3,.xcom-guide h4{margin:0 0 8px}
+.xcom-key{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:center;font-size:.8rem}
+.xcom-rank{display:inline-block;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
+.xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
+
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
+
+
+.chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
+.chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
+.chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chapter-title{font-weight:900;margin-right:auto}
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
+.chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
+.chapter-search{max-width:1180px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
+.chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
+.chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
+.chapter-intro h1{margin:.15rem 0 .35rem}
+.chapter-hidden{display:none!important}
+.read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
+@media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a  href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a class="active" href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
+<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell">
+<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Enemies, Chosen & Alien Rulers</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
+
+<section class="searchable" id="chosen">
+<h2>13. Chosen and Alien Rulers</h2>
+<h3>Chosen — universal doctrine</h3>
+<ul><li>Early/midgame Chosen are primarily a <b>burst-damage problem</b>; normal hard-control tools do not simply shut them down.</li><li>Burn can disable selected abilities; Suppression remains useful; Venom can slow.</li><li>Casey's burst progression includes Both Barrels, Amplify, Skirmisher/Gunner Chain Shot, Cyclic Fire, Assault/Ranger Rapid Fire and Reaper Banish.</li><li>Mag tier is a major Chosen damage breakpoint, especially because it upgrades the sawed-off burst option.</li></ul>
+<div class="grid">
+<div class="card"><h3>Warlock</h3><ul><li>Greatest Champion means kill the champion first.</li><li>Sometimes burning minions instead of killing them prevents immediate resummons.</li><li>Burn disables CCS; Gunner suppression is useful for approaching.</li><li>Attack with farthest/least-mobile soldiers first if you are worried he will retreat.</li><li>1.2 trick: time the final summon death so Stasis can end just before your turn.</li></ul></div>
+<div class="card"><h3>Hunter</h3><ul><li>Grapple creates constant flanks and retreating movement.</li><li>Farsight overwatch does not give the normal obvious movement warning; bring remote overwatch removal (Combat Protocol, Soul Fire, grenades, rockets).</li><li>Burn disables the pistol ability and helps protect resistance personnel.</li><li>Fight mobility with mobility and long-range force projection.</li></ul></div>
+<div class="card"><h3>Assassin</h3><ul><li>Scanning Protocol is Casey's strongest anti-hide tool.</li><li>On Haven Defense it may be better to handle immediate ADVENT first rather than spend the whole turn searching.</li><li>1.2 changes made her damage-reduction mechanics easier to manage than older versions.</li><li>Do not let the hunt for her fragment the squad.</li></ul></div>
+</div>
+<h3>Alien Ruler sequence</h3>
+<ol><li>Bring Psi Stasis, Grenadier Sting/Frost/Incendiary, Assault Stun Gunner and at least two serious shooters with shred.</li><li>Scout until the Ruler pod is isolated.</li><li>Position the entire squad before activation.</li><li>If unconcealed, an overwatch trap can give free damage before Ruler Reactions.</li><li>Open with control grenade; use shred while the Ruler is contained.</li><li>Put the Ruler in Stasis before it can act.</li><li>Move Assault into guaranteed-stun range for the next turn.</li><li>Next turn: stun → unload damage → chain another control if necessary.</li><li>Officer actions from a still-hidden Shinobi can be used without triggering Ruler Reactions in Casey's older sequence.</li></ol>
+<h3>Micro-techniques Casey uses against Chosen</h3>
+<ul><li><b>Demolition</b> and <b>Bombard</b> can remove cover without damaging the Chosen, avoiding the normal damage-triggered reposition while still exposing them.</li><li><b>Venom Rounds</b> and <b>Iron Curtain</b> slow movement when hard immobilization is unavailable.</li><li>Burning often removes important secondary actions; Suppression lowers Aim and can discourage Hunter/Warlock movement. If Suppression is doing its job, do not automatically flank and trigger a reposition that breaks it.</li></ul>
+<h4>Warlock manipulation</h4><ul><li>Greatest Champion: remove the champion before expecting clean damage on the Warlock.</li><li>When he is alone, killing every minion immediately can simply invite another summon; sometimes burning/control is better than deletion.</li><li>You can encourage <b>Mind Scorch</b> by presenting clustered targets that tolerate the effect—e.g., fire-immune/tanky bait—rather than giving him a premium isolated victim.</li><li>Burning disables his CCS, making approach much safer.</li></ul>
+<h4>Hunter manipulation</h4><ul><li><b>Farsight Overwatch</b> lacks the normal obvious danger indicator. Break it remotely with Combat Protocol, Soul Fire, explosives/rockets or other non-movement answers.</li><li>Bring mobility and force projection; forcing the squad to chase slowly while he grapples backward is how the fight becomes expensive.</li></ul>
+<h4>Assassin search criteria</h4><p>Do not spend the turn searching just because she is hidden. Casey's test is roughly: search only when <b>(A)</b> no more urgent enemies are active, <b>(B)</b> you can deal meaningful damage after revealing her, and <b>(C)</b> you can apply fire/control that prevents her bonus-action snowball. Scanning Protocol is the strongest current detection tool.</p>
+<div class="card"><h3>Alien Ruler reaction rules Casey explicitly notes</h3><ul class="check">
+<li>A Ruler gets a reaction when a <b>visible</b> soldier performs an action in its sight, including moving into visible range.</li>
+<li><b>Reloading</b> does not trigger a Ruler reaction in Casey's note; actions by concealed soldiers also do not trigger it.</li>
+<li>An <b>Advanced Arc Thrower</b> is particularly valuable because the extra stun action meaningfully suppresses more Ruler reactions; the basic Arc Thrower's one-action stun is much weaker against Ruler action economy.</li>
+<li><b>Maim</b> is worth looking for on XCOM-row perks when dealing with the Berserker Queen.</li>
+</ul></div><div class="card"><h3>Assassin — do not reveal her just because you can</h3><p>Casey's v1.1 note is deliberately counter-intuitive: revealing the Assassin can give her a more dangerous two-action turn than allowing her to break stealth naturally. Search only when <b>(A)</b> other urgent enemies are handled, <b>(B)</b> you can deal meaningful damage after revealing, and <b>(C)</b> you can apply fire/other mitigation immediately.</p></div>
+<h3>Andy Chosen refinements <span class="v6flag">v6</span></h3>
+<div class="details-grid"><details><summary>Assassin — treat her like a predictable mechanical system</summary><div><p>Do not cluster for Harbor Wave. Avoid adjacent Assault/Shinobi attacks unless they kill: Prime Reaction will punish the adjacent unit and increase later damage. Andy kites her by attacking from farther soldiers so she moves toward the nearest target who still has an action to retreat. Once her per-turn damage-reduction threshold kicks in, either finish decisively or stop feeding inefficient attacks.</p></div></details>
+<details><summary>Warlock — summons are the real threat</summary><div><p>Spread out against Mind Scorch fire. Suppression or burning can shut down Close Combat Specialist. Assume attacking late in your turn may produce several summoned enemies. If Spectral Lancers are active, killing the final lancer by overwatch during the alien turn can force the Warlock out of Stasis too late to act, handing you a full turn.</p></div></details>
+<details><summary>Chosen Stronghold — damage race, not scout mission</summary><div><p>Five soldiers. Andy does not bring his normal Shinobi officer; raw firepower and multi-shot abilities matter more. Clear patrolling ADVENT before walking far enough to spawn the Chosen. Reset cooldowns before the Ascension Gate if useful. Once the Chosen falls, burn the sarcophagus immediately: guaranteed hit chance makes Banish/multi-shot attacks exceptional. When the Chosen returns, if you can kill them this turn, ignore other enemies—the mission ends on the Chosen’s death.</p></div></details></div>
+<h3>Alien Ruler — Andy’s stun/burst script</h3>
+<ol><li>Scout the Ruler after clearing as much of the map as possible.</li><li>Position everyone; soldiers outside LOS can prepare without provoking reactions.</li><li>Delete one escort from long range if possible.</li><li>Use upgraded Arc Thrower / Disabling Shot to bank multiple safe actions.</li><li>Only spend actions on the Ruler when they deliver meaningful burst—Rapid Fire, Cyclic Fire, Banish, etc.</li><li>Use the next stun before the previous safe-action window disappears; count remaining stun actions explicitly.</li><li>Do not give the Ruler a reaction in exchange for trivial chip damage.</li></ol>
+
+<details class="complete-reference" open><summary>Complete Chosen & Alien Ruler micro</summary><div class="complete-body">
+<h3>General Chosen doctrine</h3>
+<ul class="dense-list">
+<li>Chosen appear primarily in retaliation contexts and are effectively resistant to normal crit-centric deletion plans. Early/mid campaign, assume the fight will last multiple turns and prioritize <b>burst damage + damage limitation</b>.</li>
+<li>High-value burst: Both Barrels, Chain Shot, Cyclic Fire, Rapid Fire, Banish and other multi-hit actions. Mag tier is a major Chosen-damage breakpoint.</li>
+<li>A hacked MEC/Drone is one of the best “tanks” because the Chosen/ADVENT may waste actions on it. Templar/SPARK also work; healer Specialist is especially useful because Chosen produce unavoidable chip/wound pressure.</li>
+<li>Damaging a flanked Chosen can trigger reposition, making normal explosive cover destruction self-defeating. Non-damaging Demolition/Bombard-style cover removal can avoid that interaction.</li>
+<li>Venom/Iron Curtain can slow them; Burning disables selected secondary abilities and often prevents double-action patterns. Suppression reduces Aim/movement and can turn off CCS-style threats.</li>
+<li>Chosen weapons are generally not worth delaying main weapon research unless obtained very early. Darkclaw is the most notable exception in Andy’s valuation.</li>
+</ul>
+
+<h3>Hunter</h3><ul class="dense-list"><li>Usually simplest Chosen but still dangerous. Do not let it create extreme range; it prefers to withdraw/reflank. Suppression helps hold it in place and reduces the chance it relocates around your firing plan.</li></ul>
+
+<h3>Assassin</h3>
+<ul class="dense-list">
+<li>Prime-reaction behavior is predictable: adjacent units risk immediate attacks; otherwise she tends to move toward the closest viable soldier after being damaged. Use that predictability to kite her toward a soldier who still has an action to retreat.</li>
+<li>Do not attack adjacent with Assault/Shinobi unless the strike kills. Every extra Assassin attack also increases future damage pressure.</li>
+<li>Harbor Wave punishes clustering. Keep soldiers healthy because a later Slice can one-shot wounded targets.</li>
+<li>Her layered damage reduction activates after enough HP is removed in a turn. Once the threshold is reached, switching to other board problems can be better than firing inefficient reduced-damage attacks—unless the remaining burst can finish her.</li>
+<li>Venom slows her; fire can constrain secondary options. The goal is to hit the damage threshold every turn while minimizing reaction attacks.</li>
+</ul>
+
+<h3>Warlock</h3>
+<ul class="dense-list">
+<li>Mind Scorch can ignite clustered units, so do not pack soldiers/rebels together. SPARKs are no longer a universal fire-immune bait in current LWOTC.</li>
+<li>He often summons rather than directly attacks; most of his difficulty comes from the extra units he creates.</li>
+<li>Burn/Suppression disables or discourages CCS movement interactions. Dedication can help Assault cross his CCS threat.</li>
+<li>Assume every late-turn attack can create another summon. Do not poke the Warlock with your final action if you cannot absorb three new enemies.</li>
+<li>If he enters Stasis while spectral lancers exist, the ideal line is often to leave the last lancer alive and kill it with Overwatch during the enemy turn. Warlock exits Stasis at the start of your following turn and loses the chance to act immediately.</li>
+</ul>
+
+<h3>Chosen Stronghold</h3>
+<ul class="dense-list">
+<li>Five-soldier cap; firepower matters more than scouting. Andy usually leaves Shinobi officer out here because the scout role is weak and every slot must help kill/sarcophagus-burst.</li>
+<li>Pistol perks can make Psi/Specialist viable sarcophagus damage dealers; otherwise low direct-fire support classes slow the key phase.</li>
+<li>First area has no timer/RNF. Save limited ordinance where possible and exploit door/chokepoint geometry instead of rushing closed rooms.</li>
+<li>Cooldown timers do not reset automatically at the Ascension Gate; waiting before activating it trades a small Will cost for fully available abilities.</li>
+<li>Clear or dominate the patrol in the sarcophagus chamber before stepping far enough to spawn the Chosen. A controlled enemy often absorbs an entire Chosen action.</li>
+<li>After the first Chosen kill, <b>destroy the sarcophagus immediately</b>. Hit chance is effectively guaranteed, so multi-shot abilities with Aim penalties are excellent. A Banish-style burst can delete most/all of the HP by itself.</li>
+<li>If the Chosen dies during its own turn (Overwatch/Burn), you gain maximum time before the sarcophagus phase. Nice when it happens; not worth deliberately giving another enemy turn.</li>
+<li>After the sarcophagus is gone, the mission ends when the Chosen dies again. If you can kill it now, ignore unrelated enemies rather than spending actions “cleaning up.”</li>
+</ul>
+
+<h3>Alien Rulers</h3>
+<ul class="dense-list">
+<li>They react to actions performed in line of sight, so <b>action efficiency is everything</b>. Rapid Fire-style multi-shot abilities create one Ruler reaction for multiple attacks and are much better than several weak individual attacks.</li>
+<li>Disabling Shot and upgraded Arc Thrower can buy multiple actions of stun and can stack. Count remaining disabled actions carefully.</li>
+<li>Keep some soldiers out of line of sight so they can heal, kill the Ruler’s podmates or set Overwatch without immediately donating a reaction.</li>
+<li>Scout the map first. The ideal encounter happens after most normal pods are dead and the Ruler/pod is revealed under your terms.</li>
+<li>Do not spend a Ruler reaction for trivial damage. Only high-impact attacks, stuns or essential repositioning should be done in sight.</li>
+<li>Typical clean script: scout → kill podmate from outside sight → Arc stun → burst attacks while stun actions tick down → Disabling Shot next turn → more burst → force retreat/kill.</li>
+</ul>
+</div></details>
+
+<div class="callout warn"><b>Chosen damage rule:</b> treat Chosen as <b>functionally near-immune to critical-damage strategies</b>. They also reposition when damaged while flanked, so normal “destroy cover then crit them repeatedly” logic is unreliable. Non-damaging cover removal such as Demolition can still be useful because it does not trigger that reposition before the follow-up shot.</div>
+<div class="callout"><b>General Chosen tanking:</b> hacked MECs/Drones are excellent disposable targets, followed by SPARK/Templar and then rebels. A Specialist is valuable not only for mechanical control but because it can heal soldiers and resistance personnel during the attrition fight.</div>
+</section>
+<section class="searchable" id="enemies"><h2>14. Enemy quick reference</h2><div class="callout"><b>Control principle:</b> by summer Casey wants a large share of the barracks—roughly three quarters in his example—to have some form of control. Killing remains best, but late enemies are too durable to assume every active threat dies this turn.</div>
+<table><thead><tr><th>Enemy</th><th>Preferred answer</th><th>Casey edge cases / traps</th></tr></thead><tbody>
+<tr><td><b>ADVENT Troopers / elites</b></td><td>Expose + kill; Flash/Suppress when necessary.</td><td>Late Vanguards can have CCS; Elite Gunners can shoot twice; late-game Covering Fire punishes routine actions.</td></tr>
+<tr><td><b>Sectoid</b></td><td>Flashbang the Sectoid; Electroshock; safe Fleche.</td><td>Flash breaks Mind Control/Zombie. Giving it a corpse can bait a low-value Zombie turn.</td></tr>
+<tr><td><b>Drone</b></td><td>Combat Protocol, AP Ranger, shutdown/hack.</td><td>Drones prefer stun over shooting a flank when possible. A hack from concealment can solve a detection trap.</td></tr>
+<tr><td><b>Stun Lancer</b></td><td>Flashbang / burn / kill.</td><td>Flash disables melee; burning disables the shock-rod special. Do not leave one active and undisorientated.</td></tr>
+<tr><td><b>Purifier</b></td><td>Fight at range; kill/control through non-fire tools.</td><td>Fire immune; may explode; <b>Flashbang does not disable the flamethrower</b>.</td></tr>
+<tr><td><b>Viper</b></td><td>Kill/control while allies remain active.</td><td>Bound soldier becomes an attractive target for other enemies; an isolated Viper's tongue play can be baited.</td></tr>
+<tr><td><b>Naja / squadsight unit</b></td><td>Flank/force relocation; break spotter chain.</td><td>A stunned spotter can still provide squadsight vision.</td></tr>
+<tr><td><b>Faceless</b></td><td>Strong Haven Advisor; stun/focus multiple Faceless.</td><td>Burning does not stop its swipe/AoE melee.</td></tr>
+<tr><td><b>Muton</b></td><td>Expose + kill, Assault stun, Combatives.</td><td>Combatives can lock it for one melee attempt; disorientation may change behaviour.</td></tr>
+<tr><td><b>Priest</b></td><td>Overkill, fire, focused burst.</td><td>More overkill reduces chance of Stasis survival. Advanced Priests resist mental status; Elite Priests project mental immunity to nearby allies. Arc Thrower may appear targetable but do nothing.</td></tr>
+<tr><td><b>Berserker</b></td><td>Stun / Combatives; sometimes ignore for one turn if pathing is safe.</td><td>Burn does <b>not</b> disable melee. Disorient works better when it is not already close/enraged.</td></tr>
+<tr><td><b>Chryssalid</b></td><td>Stun / Combatives; burn to stop normal double-move attack sequence.</td><td>Burrowed Lids reveal scouts rather than immediately attacking. If already close enough, a burning Lid can still move once then melee.</td></tr>
+<tr><td><b>Codex</b></td><td>Rapid Fire / focused kill; disorient before damaging if leaving alive.</td><td>Disorient prevents clone/teleport on damage, but stun/disorient does not simply delete its turn. Psi Bomb remains a likely response. Counts as mechanical for damage.</td></tr>
+<tr><td><b>Spectre</b></td><td>Kill or stun before Shadowbind; disorient as second-best.</td><td>Stunning an already Shadowbound Spectre does <b>not</b> release the victim. Keep the squad closer if you cannot stop Shadowbind. Mechanical damage rules; fire immune.</td></tr>
+<tr><td><b>Archon</b></td><td>Insanity/Domination, stun, Combatives when meleeing.</td><td>Low Will makes Psi attractive. Panic does not disable CCS. Burn does not disable melee; Combatives works best when enraged/burning and committed to melee.</td></tr>
+<tr><td><b>Andromedon</b></td><td>Stun / Combatives / cover destruction.</td><td>Fire immune. Acid Bomb is dangerous; v1.2 disorient disables Acid Bomb.</td></tr>
+<tr><td><b>Sectopod</b></td><td>Disabling Shot first; Sting/EMP; hack; then Shred + Bluescreen multi-shot boss killer.</td><td>Sting/hack are roughly coin-flip style control in Casey's older analysis; do not build the turn around them alone.</td></tr>
+<tr><td><b>Hive Queen</b></td><td>Stun / Combatives + concentrated damage.</td><td>Easiest oversized boss in Casey's view. Fire does not disable its melee.</td></tr>
+<tr><td><b>Gatekeeper</b></td><td>Stun, shred, mechanical-damage tools, concentrated fire.</td><td>Closed shell has roughly <b>40 Defense</b> plus damage reduction; Combatives may or may not matter because melee is not guaranteed.</td></tr>
+<tr><td><b>Oversized enemies generally</b></td><td>Disabling Shot, Sting/EMP, appropriate hacks.</td><td>Stasis does not work; Frost removes fewer actions than on normal enemies.</td></tr>
+</tbody></table>
+<div class="source-note">Source: <a href="https://xcom.substack.com/p/lwotc-advanced-tactics">Mid/Late Game Tactics</a> plus <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</div>
+<h3>Andy AI / threat-assessment additions <span class="v6flag">v6</span></h3>
+<p><span class="src-badge src-andy">ANDY</span> Threat assessment is not “kill the strongest enemy first.” Rank enemies by <b>what they are likely to do this turn</b>, whether they can be cheaply controlled, and whether your attempted kill is reliable. An Archon may be scarier than two Troopers but still be the correct one-action stun while you guarantee the Trooper kills.</p>
+<div class="table-scroll"><table><tr><th>Enemy</th><th>Andy’s practical AI / counter note</th></tr>
+<tr><td>ADVENT Officer</td><td>Often prioritizes Mark when allies are present; a flank can force movement/mark instead of a shot.</td></tr>
+<tr><td>Sentry</td><td>Post-shot Overwatch gives excellent enemy action economy; make sure you have an Overwatch clear.</td></tr>
+<tr><td>Gunner</td><td>Early one-shot risk is higher than intuition suggests because of weapon damage.</td></tr>
+<tr><td>Grenadier</td><td>Fuse can be excellent against advanced incendiary carriers; know that higher tiers may carry different bombs.</td></tr>
+<tr><td>Rocketeer</td><td>High priority because rockets are guaranteed-impact pressure. Spread and get off fragile roofs if one will act.</td></tr>
+<tr><td>Drone</td><td>Kill / hack earlier than its damage suggests: losing a soldier for two turns to stun can cost more actions than killing the “bigger” threat.</td></tr>
+<tr><td>Purifier</td><td>Still flamethrowers while disoriented; move away. Andy’s tests show blast danger extends beyond adjacent tiles and explosive kills guarantee its death explosion.</td></tr>
+<tr><td>Muton</td><td>Combatives lock works; burning does not disable melee parry, but disorient/panic/stun does.</td></tr>
+<tr><td>Priest</td><td>Overkill reduces Sustain chance. Priests can undo hacked/dominated pets; kill/avoid them before committing Dominate.</td></tr>
+<tr><td>Naja</td><td>Needs two actions to fire. A flank that forces movement can function as control.</td></tr>
+<tr><td>Spectre</td><td>Often Shadowbinds first. Revival Protocol can wake the soldier even while the clone persists. Scanning/Battle Scanner reveals Vanish.</td></tr>
+<tr><td>Codex</td><td>Avoid chip/graze damage that creates extra bodies. Multi-shot abilities resolve before clone creation. Disorient stops cloning for that moment but clears on its turn.</td></tr>
+<tr><td>Archon</td><td>Great Dominate target; advanced versions are high-defense action sinks, so Focus Fire / control can be better than five mediocre shots.</td></tr>
+<tr><td>Sectopod</td><td>Do not allow a free turn. Stasis/Arc Thrower do not solve it; Disabling Shot + shred + Bluescreen burst is the cleaner line.</td></tr>
+<tr><td>Gatekeeper</td><td>Similar stun/shred/burst plan; Arc Thrower can work where Sectopod is immune. Closed shell is the high-defense state you prefer not to let act.</td></tr>
+<tr><td>Lost</td><td>Flashbangs do not solve them; Technical flamethrower, pistols, Reaper/Shinobi cleanup and area suppression help. Kill Brutes fast and respect Grappler Bladestorm.</td></tr></table></div>
+
+<details class="complete-reference" open><summary>Complete enemy behavior & threat-assessment handbook</summary><div class="complete-body">
+<h3>Threat assessment rule</h3>
+<ul class="dense-list">
+<li>First objective: leave no active enemies. Second-best: leave no enemy capable of meaningfully hurting the squad. Decide this <b>before</b> spending actions—do not put four shots into an Archon, then discover too late that it cannot be killed and the Stun Lancer/MEC still has a turn.</li>
+<li>Enemies whose first action is often non-damaging (Codex Psionic Bomb, Spectre Shadowbind, some Sectoid actions) can sometimes be deferred for one turn if direct killers are present, but the follow-up problem must be solved immediately next turn.</li>
+<li>Melee threats depend on reach. A Berserker far outside its movement envelope can be lower priority than a Gunner/MEC despite much higher HP.</li>
+</ul>
+<table><thead><tr><th>Enemy</th><th>Key behavior / priority</th><th>Important counter / exception</th></tr></thead><tbody>
+<tr><td>ADVENT Officer</td><td>Likes to mark before shooting when allies are present; flanking can make it move/mark.</td><td>Use movement/priority knowledge to reduce immediate damage.</td></tr>
+<tr><td>Sentry</td><td>Post-shot Overwatch gives strong ADVENT action economy.</td><td>Usually manageable if you have free Overwatch clears; much worse if you do not.</td></tr>
+<tr><td>ADVENT Gunner</td><td>Early one-shot risk due to high weapon damage.</td><td>If denied a good shot it may Suppress, which is usually preferable to being fired on.</td></tr>
+<tr><td>Grenadier / Engineer</td><td>Advanced Grenadier Incendiary can be exploited by Psi Fuse; Elite acid remains dangerous.</td><td>Engineers with Flashbangs are not valid Fuse targets in the same way.</td></tr>
+<tr><td>Rocketeer</td><td>Guaranteed AoE threat; does not care about hitting friends with rockets.</td><td>Spread out, leave roofs if it will act. Suppression is not a perfect shutdown in every case.</td></tr>
+<tr><td>Scout</td><td>Lone Wolf can spike Defense after allies die.</td><td>Kill/disable before removing its nearby allies when possible.</td></tr>
+<tr><td>Stun Lancer</td><td>High Mobility, reliable melee, severe damage/KO.</td><td>Disorient removes melee; Bladestorm can sometimes cover travel lanes but Lancers do not always attack adjacent units.</td></tr>
+<tr><td>Drone</td><td>Often low direct lethality but stun can delete multiple XCOM actions and ruin timed missions.</td><td>Excellent Hack target; AP rounds help early. Do not ignore just because damage is low.</td></tr>
+<tr><td>Purifier</td><td>Prefers flamethrower; Disorient reduces Mobility but does not disable the flamethrower.</td><td>Move out of flame range; SPARK can bait. Death explosion extends beyond adjacent tiles; explosive kill guarantees explosion. Purifier explosion does not automatically erase all nearby loot/corpses.</td></tr>
+<tr><td>MEC</td><td>Missiles punish clusters/rooftops; gun flanks hit hard and MECs move farther than expected.</td><td>Bluescreen/Redscreen/Hack; avoid giving multi-target rocket value.</td></tr>
+<tr><td>Muton</td><td>Melee counter/parry makes normal melee dangerous.</td><td>Combatives Shinobi can lock one down by safely moving adjacent. Disorient/panic/stun disables counter state; burning alone does not.</td></tr>
+<tr><td>Priest</td><td>Stasis-on-death behavior and high Aim; Elite Solace breaks control.</td><td>Overkill reduces Sustain/Stasis likelihood. Priests are priority targets whenever XCOM has dominated/hacked puppets.</td></tr>
+<tr><td>Viper</td><td>Adjacent targets often bait Bind.</td><td>Bind is sometimes preferable to a damaging shot if the rest of the pod is controlled.</td></tr>
+<tr><td>Naja</td><td>Needs actions to fire and has squadsight support.</td><td>Flanking it forces movement and can deny the shot; stunning spotters does not necessarily remove squadsight.</td></tr>
+<tr><td>Chryssalid</td><td>Fast melee; Soldiers can have Lightning Reflexes.</td><td>Area Suppression/Kill Zone good except against LR variants. Domination creates poison-spawn complications.</td></tr>
+<tr><td>Berserker</td><td>Massive HP but melee-only.</td><td>Burning does not stop punches. Move outside reach or Dominate/control rather than dumping every action into HP.</td></tr>
+<tr><td>Spectre</td><td>Hybrid immunities: cannot be hacked/mind-controlled but can be disoriented and affected by anti-mechanical debuffs.</td><td>Shadowbind usually consumes first turn without damage; prioritize next turn. Scanning/Battle Scanner reveals vanish. Revival can wake bound soldier while clone remains.</td></tr>
+<tr><td>Codex</td><td>Damage clones it; Psionic Bomb often first action and forces movement/reload.</td><td>Burst in one ability (Rapid Fire etc.) before clone resolves. Disorient disables cloning for the turn but clears at its next turn. Preserve autoloader charges.</td></tr>
+<tr><td>Archon</td><td>High Defense/HP; excellent Dominate target.</td><td>Focus Fire/aim buffs help. Burning disables gun but not melee. Some variants have Lightning Reflexes.</td></tr>
+<tr><td>Sectopod</td><td>Can kill full-health soldiers if allowed an unrestricted turn.</td><td>Disabling Shot is premium; Stasis/Arc Thrower do not solve it. Shred first, then multi-shot Bluescreen.</td></tr>
+<tr><td>Gatekeeper</td><td>High initial Defense and armor; dangerous but somewhat more survivable to endure than Sectopod.</td><td>Assault Arc Thrower can stun Gatekeeper; Stasis does not. Shred + Focus Fire + multi-shot.</td></tr>
+<tr><td>Lost</td><td>Interfere with ammo/movement/concealment and explosions spawn more.</td><td>Flamethrower, pistols, Bladestorm/Reaper, Area Suppression. Brute immediate priority; Grappler Bladestorm is easy to forget.</td></tr>
+</tbody></table>
+<h3>Boss explosions</h3><p>Sectopod/Gatekeeper death explosions reach beyond the immediately adjacent tile; do not end melee turns hugging them unless the soldier can absorb the blast.</p>
+</div></details>
+</section>
+<section class="searchable" id="legacy-notes">
+<h2>14A. v1.1 / historical Casey notes still worth remembering</h2>
+<div class="callout gold"><b>Version warning:</b> these are older observations Casey considered useful in v1.1. Most remain relevant as tactical warnings, but v1.2 should override them where mechanics changed.</div>
+<table><thead><tr><th>Note</th><th>Campaign use</th></tr></thead><tbody>
+<tr><td>Covert-op ambushes often begin with operatives immediately revealed near a small ADVENT pod, commonly a MEC + soldier.</td><td>Choose covert operatives who can survive and kill immediately, not just soldiers who satisfy the stat requirement.</td></tr>
+<tr><td>Alien Rulers can appear on Troop Ambushes even before a facility raid.</td><td>Do not assume Troop Ambush is a safe corpse farm once the campaign matures.</td></tr>
+<tr><td><b>Miranda SITREP</b> is dangerous.</td><td>Prefer a specialized team less dependent on conventional shooting.</td></tr>
+<tr><td>Full Override MECs remain yours even if the Specialist is disoriented, stunned, unconscious or killed; Casey notes the same persistence for Psi-controlled units under Psi disorientation.</td><td>Do not waste actions “protecting the controller” purely out of fear the permanent control will flip.</td></tr>
+<tr><td>Panic does not remove Overwatch and does not prevent CCS.</td><td>Do not treat panic as complete hard control.</td></tr>
+<tr><td>Spectres can be stunned.</td><td>Remember stun as a real anti-Shadowbind option.</td></tr>
+<tr><td>Lost act before aliens and can activate alien pods.</td><td>Explosives on Lost maps can create a free-attack disaster indirectly even if the Lost themselves are manageable.</td></tr>
+<tr><td>Long missions create meaningful fatigue.</td><td>Troop Columns reward faster play; HQ cannot be shortened much, so roster depth matters.</td></tr>
+<tr><td>Strength does not mirror Vigilance perfectly and may flow toward a region being liberated.</td><td>Do not automatically start Liberation in the region you most want to preserve as an easy-mission farm.</td></tr>
+<tr><td>Trap/Snare missions still exist; Casey's example was a Hack in a Strength-8 region.</td><td>Routine-looking high-Strength Hack missions deserve a major warning in the mission matrix.</td></tr>
+</tbody></table>
+<div class="source-note"><a href="https://xcom.substack.com/p/lwotc-some-thoughts-on-version-11">Casey — Thoughts on v1.1 and other notes</a></div>
+
+<details class="complete-reference"><summary>Legacy Casey material retained with version caveats</summary><div class="complete-body">
+<ul class="dense-list">
+<li>Older 1.0/1.1 strategy/class concepts remain useful when the underlying mechanic still exists, but current stable 1.2.3 mechanics override old perk trees, SPARK details, Chosen behavior and numerical costs.</li>
+<li>Keep older reinforcement/slow-play principles: fight one pod at a time, call evac early, do not let RNF fear create a double-pod activation, and reserve large squads for missions that truly justify infiltration cost.</li>
+<li>Older class pages remain valuable for explaining <i>why</i> an archetype works even when Andy’s 1.2.2 tree or Casey’s 1.2 revision is more current. The Combined Builds section now presents those as labelled legacy alternatives rather than silently mixing versions.</li>
+<li>Historical mission/UI bugs (for example Avatar-project animation oddities or obsolete hidden Liberation labels) are kept only where they can still prevent player confusion; they are not presented as current stable guarantees.</li>
+</ul>
+</div></details>
+</section>
+</main>
+<script>
+(function(){
+ const q=document.getElementById('chapterSearch');
+ const clear=document.getElementById('chapterClear');
+ function run(){
+  const term=(q.value||'').trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(sec=>{
+   if(!term){sec.classList.remove('chapter-hidden'); return;}
+   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
+  });
+  document.querySelectorAll('details').forEach(d=>{
+   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
+  });
+ }
+ q.addEventListener('input',run);
+ clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
+ const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){
+  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
+   const s=box.querySelector('summary'); if(!s)return;
+   const name=(s.innerText||'').split(' — ')[0].trim();
+   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
+  });
+ }
+})();
+</script></body></html>
