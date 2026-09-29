@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LWOTC v13 — Campaign & Strategy</title><style>
+:root{
+  --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
+  --accent:#63d0ff; --accent2:#f3c95c; --danger:#ff7b7b; --good:#7be0a8; --line:#33404f; --purple:#c7a7ff;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.55}
+a{color:var(--accent)} a:hover{color:white}.layout{display:grid;grid-template-columns:310px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:#0b0f14;border-right:1px solid var(--line);padding:18px}
+.sidebar h1{font-size:1.05rem;margin:0 0 8px}.sidebar .sub{font-size:.8rem;color:var(--muted);margin-bottom:12px}
+.search{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#141a21;color:white;margin:8px 0 12px}
+.nav a{display:block;text-decoration:none;color:#cbd5e1;padding:6px 8px;border-radius:6px;font-size:.88rem}.nav a:hover{background:var(--panel2);color:white}
+.main{max-width:1260px;padding:30px 34px 80px}.hero{padding:30px;border:1px solid var(--line);background:linear-gradient(135deg,#151c25,#202b38);border-radius:16px;margin-bottom:26px}
+.hero h1{font-size:2rem;margin:0 0 8px}.hero p{color:var(--muted);max-width:950px}.pill{display:inline-block;padding:4px 9px;border-radius:999px;background:#22303e;border:1px solid #3e5366;color:#d8e6f3;font-size:.78rem;margin:2px 5px 2px 0}
+section{scroll-margin-top:18px;margin:30px 0}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+h2{font-size:1.55rem;border-bottom:1px solid var(--line);padding-bottom:8px}h3{margin-top:22px;color:#dfe9f3}h4{margin-bottom:6px}
+.callout{border-left:4px solid var(--accent);background:#13202a;padding:12px 14px;border-radius:6px;margin:12px 0}.warn{border-left-color:var(--danger);background:#26191c}.good{border-left-color:var(--good);background:#14241c}.gold{border-left-color:var(--accent2);background:#2a2414}.purple{border-left-color:var(--purple);background:#20192b}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}th{color:#e8f1fa;background:#111820;position:sticky;top:0;z-index:1}.small{font-size:.84rem;color:var(--muted)}
+.mission,.classbox,.sourceguide{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}.mission summary,.classbox summary,.sourceguide summary{cursor:pointer;padding:14px 16px;font-weight:700;background:#141b23}.mission .body,.classbox .body,.sourceguide .body{padding:14px 16px}.tag{font-size:.72rem;padding:3px 7px;border-radius:999px;background:#293644;border:1px solid #3c4d5d;margin-right:4px;white-space:nowrap}.tag.red{background:#3a2023}.tag.green{background:#183425}.tag.gold{background:#3a3218}.tag.purple{background:#322547}
+.sourcebox{background:#0c1117;border:1px dashed #425163;padding:14px;border-radius:8px}.check li{margin:6px 0}.topbtn{position:fixed;right:20px;bottom:20px;border:0;border-radius:999px;background:var(--accent);color:#061017;font-weight:800;padding:11px 14px;cursor:pointer;box-shadow:0 4px 18px #0008}.hidden{display:none!important}
+.kpi{font-size:1.25rem;font-weight:800}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.muted{color:var(--muted)}
+.phase{border-left:4px solid var(--accent2)}.dangerrow td:first-child{color:var(--danger);font-weight:700}.priority{font-weight:700;color:var(--accent2)}
+.imgplaceholder{border:1px dashed #58697a;border-radius:10px;padding:22px;text-align:center;color:var(--muted);background:#10161c}
+@media(max-width:950px){.layout{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.nav{columns:2}.main{padding:20px}.topbtn{right:12px;bottom:12px}}
+@media(max-width:600px){.nav{columns:1}.hero{padding:20px}.hero h1{font-size:1.55rem}.main{padding:14px}table{font-size:.81rem;display:block;overflow-x:auto}}
+
+/* --- Mobile-first usability layer --- */
+.mobilebar{display:none;position:sticky;top:0;z-index:50;background:#0b0f14;border-bottom:1px solid var(--line);padding:9px 10px;gap:8px;align-items:center}
+.mobilebar button,.quickjump{border:1px solid var(--line);background:#18212b;color:var(--text);border-radius:9px;padding:10px 12px;font-weight:700}
+.mobilebar .brand{font-weight:800;font-size:.92rem;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.decision-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.decision-grid label{font-size:.78rem;color:var(--muted);font-weight:700;display:block;margin-bottom:4px}
+.decision-grid select{width:100%;background:#10171e;color:var(--text);border:1px solid var(--line);padding:11px 10px;border-radius:9px}
+.decision-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.decision-actions button{background:var(--accent);color:#061017;border:0;border-radius:9px;padding:11px 16px;font-weight:800;cursor:pointer}
+#decisionResult{margin-top:12px;padding:14px;border-radius:10px;background:#10171e;border:1px solid var(--line)}
+.result-take{border-left:5px solid var(--good)!important}.result-consider{border-left:5px solid var(--accent2)!important}.result-skip{border-left:5px solid var(--danger)!important}
+.matrix-badge{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 7px;border-radius:999px;margin-right:4px}.take{background:#173a27;color:#9af0bd}.maybe{background:#3a3218;color:#ffe38d}.skip{background:#3b2023;color:#ffabab}
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.phase-card h3{margin:0 0 8px}.phase-card ul{padding-left:18px;margin:6px 0}.phase-card li{margin:5px 0}
+.rulegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rule{background:#111820;border:1px solid var(--line);border-radius:10px;padding:12px}.rule b{display:block;margin-bottom:4px}
+.mobile-tabs{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0b0f14eF;border-top:1px solid var(--line);padding:6px;grid-template-columns:repeat(4,1fr);gap:4px;backdrop-filter:blur(8px)}
+.mobile-tabs a{text-align:center;text-decoration:none;color:#dbe7f2;font-size:.68rem;padding:7px 3px;border-radius:8px;background:#141b23}.mobile-tabs span{display:block;font-size:1rem}
+@media(max-width:950px){
+  body{padding-bottom:68px}.mobilebar{display:flex}.sidebar{display:none;position:fixed;z-index:70;top:52px;left:0;right:0;height:calc(100vh - 52px);overflow:auto;border:0;padding:14px;background:#0b0f14}.sidebar.open{display:block}.nav{columns:1}.mobile-tabs{display:grid}.main{max-width:none;padding:14px 12px 86px}.hero{padding:18px 15px;border-radius:12px;margin-top:8px}.hero h1{font-size:1.45rem}.hero p{font-size:.92rem}.grid{grid-template-columns:1fr}.decision-grid{grid-template-columns:1fr 1fr}section{margin:22px 0;scroll-margin-top:64px}h2{font-size:1.3rem}.topbtn{bottom:76px;right:10px;padding:9px 11px}
+  details summary{touch-action:manipulation;min-height:48px;display:flex;align-items:center}
+  table{display:block;overflow-x:auto;white-space:normal;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:#11161d} th,td{min-width:145px;padding:9px 8px} th:first-child,td:first-child{position:sticky;left:0;background:#111820;z-index:2;min-width:128px} th:first-child{z-index:3}
+}
+@media(max-width:600px){
+  .decision-grid{grid-template-columns:1fr}.phase-grid{grid-template-columns:1fr}.rulegrid{grid-template-columns:1fr}.card,.mission .body,.classbox .body,.sourceguide .body{padding:12px}.mission summary,.classbox summary,.sourceguide summary{padding:12px;font-size:.95rem}.pill{font-size:.71rem}.callout{padding:10px 11px}.main{padding-left:10px;padding-right:10px}table{font-size:.78rem}.sourcebox{overflow-wrap:anywhere}
+}
+
+.refnote{font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}.tight td,.tight th{padding:6px 8px}.status-full{color:var(--good);font-weight:800}.status-legacy{color:var(--accent2);font-weight:800}
+
+.order-num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#061017;font-weight:900;margin-right:8px}
+.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#0c1117;border:1px solid var(--line);padding:10px 12px;border-radius:8px;overflow:auto}
+.calcbox{background:#101820;border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.calcrow{display:grid;grid-template-columns:1fr 100px 120px;gap:8px;align-items:center;padding:5px 0}
+.calcrow input[type=number]{width:100%;padding:6px;border-radius:6px;border:1px solid var(--line);background:#0f141a;color:var(--text)}
+.source-note{font-size:.82rem;color:var(--muted);border-top:1px dashed var(--line);margin-top:12px;padding-top:8px}
+.audit-ok{color:var(--good);font-weight:800}.audit-limit{color:var(--accent2);font-weight:800}
+@media(max-width:700px){.calcrow{grid-template-columns:1fr 75px 90px;font-size:.86rem}.order-num{width:24px;height:24px}table{font-size:.84rem}}
+
+/* v6 source comparison additions */
+.source-legend{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}.src-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.02em;border:1px solid var(--line)}
+.src-official{background:#143423;color:#9ff0bf;border-color:#285c40}.src-casey{background:#183245;color:#9edfff;border-color:#315b76}.src-andy{background:#3c2d13;color:#ffd982;border-color:#725929}.src-synth{background:#33284a;color:#d8c1ff;border-color:#5b4a7e}.src-legacy{background:#3a2020;color:#ffb3b3;border-color:#6e3939}
+.compare4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}.compare4 .card{margin:0}.andybox{border-left:4px solid #f3c95c;background:linear-gradient(90deg,rgba(243,201,92,.08),transparent)}.officialbox{border-left:4px solid #7be0a8}.synthbox{border-left:4px solid #c7a7ff}.caseybox{border-left:4px solid #63d0ff}
+.details-grid details{border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:8px 0;padding:0}.details-grid summary{cursor:pointer;padding:12px 14px;font-weight:800}.details-grid details>div{padding:0 14px 14px}.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-note{font-size:.86rem;color:var(--muted)}
+.v6flag{display:inline-block;padding:2px 7px;border-radius:6px;background:#4b2e09;color:#ffd982;font-size:.72rem;font-weight:800;margin-left:6px}.source-ref{font-size:.78rem;color:var(--muted);margin-top:8px}.source-ref a{word-break:break-word}
+@media(max-width:800px){.compare4{grid-template-columns:1fr}.details-grid summary{padding:13px 12px}.table-scroll table{min-width:760px}}
+
+/* --- v8 navigation & information architecture --- */
+.brand{text-decoration:none;color:var(--text)}
+.navgroup{border:1px solid var(--line);border-radius:10px;background:#10161d;margin:8px 0;overflow:hidden}
+.navgroup summary{cursor:pointer;list-style:none;padding:10px 11px;font-size:.76rem;font-weight:900;letter-spacing:.08em;color:var(--muted);background:#0f151c}
+.navgroup summary::-webkit-details-marker{display:none}.navgroup summary:after{content:"＋";float:right;color:var(--accent)}
+.navgroup[open] summary:after{content:"−"}.navlinks{padding:5px}.navlinks a{padding:7px 8px}
+.guide-home{margin-top:0;background:linear-gradient(180deg,#121a23,#0f151c);border:1px solid var(--line);border-radius:16px;padding:20px}
+.guide-home h2{border:0;margin:4px 0 4px;padding:0}.guide-home p{margin:0 0 14px}
+.home-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.home-card{display:flex;flex-direction:column;min-height:125px;padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--panel);text-decoration:none;color:var(--text);transition:.15s transform,.15s border-color}
+.home-card:hover{transform:translateY(-2px);border-color:var(--accent);color:var(--text)}.home-card b{font-size:1rem}.home-card small{color:var(--muted);margin-top:5px;line-height:1.35}
+.home-icon{font-size:1.35rem;color:var(--accent);margin-bottom:9px;font-weight:900}.danger-card .home-icon{color:var(--danger)}
+.phase-jump{margin-top:14px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#0d141b}.phase-jump-label{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:9px}
+.phase-chips,.month-strip,.home-secondary{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}.phase-chips::-webkit-scrollbar,.month-strip::-webkit-scrollbar,.home-secondary::-webkit-scrollbar{display:none}
+.phase-chips a,.month-strip a,.home-secondary a{flex:0 0 auto;text-decoration:none;color:#dce8f3;background:#18232d;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:.82rem;font-weight:800}
+.home-secondary{margin-top:11px}.home-secondary a{background:transparent}
+.context-dock{display:none}.month-strip{margin:10px 0 12px;padding:4px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg),var(--bg))}
+.mobile-month-cards{display:none}
+.mobile-month-card{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:14px;margin:10px 0;scroll-margin-top:112px}
+.mobile-month-card h3{margin:0 0 10px;color:var(--text);font-size:1.08rem}.month-field{padding:8px 0;border-top:1px solid var(--line)}.month-field:first-of-type{border-top:0}.month-field b{display:block;color:var(--accent2);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.mobile-tabs button{border:0;background:#141b23;color:#dbe7f2;font-family:inherit}
+@media(max-width:950px){
+  body{padding-top:0}
+  .mobilebar{position:sticky;top:0}
+  .context-dock{display:block;position:sticky;top:52px;z-index:45;background:#0b0f14eF;border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+  .context-scroll{display:flex;gap:6px;overflow-x:auto;padding:6px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}.context-scroll::-webkit-scrollbar{display:none}
+  .context-scroll a{flex:0 0 auto;text-decoration:none;color:#cbd8e5;background:#141b23;border:1px solid #293644;border-radius:999px;padding:6px 10px;font-size:.72rem;font-weight:800}
+  .context-scroll a.active{background:#203243;border-color:#47647c;color:white}
+  section{scroll-margin-top:104px}
+  .sidebar{top:52px;height:calc(100vh - 52px)}
+  .navgroup{margin:7px 0}.navgroup summary{padding:12px 11px}
+  .guide-home{padding:14px 11px;margin-top:6px}.home-grid{grid-template-columns:1fr 1fr}.home-card{min-height:112px;padding:13px}
+  .phase-jump-label{align-items:flex-start;flex-direction:column}
+  .month-strip{top:94px;padding:7px 0 8px;margin-top:8px}
+  body.monthcards-ready .campaign-table{display:none}
+  body.monthcards-ready .mobile-month-cards{display:block}
+  .mobile-tabs{grid-template-columns:repeat(5,1fr)}
+  .mobile-tabs a,.mobile-tabs button{font-size:.66rem;padding:7px 2px;border-radius:8px;text-align:center;text-decoration:none}
+  .mobile-tabs span{display:block;font-size:1rem}
+}
+@media(max-width:560px){
+  .home-grid{grid-template-columns:1fr 1fr;gap:8px}.home-card{min-height:106px;padding:12px 10px}.home-card b{font-size:.92rem}.home-card small{font-size:.73rem}
+}
+
+
+#officers table td:first-child{font-weight:700}
+#newplayer .card h4,#officers .card h4{margin-top:0}
+@media(max-width:950px){
+ #officers .table-scroll table{min-width:920px}
+ #newplayer .grid{grid-template-columns:1fr}
+}
+
+
+/* --- v10 predictive search + campaign companion --- */
+.home-campaign-summary{display:flex;flex-direction:column;gap:3px;margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#111a22}
+.home-campaign-summary span{color:var(--muted);font-size:.82rem}
+.companion-tool{background:linear-gradient(180deg,#121922,#0f151b);border:1px solid var(--line);border-radius:16px;padding:18px}
+.tool-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}.tool-grid label{font-size:.77rem;color:var(--muted);font-weight:800}
+.tool-grid input,.tool-grid select,.lookup-row input{width:100%;margin-top:5px;background:#0e151c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+.tracker-details{margin:12px 0;border:1px solid var(--line);border-radius:10px;background:#10171e}.tracker-details summary{cursor:pointer;padding:11px 12px;font-weight:800}.tracker-checks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:0 12px 12px}.tracker-check{display:flex;gap:7px;align-items:center;padding:7px 8px;border-radius:8px;background:#151e27;font-size:.8rem}.tracker-check input{accent-color:var(--accent)}
+.tool-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}.primary-btn,.secondary-btn,.icon-btn{border-radius:9px;padding:10px 13px;font-weight:800;cursor:pointer;font-family:inherit}.primary-btn{border:0;background:var(--accent);color:#061017}.secondary-btn,.icon-btn{border:1px solid var(--line);background:#18212b;color:var(--text)}
+.what-next{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:9px;margin-top:10px}.next-card{border:1px solid var(--line);background:#111820;border-radius:10px;padding:12px}.next-card b{display:block;margin-bottom:4px}.next-card a{font-size:.8rem}
+.lookup-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.lookup-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin:9px 0}.lookup-suggestions button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:6px 9px;font-size:.78rem;cursor:pointer}.lookup-result{border:1px solid var(--line);background:#10171e;border-radius:12px;padding:14px;min-height:72px}.decision-badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:.72rem;font-weight:900;margin-bottom:8px}.decision-keep{background:#163b27;color:#9ff0bf}.decision-caution{background:#3a3218;color:#ffe38d}.decision-sell{background:#3b2023;color:#ffb4b4}
+.class-picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:12px 0}.class-pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;border:1px solid var(--line);background:#111820;border-radius:10px;padding:10px}.class-pick small{display:block;color:var(--muted);margin-top:2px}.counter{display:grid;grid-template-columns:30px 28px 30px;align-items:center;text-align:center}.counter button{height:30px;border:1px solid var(--line);background:#19242e;color:var(--text);font-weight:900;cursor:pointer}.counter button:first-child{border-radius:8px 0 0 8px}.counter button:last-child{border-radius:0 8px 8px 0}.counter span{height:30px;line-height:30px;background:#0c1319;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.coverage-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:7px;margin:9px 0}.coverage{padding:9px;border:1px solid var(--line);border-radius:9px;background:#121a22}.coverage.ok{border-left:4px solid var(--good)}.coverage.miss{border-left:4px solid var(--danger)}.coverage.optional{border-left:4px solid var(--accent2)}
+.search-overlay{display:none;position:fixed;inset:0;z-index:200}.search-overlay.open{display:block}.search-backdrop{position:absolute;inset:0;background:#02060acd;backdrop-filter:blur(4px)}.search-panel{position:relative;width:min(820px,calc(100% - 24px));max-height:min(760px,calc(100vh - 30px));overflow:auto;margin:15px auto;background:#0d141b;border:1px solid #3b4b5d;border-radius:16px;padding:16px;box-shadow:0 24px 80px #000c}
+.search-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.search-head h2{border:0;padding:0;margin:2px 0 8px}.icon-btn{font-size:1.25rem;padding:5px 11px}.global-search-wrap{display:grid;grid-template-columns:1fr auto;align-items:center;border:1px solid #476177;background:#101a23;border-radius:12px;padding:2px 9px}.global-search-wrap input{border:0;outline:0;background:transparent;color:white;font-size:1rem;padding:12px 5px;width:100%}.global-search-wrap kbd{border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--muted);font-size:.72rem}.search-help{margin:7px 2px 10px}.recent-searches{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}.recent-searches button{background:#161f28;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 8px;cursor:pointer}.search-results{display:grid;gap:6px}.search-result{display:grid;grid-template-columns:auto 1fr;gap:9px;text-align:left;border:1px solid transparent;background:#111820;color:var(--text);border-radius:10px;padding:10px;cursor:pointer;width:100%}.search-result:hover,.search-result.active{border-color:#4e718c;background:#16232e}.search-type{font-size:.65rem;font-weight:900;letter-spacing:.05em;padding:3px 6px;border-radius:6px;background:#223242;color:#bde9ff;align-self:start}.search-result b{display:block}.search-result small{display:block;color:var(--muted);margin-top:3px;line-height:1.3}.search-result mark{background:#594b1d;color:#fff2b0;border-radius:2px}.search-hit{animation:searchFlash 1.7s ease}@keyframes searchFlash{0%,35%{outline:3px solid var(--accent2);outline-offset:4px;background-color:#2b2515}100%{outline-color:transparent}}
+@media(max-width:950px){.tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tracker-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.search-panel{margin:8px auto;max-height:calc(100vh - 16px);padding:12px}}
+@media(max-width:560px){.tool-grid{grid-template-columns:1fr 1fr}.tracker-checks{grid-template-columns:1fr}.lookup-row{grid-template-columns:1fr}.class-picker{grid-template-columns:1fr}.search-result{grid-template-columns:1fr}.search-type{justify-self:start}}
+
+
+/* --- v13 combined soldier builds --- */
+.build-jumps{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:10px 0 14px;padding:3px 0}.build-jumps::-webkit-scrollbar{display:none}.build-jumps a{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:999px;padding:7px 10px;font-size:.78rem;font-weight:800}
+.merged-build-meta{display:grid;grid-template-columns:1.25fr 1fr;gap:9px;margin:9px 0 13px}.andy-inline,.equipment-inline{border:1px solid var(--line);border-radius:10px;background:#111820;padding:11px}.andy-inline b{display:block;margin:6px 0}.andy-inline p,.equipment-inline p{margin:6px 0 0}
+
+@media(max-width:760px){.merged-build-meta{grid-template-columns:1fr}}
+.xcom-overview,.xcom-guide{border:1px solid #40576b;background:#0e1821;border-radius:12px;padding:12px;margin:13px 0}
+.xcom-overview h3,.xcom-guide h4{margin:0 0 8px}
+.xcom-key{display:grid;grid-template-columns:auto 1fr;gap:7px 10px;align-items:center;font-size:.8rem}
+.xcom-rank{display:inline-block;border-radius:999px;padding:3px 7px;font-size:.68rem;font-weight:900;white-space:nowrap}
+.xcom-rank.reroute{background:#402326;color:#ffc0c0}.xcom-rank.premium{background:#35331b;color:#ffe692}.xcom-rank.value{background:#173924;color:#aaf1c3}
+.xcom-guide table{margin-top:7px}.xcom-guide td:nth-child(2){white-space:nowrap}
+
+
+/* --- v13 exhaustive reference layers --- */
+.complete-reference{margin:18px 0 4px;border:1px solid #43566a;border-radius:14px;background:#0d161e;overflow:hidden}
+.complete-reference>summary{cursor:pointer;padding:13px 15px;font-weight:900;background:#131e28}
+.complete-reference>.complete-body{padding:4px 15px 15px}
+.complete-reference h3{margin-top:16px}.complete-reference h4{margin-top:14px}
+.complete-reference .dense-list li{margin:5px 0}
+.complete-reference .source-split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.complete-reference .source-split>div{border:1px solid var(--line);border-radius:9px;padding:10px;background:#111820}
+.complete-reference table{font-size:.82rem}
+.complete-reference .rule{border-left:3px solid var(--accent);padding:7px 10px;margin:8px 0;background:#111820}
+@media(max-width:760px){.complete-reference .source-split{grid-template-columns:1fr}}
+
+
+
+.chapter-shell{max-width:1180px;margin:0 auto;padding:16px 18px 80px}
+.chapter-head{position:sticky;top:0;z-index:50;background:rgba(11,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:10px 14px}
+.chapter-head-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.chapter-title{font-weight:900;margin-right:auto}
+.chapter-nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chapter-nav a{white-space:nowrap;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:6px 9px;color:var(--text);font-size:.75rem;font-weight:800}
+.chapter-nav a.active{background:var(--accent);color:#07131c;border-color:var(--accent)}
+.chapter-search{max-width:1180px;margin:12px auto 0;display:grid;grid-template-columns:1fr auto;gap:8px}
+.chapter-search input{width:100%;background:#0f1820;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.chapter-search button{border:1px solid var(--line);background:#17212b;color:var(--text);border-radius:10px;padding:8px 12px;font-weight:800}
+.chapter-intro{border:1px solid var(--line);border-radius:14px;padding:14px;margin:14px 0;background:#101820}
+.chapter-intro h1{margin:.15rem 0 .35rem}
+.chapter-hidden{display:none!important}
+.read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
+@media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v13</a><nav class="chapter-nav"><a class="active" href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div>
+<div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell">
+<div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Campaign & Strategy</h1><p>This chapter is generated from the same canonical v13 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div>
+<a class="read-tool-link" href="index.html#tracker"><b>Campaign Tracker / What Next? →</b><br><span class="small">Use the master guide for saved campaign-state tools.</span></a>
+<section class="searchable" id="quick">
+<h2>1. The rules that keep campaigns alive</h2>
+<div class="grid">
+<div class="card"><div class="kpi">1 pod</div><b>Fight one pod at a time.</b><p>Most catastrophic turns begin when a melee move, flank, roof climb or careless scout activates another pod.</p></div>
+<div class="card"><div class="kpi">Scan first</div><b>Information is combat power.</b><p>In 1.2, Specialist Scanning Protocol changes campaign tempo. Use it after the first ambush to find remaining pods and protect flanks.</p></div>
+<div class="card"><div class="kpi">Control</div><b>Do not require every enemy to die this turn.</b><p>Burn, stun, hack, Stasis, Suppression and Sting Grenades convert impossible damage checks into manageable fights.</p></div>
+<div class="card"><div class="kpi">Deep barracks</div><b>Build more than one A-team.</b><p>Infiltration, wounds, covert actions, officer training and bond training all remove soldiers from availability.</p></div>
+<div class="card"><div class="kpi">Mission choice</div><b>You are not meant to run every mission.</b><p>Bad infiltration, high Strength and low-value rewards are valid reasons to pass.</p></div>
+<div class="card"><div class="kpi">Intel reserve</div><b>Expansion beats convenience.</b><p>Boost critical missions; do not routinely spend the Intel needed to open regions and reach Golden Path objectives.</p></div>
+</div>
+
+<h3>Andy setup / mechanics notes worth knowing</h3>
+<ul><li><b>Do not use Avenger-reskin mods</b> in Andy’s setup; he reports they can break the game.</li><li>Resistance Orders are disabled by default in LWOTC stable 1.2.x.</li><li>Lost do not use vanilla Headshot chaining.</li><li>Training Center AP can buy eligible XCOM-row abilities beyond the soldier’s current rank.</li><li>Hero classes can bank a promotion by not selecting a perk immediately.</li><li>Laser sights in LWOTC increase crit chance without the vanilla distance falloff assumption Andy warns about.</li></ul>
+</section>
+<section class="searchable" id="newplayer">
+<h2>1A. New-player essentials — the mechanics most likely to surprise you <span class="v6flag">NEW IN v9</span></h2>
+<div class="callout good"><b>Source rule for this section:</b> current stable LWOTC mechanics come first from UFOpaedia and the stable mod files. Andy, Casey and DerAva are used for strategy and explanation. Older LW2 / LWOTC 1.1 guides are useful for concepts, but their numbers are not copied unless they still match current mechanics.</div>
+
+<h3>Six systems to understand before a serious campaign</h3>
+<div class="grid">
+<div class="card"><h4>1. Missions must be discovered</h4><p>Most opportunities already exist in the region; your haven has to <b>detect</b> them. Rebels on Intel generate detection, Avenger scanning is worth roughly <b>4 basic Intel workers</b>, and a Scientist adviser adds a <b>20% haven-wide Intel bonus</b>. More detection usually means you find missions earlier and get longer infiltration windows.</p><p class="small"><a href="#strategy">Haven &amp; expansion details →</a></p></div>
+<div class="card"><h4>2. Strength ≠ Force ≠ Vigilance</h4><p><b>Strength</b> is regional ADVENT troop quantity and drives mission enemy counts. <b>Force</b> is global enemy quality/tech progression. <b>Vigilance</b> is ADVENT's alarm level caused mainly by XCOM activity; when Vigilance outruns Strength, ADVENT tends to move more Strength into the region.</p><p class="small"><a href="#strategy">Regional operating rules →</a></p></div>
+<div class="card"><h4>3. 100% infiltration removes major penalties</h4><p>Below 100%, you can face more dangerous reinforcement queues, larger detection radii, slower evac and other mission pressure. Above 100% can improve several of those factors. Andy's beginner rule is sound: <b>plan around 100% and skip missions that cannot justify under-infiltration.</b></p><p class="small"><a href="index.html#missiondecision">Mission decision tool →</a></p></div>
+<div class="card"><h4>4. Call evac before you need it</h4><p>The Skyranger is not immediate. Base evac delay is difficulty-dependent, and low infiltration / large squads can add turns. Throwing the flare <b>breaks concealment</b>; moving an existing evac zone adds arrival time. Once evac has arrived, it waits for you.</p><p class="small"><a href="missions.html#reinforcements">Evac &amp; reinforcement rules →</a></p></div>
+<div class="card"><h4>5. Corpses are not normally recovered</h4><p>Most guerrilla missions end by evacuation, so bodies stay behind. Look for <b>Full Salvage</b> missions such as Supply Raids, Troop Maneuvers/Columns, HQ assaults, landed UFOs and invasions when an autopsy or Proving Ground project needs a corpse.</p><p class="small"><a href="#autopsies">Autopsy priorities →</a></p></div>
+<div class="card"><h4>6. You are expected to decline missions</h4><p>A dark event or mediocre reward is often cheaper than a squad wipe. Andy's onboarding advice is to prefer missions that can infiltrate a useful <b>5+ soldier team</b>, cancel an infiltration when a more important mission appears, and reserve Intel boosts mainly for campaign-critical or unusually valuable missions.</p><p class="small"><a href="index.html#missiondecision">Should I take this mission? →</a></p></div>
+</div>
+
+<h3>Havens — beginner operating rules</h3>
+<table><thead><tr><th>Situation</th><th>Default</th><th>Why</th></tr></thead><tbody>
+<tr><td>Active unliberated region</td><td><b>Almost everyone on Intel</b></td><td>Mission discovery is your main economic engine; discovered missions provide personnel, Intel and resources.</td></tr>
+<tr><td>Region needs to cool</td><td><b>Mostly Hide</b></td><td>Reduces active rebel pressure while regional Vigilance decays.</td></tr>
+<tr><td>Liberated region</td><td><b>Supplies + Engineer adviser</b></td><td>No normal missions need detecting; liberated jobs receive an efficiency bonus.</td></tr>
+<tr><td>Haven adviser</td><td><b>Use a good, rested soldier</b></td><td>Soldier advisers recruit and reveal Faceless; higher combat/officer rank improves detection. Swap them out when needed for a mission.</td></tr>
+<tr><td>Recruiting new rebels</td><td>Remember the <b>16% base Faceless chance</b></td><td>Faceless quietly reduce haven output until detected.</td></tr>
+</tbody></table>
+
+<h3>How to use Andy's recommended external guides</h3>
+<table><thead><tr><th>Resource</th><th>Best use</th><th>How this guide treats it</th></tr></thead><tbody>
+<tr><td><b>UFOpaedia LWOTC</b></td><td>Current mechanics, formulas, mission rules, classes, items</td><td><span class="status-full">PRIMARY MECHANICS REFERENCE</span></td></tr>
+<tr><td><b>inukealot LWOTC Guide</b> (written before 1.2)</td><td>Excellent plain-language explanation of Mission Detection, havens, infiltration, alert, officers and tactical systems</td><td>Concept map / gap finder. Version-sensitive numbers are rechecked before inclusion.</td></tr>
+<tr><td><b>Casey's guides</b></td><td>Campaign structure, tactics, liberation, class reasoning</td><td>Primary strategy source, with version caveats.</td></tr>
+<tr><td><b>DerAva tutorials</b></td><td>Seeing strategy-layer decisions and mission execution in practice</td><td>Recommended visual companion, especially for new players.</td></tr>
+<tr><td><b>LW2 Unofficial Compendium</b></td><td>Legacy compact tips for the original LW2</td><td><span class="status-legacy">LEGACY ONLY</span> — the old Drive resource is currently unavailable and predates LWOTC; do not use it to override current mechanics.</td></tr>
+</tbody></table>
+<div class="source-note">Current mechanics: <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">Missions</a>, <a href="https://www.ufopaedia.org/Infiltration_%28LWOTC%29" target="_blank">Infiltration</a>, <a href="https://www.ufopaedia.org/Haven_Management_%28LWOTC%29" target="_blank">Haven Management</a>, <a href="https://www.ufopaedia.org/ADVENT%27s_Agenda_%28LWOTC%29" target="_blank">ADVENT's Agenda</a>, <a href="https://www.ufopaedia.org/Evac_%28LWOTC%29" target="_blank">Evac</a>. Andy source: <a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a>. Mechanics explainer: <a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot guide</a>.</div>
+
+<details class="complete-reference" open><summary>Complete new-player onboarding, difficulty & resource guidance</summary><div class="complete-body">
+<ul class="dense-list">
+<li>LWOTC is a poor first exposure to XCOM 2. Learn the base game and ideally War of the Chosen first; otherwise you are learning vanilla systems, WOTC systems and Long War systems simultaneously.</li>
+<li><b>Veteran is the recommended first serious difficulty</b> even for players who have beaten vanilla Legend. Rookie is valid, but be aware that tactics which work there may teach habits that fail on higher difficulties.</li>
+<li><b>Honestman over Ironman:</b> preserve the consequence of tactical decisions, but keep multiple normal saves because a heavily modded campaign can suffer bugs/corruption. Reload for technical failures, not to erase ordinary mistakes.</li>
+<li>Expect the first campaign to be educational rather than pristine. A throw-away campaign to learn infiltration, havens and mission selection is completely reasonable.</li>
+<li><b>Infiltration:</b> most missions require squads to spend days infiltrating; launching early generally increases enemy pressure. Plan for 100%, and accept that many missions should simply be skipped.</li>
+<li><b>Mission choice:</b> compare reward/penalty, enemy count, Strength, infiltration window and roster conflict. A Dark Event is often survivable; a squad wipe is much harder to recover from. Cancel an existing infiltration if a substantially more important mission appears.</li>
+<li><b>Haven default:</b> unliberated havens mostly Intel; Hide when cooling a hot region; Supplies in liberated regions. Keep a soldier adviser and rotate them out instantly when needed for a mission.</li>
+<li>Haven advisers do not recover Will while assigned. Prefer the highest-rank healthy/well-rested soldier you can spare because rank helps recruiting/Faceless detection and the adviser appears on retaliation missions.</li>
+<li><b>Evac:</b> call the Skyranger several turns before you need it. The flare breaks concealment, but once the Skyranger arrives it waits indefinitely; there is no reward for calling it late.</li>
+<li><b>Liberation:</b> begin the first chain early. New LWOTC UI labels the missions more clearly than old LW2, but the chain can still be missed if you do not prioritize its detection.</li>
+</ul>
+<h3>Learning resources retained from Andy</h3>
+<ul class="dense-list">
+<li>UFOpaedia is the primary mechanics lookup. Search for the LWOTC-specific page of the mechanic/class/mission in question.</li>
+<li>The inukealot Google Doc is a useful mechanics explainer but predates current 1.2 changes; verify numbers against current sources.</li>
+<li>Casey’s early strategy/tactics articles provide the structural campaign framework used throughout this guide.</li>
+<li>DerAva’s tutorials and campaign videos are valuable for seeing movement/tempo/haven management executed rather than merely described.</li>
+<li>The LWOTC Discord is active and technically strong, though community preferences can differ from Andy/Casey’s control-heavy style. Reddit/Pavonis contain useful historical discussion but require more skepticism about version/current accuracy.</li>
+<li>The project GitHub New Player Resources page is retained in Sources as a broader index.</li><li><b>Andy’s own setup references:</b> <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3582541381" target="_blank">LWOTC 2025 mod collection</a>, <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3583759033" target="_blank">LWOTC map collection</a>, and <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2085849235" target="_blank">cosmetic collection</a>. These describe his environment; they are not prerequisites for this guide. He specifically warns against Avenger-reskin mods because he has seen them break campaigns.</li>
+<li><b>Campaign Notebook:</b> Andy tracks mission dates and campaign events in a reusable <a href="https://app.notion.com/p/7dce7e2beea383239c7301f92462dc13" target="_blank">Campaign Notebook Template 1.2</a>. The most useful habit is recording Troop Ambush windows, strategic mistakes and upcoming milestones so recurring patterns are visible.</li>
+</ul>
+</div></details>
+</section>
+<section class="searchable" id="timeline">
+<h2>2. Month-by-month campaign plan</h2>
+<div class="callout"><b>Important:</b> months are targets, not deadlines. Mission RNG, difficulty, Chosen activity and starting faction will shift timing. This schedule combines Casey's priorities into an operating sequence.</div>
+<nav class="month-strip" aria-label="Campaign month navigation">
+<a href="index.html#month-march" data-month-key="march">March</a><a href="index.html#month-april" data-month-key="april">April</a><a href="index.html#month-may" data-month-key="may">May</a><a href="index.html#month-june" data-month-key="june">June</a><a href="index.html#month-july" data-month-key="july">July</a><a href="index.html#month-aug-sep" data-month-key="aug-sep">Aug–Sep</a><a href="index.html#month-late" data-month-key="late">Late</a>
+</nav>
+<div id="mobileMonthCards" class="mobile-month-cards" aria-label="Campaign month cards"></div>
+<table class="campaign-table" id="campaignTimelineTable">
+<tr><th>Month / phase</th><th>Main objectives</th><th>What to buy/build</th><th>Map / region target</th><th>Danger signal</th></tr>
+<tr><td><b>March</b></td><td>Survive, get promotions, create two usable squads, start officer pipeline.</td><td>GTS first + one upgrade; early engineer/scientist when affordable; plating/nanoscale; flashbang/grenade stock; Wet Work when it does not delay survival purchases.</td><td>All starting rebels on Intel; assign Haven Advisor; research Resistance Comms early; prepare first adjacent contact.</td><td>Taking 4-man fights you could avoid; sending Assault/Shinobi into fog; no spare soldiers because every mission uses the same team.</td></tr>
+<tr><td><b>April</b></td><td>Reach the first meaningful weapon/control breakpoints.</td><td>Psi Lab if following Casey's Psi route; Workshop optional; Proving Ground; AP rounds; Vulture as soon as you can reasonably afford it; continue engineer priority.</td><td><b>First expansion should be active or imminent.</b> Do not wait for the starting region to reach Strength 5.</td><td>Spending Intel on routine boosts; staying in one region while Vigilance and Strength climb.</td></tr>
+<tr><td><b>May</b></td><td>Laser tier, SGTs, stronger faction/covert options, first serious control tools.</td><td>Key laser weapons first rather than one weapon for everyone; first SPARK once 1.2 requirement is met; Resistance Ring when power/cash allow; Gremlin/launcher upgrades when unlocked.</td><td>Operate mainly in low-Strength regions. High-Strength region becomes an Intel-for-ambush / Supply region rather than your normal mission farm.</td><td>No SGTs, no Trial by Fire path, no faction influence, or your second region has also become hot.</td></tr>
+<tr><td><b>June</b></td><td>Start/accelerate Liberation; prepare armor and economy bottlenecks.</td><td>Combat Armor/Predator path; Training Center rising in priority; Incendiary/Sting/Bluescreen tools as available. <b>Stop casually selling Elerium cores.</b></td><td>Lib chain should be a major focus. Keep the liberation region heavily on Intel while hunting Lib missions.</td><td>Running every side mission in your liberation region and driving Vigilance/Strength up; selling Muton corpses in 1.2.</td></tr>
+<tr><td><b>July</b></td><td><b>Target first liberation.</b> Network Tower → HQ.</td><td>Predator armor for the Tower team if alloys are tight; healing/medikits and endurance gear for HQ; Infirmary if wound load is hurting operations.</td><td>After HQ, immediately plan the contact route toward Blacksite.</td><td>Spending liberation windfall on low-value Black Market gear and then being unable to fund contacts, relays or tier upgrades.</td></tr>
+<tr><td><b>Aug–Sep</b></td><td>Golden Path, Mag/Coil progression, stronger control, Chosen stronghold race.</td><td>Mag → Adv Mag; Elerium preparation; Lab when power/scientist count makes it worthwhile; Defense Matrix if UFO/Chosen threat is near.</td><td>Expand along the Blacksite route even if continent bonuses tempt you elsewhere.</td><td>No Intel reserve for a multi-region Blacksite route; fewer than 3 soldiers being pushed toward MSGT.</td></tr>
+<tr><td><b>Late campaign</b></td><td>Strongholds, Blacksite/Forge/Psi Gate, Shadow Chamber, Coil/Plasma.</td><td>Shadow Chamber on a power conduit; Coil/Adv Coil; Powered Armor; Plasma sequence; mission-specific boss gear.</td><td>After each Golden Path objective, continue opening the next required region rather than farming indefinitely.</td><td>Campaign has stabilized but Golden Path has stopped moving; Chosen has found Avenger and Stronghold reveal is still far away.</td></tr>
+</table>
+</section>
+<section class="searchable" id="researchroadmap">
+<h2>2A. Research thresholds, exact costs &amp; acquisition playbook <span class="v6flag">NEW IN v7</span></h2>
+<div class="callout gold"><b>How to use this section:</b> the month is a planning target, not a hard deadline. The <b>RP budget</b> is the research-point cost of the projects listed for that phase. Resource costs are what you must have available to start the project. On Commander and Legend, research takes longer even though the RP/material price is unchanged.</div>
+
+<h3>Research speed — turn RP into calendar days</h3>
+<p>LWOTC research is linear: Tygan contributes <b>10 RP/hour</b>; each normal, research-available Scientist contributes <b>5 RP/hour</b>; a Scientist staffed in the Laboratory contributes <b>10 RP/hour</b>; Scientists staffed elsewhere contribute no normal research output. Each completed Basic Research adds another <b>5 RP/hour</b>.</p>
+<p class="formula"><b>Base research days = RP cost ÷ [(10 + 5×unassigned Scientists + 10×Lab Scientists + 5×Basic Research completions) × 24]</b></p>
+<table class="tight"><thead><tr><th>Research setup</th><th>RP / hour</th><th>Days per 1,000 RP</th><th>Legend equivalent</th></tr></thead><tbody>
+<tr><td>Tygan only</td><td>10</td><td>4.17</td><td>5.21</td></tr>
+<tr><td>Tygan + 1 Scientist</td><td>15</td><td>2.78</td><td>3.47</td></tr>
+<tr><td>Tygan + 2 Scientists</td><td>20</td><td>2.08</td><td>2.60</td></tr>
+<tr><td>Tygan + 3 Scientists</td><td>25</td><td>1.67</td><td>2.08</td></tr>
+<tr><td>Tygan + 4 Scientists</td><td>30</td><td>1.39</td><td>1.74</td></tr>
+<tr><td>Tygan + 4 Scientists in Lab</td><td>50</td><td>0.83</td><td>1.04</td></tr>
+</tbody></table>
+<div class="callout"><b>Difficulty scalar:</b> Rookie/Veteran = 100%, Commander = 110%, Legend = 125% research time. If you are on Legend, multiply the base-day estimate by 1.25.</div>
+
+<h3>Month-by-month research budget and resource gates</h3>
+<div class="table-scroll"><table><thead><tr><th>Phase</th><th>Research target</th><th>RP budget</th><th>Prerequisites / resource cost</th><th>What you should secure before the threshold</th></tr></thead><tbody>
+<tr><td><b>March</b></td><td><b>Resistance Communications → Modular Weapons → Alien Biotech.</b><br><span class="small">Psi route add-on: Sectoid Autopsy → Psionics.</span></td><td><b>3,310 RP core</b><br>+6,700 RP Psi route<br><b>= 10,010 RP</b> with Psi</td><td>Resistance Comms: <b>20 Intel</b>.<br>Sectoid Autopsy: <b>1 Sectoid corpse</b>.<br>Psionics: <b>30 Supplies + 2 Scientists</b> (1.2 threshold).</td><td>Prioritize early Scientist/Engineer mission rewards. Preserve a Sectoid corpse if possible. Buy an early Scientist from the Black Market when that purchase is what unlocks Psionics rather than spending those supplies on marginal gear.</td></tr>
+<tr><td><b>April</b></td><td><b>ADVENT Trooper Autopsy → Hybrid Materials → Laser Weapons → Advanced Laser Weapons.</b></td><td><b>12,000 RP</b></td><td>Trooper: <b>1 Trooper corpse</b>.<br>Hybrid: <b>5 Alloys + 3 Elerium</b>.<br>Laser: <b>2 Alloys + 5 Elerium</b>.<br>Adv Laser: <b>2 Alloys + 10 Elerium</b>.<br>Alloy Plating PG gate: <b>2 Engineers</b>.</td><td>Do not sell early Alloys/Elerium blindly. Take full-salvage opportunities you can safely complete and use Smash N Grab caches to patch resource shortages. If your Psi route consumed April, let Advanced Lasers spill into May rather than skipping prerequisites.</td></tr>
+<tr><td><b>May</b></td><td><b>ADVENT Officer Autopsy → ADVENT Robotics → Magnetic Weapons.</b><br><span class="small">Interrupt for Stun Lancer / Purifier only when you have the corpse and will immediately use the unlock.</span></td><td><b>16,500 RP core</b><br>+2,000 RP per common interrupt</td><td>Officer: Trooper Autopsy + <b>1 Officer corpse</b>.<br>Robotics: Hybrid + Trooper + <b>3 Drone wrecks</b>.<br>Magnetic: Hybrid + Officer + <b>50 Supplies + 10 Alloys</b>.<br>Casey 1.2 SPARK threshold: <b>3 Scientists + 3 Engineers</b>.</td><td>Target missions that award staff and full salvage. Drone wrecks are easy to accidentally miss because most evac missions do not return corpses/wrecks. Do not let low-value autopsies postpone Magnetic Weapons.</td></tr>
+<tr><td><b>June</b></td><td><b>Combat Armor → Battle Armor → Advanced Magnetic Weaponry.</b></td><td><b>21,500 RP</b></td><td>Combat Armor: Hybrid + <b>50 Supplies + 15 Alloys</b>.<br>Battle Armor: Combat + <b>50 Supplies + 10 Alloys + 1 Core</b>.<br>Adv Mag: Magnetic + <b>50 Supplies + 10 Alloys</b>.</td><td>This is the first major Alloy squeeze. Start treating Alloys as a strategic reserve. Buy them at the Black Market or render genuinely surplus corpses only when that immediately unlocks Predator/EXO or weapon progression.</td></tr>
+<tr><td><b>July</b></td><td><b>Resistance Radio when needed → Elerium → Alien Encryption when Golden Path trigger exists.</b></td><td><b>17,580 RP</b> if all three are done</td><td>Radio: <b>60 Intel</b>.<br>Elerium: Hybrid + Adv Mag + Combat Armor; <b>50 Supplies + 50 Elerium + 5 Cores</b>.<br>Alien Encryption: Blacksite Vial or Codex Brain + <b>40 Intel</b>.</td><td><b>Stop routine Core sales by June/July.</b> Casey specifically expects an Elerium shortage here. Buy an Elerium stack when needed; rendering a Core yields 8 Elerium after Hybrid Materials, but do not render yourself below the 5-Core Elerium-tech requirement.</td></tr>
+<tr><td><b>Aug–Sep</b></td><td><b>Coilguns → Advanced Coilguns → Powered Armor</b>, while inserting required Shadow Chamber projects.</td><td><b>46,500 RP</b> for the three core techs, plus storyline projects</td><td>Coil: Adv Mag + Elerium; <b>100 Supplies + 15 Alloys + 15 Elerium</b>.<br>Adv Coil: <b>50 Supplies + 10 Alloys</b>.<br>Powered Armor: Combat + Elerium; <b>100 Supplies + 20 Alloys + 20 Elerium + 2 Cores</b>.</td><td>This is where a staffed Laboratory pays off. Keep a reserve of Alloys/Elerium rather than buying every unlocked weapon. Shadow Chamber research pauses normal research, so schedule story projects when they advance the campaign rather than during an urgent weapon-tier race.</td></tr>
+<tr><td><b>Late campaign</b></td><td><b>Plasma Rifle → the plasma branch your squads actually need → Battlesuits.</b></td><td><b>51,000 RP</b> for Plasma Rifle + one 15k branch + Battlesuits</td><td>Plasma Rifle: Adv Lasers + Adv Coil; <b>150 Supplies + 20 Alloys + 30 Elerium + 3 Cores</b>.<br>Beam Cannon / Plasma Lance / Storm Gun: each <b>100 Supplies + 10 Alloys + 15 Elerium + 1 Core</b>.<br>Battlesuits: Powered + Battle Armor; <b>100 Supplies + 20 Alloys + 20 Elerium + 2 Cores</b>.</td><td>Do not research all plasma branches just because they exist. Finish the branch used by your strongest squads first, then spend lab time on the remaining branch only if the campaign will actually benefit before Waterworld.</td></tr>
+</tbody></table></div>
+
+<h3>Staff thresholds — what to acquire and when</h3>
+<table><thead><tr><th>Threshold</th><th>Why it matters</th><th>Acquisition rule</th></tr></thead><tbody>
+<tr><td><b>2 Scientists</b></td><td>Psionics requirement in Casey’s 1.2 notes.</td><td>March–April: Scientist reward missions &gt; early Black Market purchase when affordable. Do not tie up both Scientists as haven advisers / facility staff before starting the gated research.</td></tr>
+<tr><td><b>2 Engineers</b></td><td>Alloy Plating requirement in Casey’s 1.2 notes.</td><td>Engineer reward missions are premium early rewards. The Black Market is justified when the purchase immediately unlocks plating, excavation or a critical facility.</td></tr>
+<tr><td><b>3 Scientists + 3 Engineers</b></td><td>SPARK staffing threshold called out for 1.2.</td><td>Target by late April/May if SPARK is part of your plan. <b>SPARK project details are version-sensitive after the 1.2.3 rework</b>, so use the current in-game Proving Ground card for the final material price.</td></tr>
+<tr><td><b>~6 Scientists</b></td><td>Casey’s point where a serious Laboratory becomes attractive: roughly 4 in Lab + 2 available elsewhere.</td><td>Midgame: once early Black Market Scientist prices rise and power is available, invest in the Laboratory instead of endlessly buying scientists. Do not build it so early that it starves weapon/armor purchases.</td></tr>
+</tbody></table>
+
+<h3>How to acquire the bottleneck resources</h3>
+<div class="grid">
+<div class="card"><h4>Corpses &amp; wrecks</h4><p>Most evac missions do <b>not</b> recover bodies. Prioritize full-salvage missions such as Troop Maneuvers / troop-column ambushes, Supply Line Raids, regional HQ assaults and other full-salvage fights when you need a specific autopsy corpse. Explosive killing blows can destroy recoverable materiel, so preserve key targets when practical.</p></div>
+<div class="card"><h4>Alloys / Elerium / Cores</h4><p>Full-salvage missions are the cleanest source. Smash N Grab resource caches can also yield Supplies, Alloys, Elerium or Cores even though they do not return corpses. Use the Black Market to bridge a breakpoint, not to erase every shortage.</p></div>
+<div class="card"><h4>Intel</h4><p>Keep enough for Resistance Communications/Radio and Golden Path research before spending it on routine mission boosts. Save datapads/caches when a large contact or Shadow Chamber bill is approaching.</p></div>
+<div class="card"><h4>Research capacity</h4><p>A Scientist produces value every day you acquire them early. Once you can support a mature Lab, lab staffing doubles each staffed Scientist’s research contribution from 5 to 10 RP/hour. Do not over-tech so far ahead that you cannot afford the equipment you just unlocked.</p></div>
+</div>
+
+<div class="callout purple"><b>Decision rule when you miss a monthly threshold:</b> protect the next <b>weapon/armor breakpoint</b>, then the Golden Path requirement, then convenience research. A delayed Purifier/Viper/Faceless autopsy is usually recoverable; entering a new force-level band while a full weapon tier behind is much harder to recover from.</div>
+<h3>Casey vs Andy — where their research routes actually differ</h3>
+<table><thead><tr><th>Decision</th><th>Casey</th><th>Andy</th><th>Practical synthesis</th></tr></thead><tbody>
+<tr><td>Early Psi</td><td>Strong Psi-rush route: Alien Biotech → Sectoid → Psionics early.</td><td>Likes a light Psi rush but explicitly treats it as optional.</td><td>If using Psi, start early because training is the real clock. If not, pull Lasers forward.</td></tr>
+<tr><td>Hybrid Materials timing</td><td>Can move Hybrid / Trooper earlier for a safer opening.</td><td>Often pushes Laser / Advanced Laser first, then Hybrid.</td><td>Offense first when you can survive; Hybrid earlier when wounds/ablative HP are the bottleneck.</td></tr>
+<tr><td>Autopsies</td><td>Interrupt for high-value unlocks when corpse stock exists.</td><td>Even stricter: do not spend lab time unless you can also use/build the unlock.</td><td>Treat autopsies as interrupts, not the backbone of the research queue.</td></tr>
+<tr><td>Resistance Radio</td><td>Important for long contact chains.</td><td>Delay while POIs / covert actions are supplying enough contacts.</td><td>Research it when expansion is actually contact-capped.</td></tr>
+<tr><td>Basic Research / Engineering</td><td>No longer wants Basic Research rushed.</td><td>Generally considers both poor uses of time while meaningful tech exists.</td><td>Use only when core progression is temporarily blocked.</td></tr>
+</tbody></table>
+<div class="source-note">Mechanics/cost references: <a href="https://www.ufopaedia.org/Research_%28LWOTC%29" target="_blank">LWOTC Research</a>, <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">LWOTC Missions / full salvage</a>, <a href="https://www.ufopaedia.org/Difficulty_Levels_%28LWOTC%29" target="_blank">LWOTC difficulty scalars</a>, and Casey’s <a href="https://xcom.substack.com/p/lwotc-version-12-notes" target="_blank">version 1.2 notes</a> + <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy" target="_blank">mid/late strategy</a>.</div>
+
+<details class="complete-reference">
+<summary>Complete merged research & Proving Ground rationale — not just the sequence</summary>
+<div class="complete-body">
+<h3>Opening research logic</h3>
+<ul class="dense-list">
+<li><b>Resistance Communications first</b> in the Psi-oriented opening because a second region is a strategic requirement, not a convenience.</li>
+<li><b>Modular Weapons</b> is a short detour that unlocks early weapon upgrades; scopes/stocks have outsized value before soldier aim and weapon tiers mature.</li>
+<li><b>Alien Biotech → Sectoid Autopsy → Psionics</b> is the core Psi branch. Psionics itself has a Scientist gate; the point of starting early is that advanced Psi training consumes a large amount of calendar time.</li>
+<li><b>Trooper Autopsy / Hybrid Materials</b> are the survivability branch. Casey explicitly accepts moving them earlier if the campaign is taking too many wounds, because plating/vest HP can convert deaths into light wounds and reduce recovery time.</li>
+<li><b>Laser → Advanced Laser</b> is the first major damage breakpoint. Corpse-dependent interrupts such as Robotics, Purifier or Stun Lancer should jump ahead when the required bodies are actually available.</li>
+<li>Andy delays an autopsy if performing it would consume the last corpses needed for the resulting item/project. The guide therefore treats corpse count as part of the research condition, not merely a checkbox that the autopsy exists.</li>
+</ul>
+
+<h3>Mid/late research logic</h3>
+<ul class="dense-list">
+<li>After Lasers, research becomes less linear. <b>Weapons remain the priority</b>; armor is important, but both authors generally prefer the next weapon breakpoint before optional defensive/convenience technology.</li>
+<li>Advanced Magnetic, Combat Armor and Battle Armor form the core midgame path; Resistance Radio is delayed as long as geography allows because its Intel cost competes with expansion/Golden Path spending.</li>
+<li>Elerium → Coilguns → Advanced Coilguns is the next major offensive breakpoint. Check resource prices <b>before</b> spending Alloys/Elerium/Cores on optional projects.</li>
+<li>Alien Encryption, Codex Brain, Blacksite Vial and Psionic Gate are campaign-path technologies. Do not let optional research stall them once the roster can handle story missions.</li>
+<li>Powered Armor then Plasma branches complete the late combat curve. Mobile/Spider/Shadow armor is a late luxury in Andy’s route and can be skipped if the campaign is already nearing completion.</li>
+<li>Andy explicitly considers Basic Research / Basic Engineering poor use of research time in his 1.2.2 route.</li>
+</ul>
+
+<h3>Autopsy priority logic</h3>
+<table><thead><tr><th>Priority</th><th>Examples</th><th>Why</th></tr></thead><tbody>
+<tr><td><b>Critical</b></td><td>Purifier, Gatekeeper, Robotics, Stun Lancer, Sectopod, Archon, Andromedon, Muton Elite, Muton, Rulers</td><td>Unlocks control, high-tier weapons/amps/gremlins, strong ammo, grenades or unique armors. These can justify interrupting a longer tech when corpses are available.</td></tr>
+<tr><td><b>Tier 2</b></td><td>Viper, MEC, Turret, early Chosen weapons</td><td>Useful items but less campaign-defining. Chosen weapons are time-sensitive: good if obtained early, poor if Plasma is already close.</td></tr>
+<tr><td><b>Tier 3</b></td><td>Chryssalid, Berserker</td><td>Useful but niche defensive/project unlocks.</td></tr>
+<tr><td><b>Usually skip</b></td><td>Faceless, Priest, Spectre, Shieldbearer</td><td>Andy does not value the resulting projects enough to spend research time routinely. Still keep corpses that are separately required for other manufacturing, e.g. Priest corpses for advanced Psi equipment.</td></tr>
+</tbody></table>
+
+<h3>Proving Ground operating rule</h3>
+<ul class="dense-list">
+<li>The PG does not need to be built immediately. Late April is a reasonable timing because the early campaign often lacks both unlocks and spare Engineers.</li>
+<li>Engineer staffing is dynamic: accelerate a project when the breakpoint matters, but do not permanently trap scarce Engineers in the PG while excavation/power/facilities are bottlenecked.</li>
+<li>Andy’s old 1.2.2 route strongly prioritized early SPARKs. Stable 1.2.3 reworked SPARKs, so the <b>timing concept</b> is retained but the old exact SPARK valuation is marked version-sensitive.</li>
+</ul>
+
+<h3>High-value PG projects</h3>
+<ul class="dense-list">
+<li>Alloy Plating; Incendiary Grenades; Skulljack/Skullmining; Talon/Dragon/Shredder/Bluescreen/Redscreen ammunition; Plasma Grenades; upgraded heavy weapons; advanced grenades; selected alien armors; Battlefield Medicine/Nanomedikit; tactical plating/vests when they solve a specific problem.</li>
+<li>Incendiaries are repeatedly singled out because burning is one of the most reliable forms of control against organic enemies.</li>
+<li>Redscreen + Bluescreen effects are strategically important because they make higher-tier mechanical hacks practical, not merely because they do damage.</li>
+</ul>
+
+<h3>Projects commonly skipped or delayed</h3>
+<ul class="dense-list">
+<li>Specialty ammo with narrow use cases (Needle/Flechette/Stiletto), low-priority vests (Hellweave/Chameleon/Stasis), most non-incendiary grenade projects, Mimic Beacons, and routine weapon-mod upgrade projects.</li>
+<li>Plasma Blaster is situational: useful if Shredstorm is far away; less compelling once the stronger heavy-weapon option is available. Casey’s 1.2 note also values the extra ammo count versus Shredder Gun, so this is a legitimate source disagreement rather than a universal skip.</li>
+<li>Do not research every alien-hunter weapon early. Andy mainly values the Frost Bomb from that package before the PG economy is comfortable.</li>
+</ul>
+</div></details>
+
+<div class="callout"><b>Basic Research / Engineering:</b> Andy considers these poor uses of time in his normal 1.2.2 route, and Casey explicitly backed away from an early Basic Research rush. Treat them as gap-fillers when normal research is temporarily blocked, not default opening priorities.</div>
+</section>
+<section class="searchable" id="masterorders">
+<h2>2B. Casey's facility &amp; cost plan</h2>
+<div class="callout gold"><b>Facility/cost reference only.</b> Research sequencing is centralized in <a href="#researchroadmap">Research Roadmap</a>; this section preserves Casey's Avenger build logic and published budget arithmetic.</div>
+<h3>Facility build order — early game</h3>
+<table><thead><tr><th>#</th><th>Facility / upgrade</th><th>Power impact Casey quotes</th><th>Reason</th></tr></thead><tbody>
+<tr><td>1</td><td><b>GTS + 1 upgrade</b></td><td>-2, then -1</td><td>Officer pipeline, Command, rookie class training, and later Trial by Fire. Casey says GTS first is the part he expects never to change.</td></tr>
+<tr><td>2</td><td><b>Psi Lab</b></td><td>-3</td><td>Psi powers take a long time to train, so the facility loses value rapidly when delayed.</td></tr>
+<tr><td>3</td><td><b>Workshop</b></td><td>+1</td><td>Acts as engineering support for requirements and can service adjacent Ring / Proving Ground / Power Relay. Early gremlins can also accelerate excavation.</td></tr>
+<tr><td>4</td><td><b>Proving Ground</b></td><td>-2</td><td>SPARK access, Alloy Plating and later ammo/grenade projects.</td></tr>
+<tr><td>5</td><td><b>Power Relay</b></td><td>+4 / +6 / +11</td><td>Build once the first facilities consume Avenger power; bonus-power scan sites can delay it.</td></tr>
+<tr><td>5A</td><td><b>Psi Lab upgrade</b></td><td>-2</td><td>Second tube removes the early Psi training bottleneck.</td></tr>
+<tr><td>6</td><td><b>Resistance Ring</b></td><td>-3</td><td>Early covert rewards are modest; value rises sharply after SGTs unlock higher influence and stronger operations.</td></tr>
+</tbody></table>
+<div class="callout"><b>v1.2 prerequisites:</b> SPARK = <b>3 Scientists + 3 Engineers</b>; Alloy Plating = <b>2 Engineers</b>; Psionics = <b>2 Scientists</b>. These gates are one reason early staff rewards/purchases are so valuable.</div>
+<h3>Facility build order — mid / late game</h3>
+<table><thead><tr><th>#</th><th>Facility</th><th>Power</th><th>Casey's use case</th></tr></thead><tbody>
+<tr><td>1</td><td><b>Training Center</b></td><td>-3</td><td>Most urgent remaining facility: Bond Level 2 and XCOM-row abilities both need downtime.</td></tr>
+<tr><td>2</td><td><b>Infirmary</b></td><td>-3</td><td>Useful when wounds constrain operations. It does <b>not</b> speed Tired recovery.</td></tr>
+<tr><td>3</td><td><b>Laboratory</b></td><td>-3 / -5 / -7 / -9</td><td>Build when power/scientist count support it; Casey wants about <b>6 scientists</b> for serious use (4 in Lab, 2 elsewhere).</td></tr>
+<tr><td>4</td><td><b>Defense Matrix</b></td><td>-1 / -2</td><td>Move it up the queue when UFO/Chosen Avenger threat becomes imminent.</td></tr>
+<tr><td>5</td><td><b>Shadow Chamber</b></td><td>-8 / -14</td><td>Required to keep the Golden Path moving. Casey wants it on a <b>Power Conduit</b>.</td></tr>
+<tr><td>6</td><td><b>Resistance Communications</b></td><td>-4 / -7</td><td>Can often be delayed because Covert Ops and POIs add contacts.</td></tr>
+</tbody></table>
+
+
+<h3>Casey's early-game cost calculation</h3>
+<div class="callout warn"><b>Published arithmetic:</b> Casey gives the urgent facility/upgrade package as a combined <b>785 supplies</b>. He does not publish a reliable per-facility supply split in this article, so this guide does not invent one.</div>
+<table><thead><tr><th>Purchase</th><th>Estimate</th><th>Running total</th></tr></thead><tbody>
+<tr><td>Urgent facilities + upgrades</td><td>785</td><td>785</td></tr>
+<tr><td>Engineer / Scientist ×2</td><td>~260</td><td>1,045</td></tr>
+<tr><td>Wet Work</td><td>75</td><td>1,120</td></tr>
+<tr><td>Alloy Plating project</td><td>10</td><td>1,130</td></tr>
+<tr><td>Nanoscale Vest ×8</td><td>40</td><td>1,170</td></tr>
+<tr><td>AP Rounds ×3</td><td>30</td><td>1,200</td></tr>
+<tr><td>Laser-tier weapons ×9</td><td>~205</td><td>1,405</td></tr>
+<tr><td>SPARK #1</td><td>50</td><td>1,455</td></tr>
+<tr><td>Black Market soldier</td><td>45</td><td>1,500</td></tr>
+<tr><td>Vulture</td><td>150</td><td><b>1,650</b></td></tr>
+</tbody></table>
+<p class="formula"><b>785 urgent facilities + 865 other priorities = ~1,650 supplies.</b></p>
+<h3>Interactive early-budget calculator</h3>
+<div class="calcbox" id="budgetCalc">
+<div class="small">Defaults reproduce Casey's estimate. Edit quantities/costs to match your current campaign/difficulty.</div>
+<div class="calcrow"><label>Urgent facility bundle</label><input id="c_fac_q" min="0" type="number" value="1"/><input id="c_fac_u" min="0" type="number" value="785"/></div>
+<div class="calcrow"><label>Engineer / Scientist</label><input id="c_staff_q" min="0" type="number" value="2"/><input id="c_staff_u" min="0" type="number" value="130"/></div>
+<div class="calcrow"><label>Wet Work</label><input id="c_wet_q" min="0" type="number" value="1"/><input id="c_wet_u" min="0" type="number" value="75"/></div>
+<div class="calcrow"><label>Alloy Plating project</label><input id="c_plating_q" min="0" type="number" value="1"/><input id="c_plating_u" min="0" type="number" value="10"/></div>
+<div class="calcrow"><label>Nanoscale Vest</label><input id="c_vest_q" min="0" type="number" value="8"/><input id="c_vest_u" min="0" type="number" value="5"/></div>
+<div class="calcrow"><label>AP Rounds</label><input id="c_ap_q" min="0" type="number" value="3"/><input id="c_ap_u" min="0" type="number" value="10"/></div>
+<div class="calcrow"><label>Laser-tier weapon</label><input id="c_laser_q" min="0" type="number" value="9"/><input id="c_laser_u" min="0" step="0.01" type="number" value="22.7778"/></div>
+<div class="calcrow"><label>SPARK #1</label><input id="c_spark_q" min="0" type="number" value="1"/><input id="c_spark_u" min="0" type="number" value="50"/></div>
+<div class="calcrow"><label>Black Market soldier</label><input id="c_soldier_q" min="0" type="number" value="1"/><input id="c_soldier_u" min="0" type="number" value="45"/></div>
+<div class="calcrow"><label>Vulture</label><input id="c_vulture_q" min="0" type="number" value="1"/><input id="c_vulture_u" min="0" type="number" value="150"/></div>
+<div class="callout good"><b>Calculated total:</b> <span class="kpi" id="budgetTotal">1,650</span> supplies</div>
+</div>
+<h3>Midgame bottleneck calculations</h3>
+<table><thead><tr><th>Bottleneck</th><th>Casey's numbers</th><th>Practical planning rule</th></tr></thead><tbody>
+<tr><td><b>Predator Armor</b></td><td>5 alloys per suit</td><td>5 Tower suits = 25 alloys; 8 suits = 40 alloys. Prioritize Tower team / soldiers without other protection if short.</td></tr>
+<tr><td><b>Blacksite expansion example</b></td><td>200 Intel + 350-supply relay + 100 Intel + 200 Intel</td><td><b>500 Intel + 350 supplies</b>. Stockpile Intel and save datapads/caches.</td></tr>
+<tr><td><b>Elerium research</b></td><td>50 Elerium + 5 cores</td><td>Stop routine core sales around June/July and expect to buy/render Elerium.</td></tr>
+<tr><td><b>Chosen Stronghold clock</b></td><td>3 MSGTs + ~13-day reveal op + ~5-day infiltration</td><td>Three MSGTs is not “safe”; it only starts an ~18-day path to the assault.</td></tr>
+</tbody></table>
+<div class="source-note">Sources: <a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</div>
+</section>
+<section class="searchable" id="andyorders">
+<h2>2C. Andy’s facility, economy &amp; Proving Ground preferences</h2>
+<div class="callout gold"><span class="src-badge src-andy">ANDY</span> These are Andy’s 1.2.2 Legend/Honestman facility, economy and Proving Ground preferences. Research differences are summarized once in <a href="#researchroadmap">Research Roadmap</a>.</div>
+<h3>Early Avenger order — light Psi route</h3>
+<table><tr><th>Order</th><th>Facility</th><th>Why Andy puts it here</th><th>Decision rule</th></tr>
+<tr><td>1</td><td><b>GTS</b> + officer chamber</td><td>Immediate class training and officer progression.</td><td>Starts right after Gatecrasher.</td></tr>
+<tr><td>2</td><td><b>Psi Lab</b></td><td>Andy prefers a light Psi rush.</td><td>Keep one Elerium Core specifically for it; skip/delay if you are not prioritizing Psi.</td></tr>
+<tr><td>3</td><td><b>Proving Ground</b></td><td>SPARK / plating / Skulljack / control items become available.</td><td>End of April is acceptable if you do not yet have the 3 Engineer + 3 Scientist threshold.</td></tr>
+<tr><td>4</td><td><b>Power Relay</b></td><td>Usually needed to support PG after GTS + Psi.</td><td>A Power POI or Workshop can temporarily change timing.</td></tr>
+<tr><td>5</td><td><b>Psi Lab upgrade</b></td><td>One Scientist trains two Psis instead of one.</td><td>Delay if roster/scientist pressure is severe.</td></tr></table>
+<div class="callout"><b>Workshop disagreement:</b> Andy may use it opportunistically for one power / early gremlins, but calls it non-essential and says never delay a useful facility just to optimize Workshop adjacency. Casey is more receptive to it. <span class="src-badge src-synth">SYNTHESIS</span> Treat Workshop as a situational bridge, not a sacred part of the build.</div>
+<h3>Mid / late facility preference</h3>
+<table><tr><th>Approx.</th><th>Facility</th><th>Andy’s reasoning</th></tr>
+<tr><td>1</td><td><b>Laboratory</b></td><td>Research acceleration compounds all campaign; makes scientists committed to Psi less painful.</td></tr>
+<tr><td>2</td><td><b>Resistance Ring</b></td><td>Excellent once barracks depth exists; low value when you cannot spare soldiers.</td></tr>
+<tr><td>3</td><td><b>Training Center</b></td><td>Good once AP pools, bonds and pistol/XCOM-row purchases become relevant; not urgent early.</td></tr>
+<tr><td>4</td><td><b>Resistance Comms</b></td><td>Delay only if POIs/covert actions give enough contacts; eventually mandatory.</td></tr>
+<tr><td>5</td><td><b>Defense Matrix</b></td><td>Build when UFO hunting starts or Chosen knowledge nears assault. Staff the engineer.</td></tr>
+<tr><td>6</td><td><b>Infirmary</b></td><td>Andy sees this as defensive/catch-up infrastructure and delays unless wounds/traits demand it.</td></tr>
+<tr><td>7</td><td><b>Shadow Chamber</b></td><td>Golden Path requirement once the campaign can support its large power draw.</td></tr></table>
+<div class="callout good"><b>Power-coil rule:</b> Andy prefers placing the <b>Lab and Shadow Chamber</b> on exposed power coils because avoiding their large power draw saves more than the extra output of a Relay on the coil.</div>
+
+
+<h3>Proving Ground priority + costs</h3>
+<div class="table-scroll"><table><tr><th>Priority</th><th>Project</th><th>Approx. cost / requirement in Andy’s notes</th><th>Role</th></tr>
+<tr><td>1</td><td>SPARK #1 <span class="src-badge src-legacy">1.2.2</span></td><td>$100 + 1 Core + 3 Eng + 3 Sci</td><td>Version-sensitive; Andy valued it enormously in 1.2.2.</td></tr>
+<tr><td>2</td><td>SPARK #2 <span class="src-badge src-legacy">1.2.2</span></td><td>$80 + engineer requirement</td><td>Do not auto-copy into 1.2.3 without checking current SPARK balance.</td></tr>
+<tr><td>3</td><td>Alloy Plating</td><td>$10 + 3 Alloys</td><td>Cheap survival / wound reduction.</td></tr>
+<tr><td>4</td><td>Incendiary Grenades</td><td>$30 + 4 Alloys + 3 Elerium + 1 Core + Purifier</td><td>Top-tier reusable control philosophy.</td></tr>
+<tr><td>5</td><td>Skulljack</td><td>$75 + Officer corpse</td><td>Golden Path + Specialist hack package.</td></tr>
+<tr><td>6</td><td>Skullmining</td><td>$150 + 1 Core</td><td>Hack bonus + Intel income.</td></tr>
+<tr><td>7</td><td>Talon Rounds</td><td>$20 + 2 Alloys + Core + Officer</td><td>Crit builds / Assault / Sharpshooter.</td></tr>
+<tr><td>8</td><td>Dragon Rounds</td><td>$50 + 5 Alloys + Core + Muton Elite</td><td>Ranger/general damage + fire.</td></tr>
+<tr><td>9</td><td>Shredder Rounds</td><td>$20 + 2 Alloys + Core + Turret wreck</td><td>Armor / boss support.</td></tr>
+<tr><td>10</td><td>Plasma Grenades</td><td>$75 + 10 Alloys + 20 Elerium + Core + Muton</td><td>Grenade damage/shred progression.</td></tr>
+<tr><td>11+</td><td>Shredstorm / Ruler armors / Bluescreen / Battlefield Medicine / advanced grenades</td><td>Resource-heavy</td><td>Build when the relevant role and bottleneck justify it.</td></tr></table></div>
+<div class="callout warn"><b>Andy’s common skips:</b> Needle/Flechette/Stiletto ammo, Hellweave/Chameleon/Stasis vests, most non-incendiary grenade projects, Mimic Beacon and weapon-mod upgrade projects. These are playstyle-dependent, not official “bad items.”</div>
+<h3>Early Black Market: sell vs hoard</h3>
+<div class="compare4"><div class="card andybox"><h4>Sell aggressively</h4><p>Extra early cores beyond scheduled needs, Faceless corpses, datapads, surplus Sectoids, most weapon mods, most PCS. Auto-loaders and a useful Stock are exceptions he often keeps.</p></div><div class="card synthbox"><h4>Hoard strategic bottlenecks</h4><p><b>Alloys and Elerium.</b> Andy repeatedly warns they feel useless early and become the real mid/late bottleneck. Start buying Elerium from the Black Market earlier than feels comfortable.</p></div></div>
+</section>
+<section class="searchable" id="purchases">
+<h2>3. Priority purchases — items, personnel &amp; upgrades</h2><div class="callout"><b>This section owns shopping decisions only.</b> Facilities and budget arithmetic live in <a href="#masterorders">Facility &amp; Cost Plan</a>; research lives in <a href="#researchroadmap">Research Roadmap</a>.</div>
+<div class="callout gold"><b>Casey gives a priority list rather than a strict chronological shopping list.</b> The order below is my synthesis of that list, his 1.2 notes, and the economic bottlenecks he identifies.</div>
+<h3>March–early April: survival and compounding value</h3>
+<ol>
+<li><b>Early Engineer.</b> Casey generally favors an Engineer over a Scientist when counts are equal; he wants roughly three Engineers quickly. In 1.2, Alloy Plating also requires two Engineers.</li>
+<li><b>Ablative protection.</b> Alloy Plating project when available; build enough Nanoscale/Plating that core soldiers are not taking naked lethal rolls.</li>
+<li><b>Wet Work.</b> XP acceleration pays back across dozens of missions.</li>
+<li><b>Basic consumable package.</b> Rough early squad target from Casey: about 3 flashbangs, 4 grenades and 1–2 medikits on a 6-person squad.</li>
+<li><b>AP Rounds ×3.</b> Early mechanical answer, especially strong on Ranger.</li>
+<li><b>Vulture.</b> Casey calls this very important to obtain soon because extra loot funds later purchases.</li>
+<li><b>Second Engineer/Scientist purchase when Black Market value is good.</b> Buy the role that unlocks a requirement or fixes your bottleneck.</li>
+</ol>
+<h3>April–May: power spike purchases</h3>
+<ol>
+<li><b>Key Laser weapons, not universal Laser weapons.</b> Upgrade your reliable killers/shooters first. Do not bankrupt the campaign trying to equip every body.</li>
+<li><b>First SPARK</b> once the 1.2 prerequisites are met (Casey's 1.2 note: 3 Scientists + 3 Engineers).</li>
+<li><b>Gremlin upgrade</b> when available: it improves hacking and increases Scanning Protocol usefulness/charges.</li>
+<li><b>Grenade Launcher upgrades</b> when available: in 1.2 the launcher itself supplies the extra-grenade benefits that were formerly perks.</li>
+<li><b>Black Market soldier</b> when the barracks is shallow and the price does not delay critical tech/facility purchases.</li>
+</ol>
+<h3>June–July: liberation and bottleneck purchases</h3>
+<ol>
+<li><b>Predator Armor selectively.</b> Casey often cannot armor everybody; prioritize the Network Tower team and vulnerable/no-vest soldiers.</li>
+<li><b>Incendiary Grenades / Sting / Bluescreen support</b> as unlocked. These become central to mid/late control.</li>
+<li><b>Do not overspend liberation proceeds.</b> Contact costs, relays, Mag weapons, Elerium and Shadow Chamber will consume the windfall.</li>
+</ol>
+<h3>Purchases Casey suggests skipping or delaying</h3>
+<table>
+<tr><th>Skip / delay</th><th>Why</th></tr>
+<tr><td>Lightning Strike GTS project</td><td>Expensive and low priority in Casey's framework.</td></tr>
+<tr><td>Stay With Me</td><td>Can be delayed; not strong enough to beat core economy needs.</td></tr>
+<tr><td>Needle / Flechette / Stiletto ammo projects</td><td>Often lower value than core weapon/control spending.</td></tr>
+<tr><td>Hellweave / Chameleon vests</td><td>Usually not worth the opportunity cost in his route.</td></tr>
+<tr><td>Smoke / Acid / Gas / EMP / Proximity grenade projects</td><td>He prefers the more campaign-defining control options.</td></tr>
+<tr><td>Weapon-upgrade projects</td><td>Casey says to skip these.</td></tr>
+<tr><td>Fully upgrading every soldier to each weapon tier</td><td>Economically impossible/inefficient; buy for squads and priority roles.</td></tr>
+</table>
+<div class="callout warn"><b>Resource traps to prepare for:</b> Predator Armor creates an <b>alloy shortage</b>; the Blacksite route can create a massive <b>Intel shortage</b>; Elerium research requires a large <b>Elerium + core reserve</b>. Casey specifically recommends stopping routine core sales around June/July.</div>
+<h3>Early economy and Black Market policy</h3>
+<div class="grid">
+<div class="card"><h4>Use the single budget calculator</h4><p>The opening cost model now lives only in <a href="#masterorders">Facility &amp; Cost Plan</a>. The shopping rule here is simpler: buy what unlocks a breakpoint, deepens the roster, or keeps active squads operational.</p></div>
+<div class="card"><h4>Buy people before luxury</h4><p>Early Scientists/Engineers can be worth Black Market prices because they unlock Psionics, SPARK/Alloy Plating requirements and faster excavation/research. In 1.2 Casey says the Laboratory is stronger later, but early Scientists remain valuable for prerequisites and power efficiency.</p></div>
+<div class="card"><h4>Sell aggressively—but intelligently</h4><p>Early Casey policy is to convert low-value loot into tempo: excess early Elerium cores, datapads/caches when not being saved for expansion, mediocre PCS and many weapon upgrades can be sold. Preserve alloys, Elerium and corpses you expect to need. In 1.2, <b>do not casually sell Muton corpses</b> because Tactical Armor is now a premium protection item.</p></div>
+<div class="card"><h4>Use a “safe to sell” reference</h4><p>Casey recommends the <b>Blackmarket Usage</b> mod/reference approach so you can see future item uses before selling. The strategic principle is more important than the mod: never solve today's cash problem by unknowingly creating June's research/armor bottleneck.</p></div>
+</div>
+<div class="callout purple"><b>Need the next dependency?</b> Use <a href="#researchroadmap">Research Roadmap</a> for tech prerequisites, <a href="#masterorders">Facility &amp; Cost Plan</a> for Avenger construction, and <a href="#andyorders">Andy deltas</a> for his Proving Ground / Black Market preferences.</div>
+<p class="small">Sources: <a href="https://xcom.substack.com/p/lwotc-early-game-strategy">Early Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</p>
+
+<div class="callout"><b>Timing details that affect value:</b> <b>Wet Work is not retroactive</b>, so buying it earlier increases total campaign XP value. Conversely, do not buy an upgrade merely because it is available: several late GTS/PG projects have low marginal value compared with weapons, armor, Alloys/Elerium and critical facilities.</div>
+</section>
+<section class="searchable" id="strategy">
+<h2>4. Regions, havens and expansion</h2>
+<h3>Starting region</h3>
+<ul>
+<li>Start with essentially everyone on <b>Intel</b>.</li>
+<li>Assign a Haven Advisor immediately; Casey likes Ranger or Assault early because they handle Faceless well.</li>
+<li>His early routine: scan the starting region until you have found roughly two useful missions, then use Black Market scanning time.</li>
+<li>Jailbreaks usually provide enough new rebels; Recruiting is situational rather than a permanent job.</li>
+<li>When rebels change jobs they lose roughly a day of productivity, so do not constantly shuffle Intel ↔ Supply.</li>
+</ul>
+<h3>When to open the first new region</h3>
+<div class="callout good"><b>Practical trigger:</b> contact an adjacent region as soon as Resistance Communications and your Intel budget allow — ideally while the starting region is still a productive low-Strength mission farm, not after it is already at Strength 5.</div>
+<p>Casey's explicit rule is to expand <b>quickly</b>. Your starting region accumulates Vigilance because you are doing missions there. ADVENT responds by increasing Strength. You want the next low-Strength region operational before standard missions in the first become unattractive.</p>
+<h3>Strength 5+ treatment</h3>
+<ul>
+<li>At about <b>Strength 5</b>, Supply gathering becomes a reasonable alternative because normal missions become harder to execute.</li>
+<li>Intel is still useful in hot regions for <b>Troop Ambushes</b> and stealthable extraction/hack opportunities.</li>
+<li>Casey often hunts a Troop Ambush, then switches the haven to Supplies for a couple of weeks, then returns to Intel when another ambush can plausibly spawn.</li>
+<li>He tracks Troop Ambush timing: roughly a 21-day cooldown from spawn; his 1.2 notes simplify the practical post-expiry window to roughly <b>9–12 days + remaining time on the current ambush</b>.</li>
+<li>Only two Troop Ambushes can be active globally at once in the older framework he describes.</li>
+</ul>
+<h3>Liberation region</h3>
+<ul>
+<li>Once you choose a liberation region, put a large share — often all — rebels on Intel when hunting Lib 2/3.</li>
+<li>Do <b>not</b> run every unrelated mission that appears there. Extra activity raises Vigilance/Strength and makes the liberation missions harder.</li>
+<li>Lib 2 is hard to detect; Casey's classic approach is to let bad-timer versions expire and keep searching for a version with enough time to send a full team with an Intel boost.</li>
+</ul>
+<h3>After first liberation</h3>
+<ul>
+<li>First liberation target: approximately <b>July</b>.</li>
+<li>Once HQ is beaten and the Blacksite is revealed, <b>start expanding toward it immediately</b>.</li>
+<li>Ignore continent bonuses unless they are conveniently on the Golden Path route.</li>
+<li>Expect the Blacksite route to be expensive. Casey gives an example path costing about <b>500 Intel</b> plus a <b>350-supply relay</b>.</li>
+<li>After Blacksite, repeat the same logic for Forge and Psi Gate regions.</li>
+<li>Resistance Communications can often be delayed because covert actions and points of interest can provide contacts.</li>
+</ul>
+<div class="card"><h3>Early scanning &amp; Troop Ambush timing — exact notes</h3><ul class="check">
+<li>Start with essentially all rebels on <b>Intel</b>, assign a Haven Advisor, and scan the starting region until roughly <b>two missions</b> are found; then spend scan time at the Black Market.</li>
+<li>Changing a rebel's job causes roughly <b>24 hours of lost productivity</b>; avoid constant Intel ↔ Supply toggling.</li>
+<li>Older Casey timing: Troop Ambushes have a <b>21-day cooldown from spawn</b> and only <b>two can be active globally</b>.</li>
+<li>1.2 practical estimate: once an Ambush expires, another can become eligible in roughly <b>9–12 days</b>. While one is active, estimate next eligibility as <b>9–12 days + current mission time remaining</b>.</li>
+<li>At high Strength Casey often keeps Intel long enough to find the Ambush, then flips to Supplies for a couple of weeks before searching again.</li>
+</ul></div>
+<h3>Andy’s region operating benchmarks <span class="v6flag">v6</span></h3>
+<div class="callout gold"><span class="src-badge src-andy">ANDY</span> A healthy tempo target is roughly <b>9 missions per Supply Drop</b>, which usually means about <b>3 squads infiltrating at once</b> (eventually 4) and <b>at least two low-Strength regions</b> actively generating missions.</div>
+<table><tr><th>Signal</th><th>Interpretation</th><th>Action</th></tr>
+<tr><td>You keep finding short timers / high enemy counts</td><td>You probably lack enough viable low-Strength regions.</td><td><b>Expand earlier.</b> Do not solve a regional-capacity problem by repeatedly boosting mediocre missions.</td></tr>
+<tr><td>Strength reaches 5+</td><td>Routine missions and retaliation pressure become unattractive.</td><td>Mostly Hide; optionally keep 1–2 Intel workers hunting high-value troop movement/ambush opportunities.</td></tr>
+<tr><td>Strength reaches 8+</td><td>Snare / brutal RNF territory.</td><td>Do not run ordinary missions there. Treat apparent hack missions as potentially lethal traps.</td></tr>
+<tr><td>Unliberated region is active</td><td>Mission discovery is the economic engine.</td><td>Almost everyone on Intel; supplies are generally inferior to mission rewards.</td></tr>
+<tr><td>Liberated region</td><td>No normal discovery requirement.</td><td>Supplies become appropriate; Engineer advisor boosts output. Clear Faceless first.</td></tr></table>
+<div class="callout"><b>Retaliation thresholds Andy tracks:</b> roughly 3 Intel workers, 3 Supply workers or 6 Recruit workers can expose the haven to the respective retaliation family. Treat these as planning thresholds, not reasons to cripple mission discovery in a low-Strength region.</div>
+<div class="callout purple"><span class="src-badge src-synth">SYNTHESIS</span> <b>Expansion trigger:</b> if your primary region is approaching Strength 4–5 <i>or</i> you are spending Intel to make routine infiltrations viable, prioritize a new contact. Intel used on region #2/#3 creates future mission capacity; Intel spent on an ordinary boost is gone.</div>
+
+<details class="complete-reference" open>
+<summary>Complete merged strategy-layer reference — region stats, haven jobs, economy, expansion & campaign cadence</summary>
+<div class="complete-body">
+<div class="callout good"><b>Completeness rule:</b> this layer preserves the practical exceptions and operating routines from Andy and Casey instead of reducing them to one-line rules. Current stable mechanics still override older strategy advice when numbers conflict.</div>
+
+<h3>Region state: Strength, Vigilance and when to leave</h3>
+<ul class="dense-list">
+<li><b>Strength</b> is the regional ADVENT presence that drives mission enemy counts and reinforcement pressure. Routine missions become much less attractive around Strength 5+, and both authors increasingly shift activity to other regions rather than trying to brute-force the same haven indefinitely.</li>
+<li><b>Vigilance</b> is ADVENT's alarm level. When Vigilance is above Strength, troop movement into the region becomes more likely. Andy notes Vigilance decays on a multi-day timer, and more active rebels can lengthen that decay; completing another mission in the region resets the decay cycle.</li>
+<li>Andy’s practical high-Strength rule is stricter than Casey’s older one: at <b>Strength 5+</b>, normal operations should largely stop; at <b>Strength 8</b>, avoid ordinary missions entirely because Snare-style reinforcement behavior can turn normal-looking hack missions into traps.</li>
+<li>There is one recurring exception: <b>Troop Ambush / Troop Column</b> missions remain attractive because they reduce regional Strength and provide full salvage. Both authors accept continuing to search for them after normal missions have become unattractive.</li>
+<li>Strength can rise <b>while a squad is infiltrating</b>. If Vigilance has spiked in a low-Strength region, assume the mission may launch one enemy-count bracket harder than it looked when you started infiltration.</li>
+</ul>
+
+<h3>Haven jobs and retaliation management</h3>
+<ul class="dense-list">
+<li>When actively farming a region, default to <b>Intel</b>. More detection means earlier mission discovery and longer infiltration windows. Avenger scanning and a Scientist adviser improve detection further.</li>
+<li>Casey’s early routine is to assign a soldier adviser immediately, scan the region until viable missions are found, then use spare scanning time elsewhere rather than sitting at the Black Market from day one.</li>
+<li>Andy increasingly avoids the Recruit job. Jailbreaks are usually a more efficient source of soldiers/rebels, and Intel workers are what reveal Jailbreaks. One exception is a nearly empty haven where very few Intel workers would only discover unusably short-timer missions.</li>
+<li>When a region is deliberately cooling down, switch most rebels to <b>Hide</b>. Andy notes that up to roughly two non-hiding workers can often be left active without creating the same retaliation pressure; he commonly leaves a small Intel presence to look for a Troop Ambush.</li>
+<li>In liberated regions, run <b>Supplies</b> and staff an <b>Engineer adviser</b> for income. Keep or rotate a soldier adviser long enough to find/remove hidden Faceless. Unexpectedly reduced supply income is a warning that a Faceless may still be present.</li>
+<li>Job changes impose a temporary productivity penalty, so do not bounce rebels between Intel/Supplies/Recruit every few hours just to micromanage a small gain.</li>
+<li>Andy’s retaliation heuristics: several rebels on Intel/Supplies/Recruit can cross job-specific retaliation thresholds. The exact prediction system is more detailed than a single threshold, so use the current Haven Management screen/UFOpaedia when timing matters.</li>
+<li>Recruited rebels have a non-trivial chance to be Faceless. Certain advisers/scanning tools reduce that risk; higher-rank soldiers and officers also improve adviser performance.</li>
+</ul>
+
+<h3>Expansion and mission throughput</h3>
+<ul class="dense-list">
+<li><b>Expand before you feel forced to.</b> If every discovered mission has a poor timer, high enemy count or bad Strength, the strategic failure usually happened earlier: you did not have enough contacted low-Strength regions generating missions.</li>
+<li>Andy targets roughly <b>nine missions per supply-drop cycle</b>, which implies several squads infiltrating simultaneously and at least two productive low-Strength regions. This is a campaign-health benchmark, not a hard quota.</li>
+<li>Most routine missions should use around <b>five soldiers</b>. Six is often a luxury or a chance to bring a lower-rank soldier. Seven on ordinary guerrilla ops is usually strategically expensive because infiltration time ties up too much of the roster; reserve large squads for genuinely large/untimed missions.</li>
+<li>By April, if a mission has a forgiving enemy count and a strong core team, deliberately bring a Squaddie or other lower-rank soldier. Deep roster development matters more than perfect A-team XP concentration.</li>
+<li>A healthy campaign eventually needs enough depth to keep two to three combat squads active while still supporting covert ops, officer training, bond training, wounds and haven advisers.</li>
+</ul>
+
+<h3>Intel discipline and boosting</h3>
+<ul class="dense-list">
+<li>Routine Intel boosting is usually a symptom of insufficient expansion. Intel is the currency for contacting regions, critical liberation/Golden Path boosts and story research.</li>
+<li>Andy’s regular boost exceptions are <b>Troop Ambushes, Supply Raids, Liberation missions and Golden Path missions</b>, and even there he prefers not to boost if the timer is already adequate.</li>
+<li>Casey similarly recommends stockpiling Intel for expansion and only spending it on missions that are unusually lucrative or campaign-critical.</li>
+<li>Once the campaign has multiple active regions, passing a mediocre mission is usually better than spending Intel to force it into viability.</li>
+</ul>
+
+<h3>Troop Ambush timing and region cycling</h3>
+<ul class="dense-list">
+<li>Troop Ambushes have a long cooldown after spawning. Both authors use a calendar/journal to estimate when the next one can appear and time a return to Intel collection accordingly.</li>
+<li>Casey additionally notes a global cap on active Troop Ambushes, which can occasionally explain why a region is not producing one even when its local cooldown has passed.</li>
+<li>After discovering a Troop Ambush in a high-Strength region, it can make sense to switch that haven away from Intel for a while, then return near the expected respawn window.</li>
+</ul>
+
+<h3>Black Market and economy</h3>
+<ul class="dense-list">
+<li>Early cash is more valuable than hoarding mediocre inventory. Both authors sell low-impact PCS, surplus weapon mods, data items and some corpses to fund facilities, staff and technology breakpoints.</li>
+<li>Do <b>not</b> sell blindly: preserve corpses/wrecks needed for near-term autopsies/projects and the one-off resource gates in your chosen build order. The Sell/Keep lookup in this guide is intentionally conservative.</li>
+<li>Casey’s older early-game economy is extremely aggressive about selling Cores/data/loot to fund urgent facilities, Vulture, staff and laser-tier purchases. Andy follows the same tempo logic but later becomes much more protective of Cores, Alloys and Elerium.</li>
+<li>Start buying <b>Elerium earlier than feels comfortable</b>. Late-game weapon/armor progression is frequently bottlenecked by Elerium and Alloys rather than Supplies.</li>
+<li>One or two liberated regions are generally enough for Supplies. More liberations can yield corpses and income, but they also remove unliberated regions that generate many of the missions that supply Alloys/Elerium.</li>
+<li>Chosen weapons are usually poor research priorities unless acquired unusually early. Andy considers the Darkclaw the notable exception; normal Coil/Plasma progression typically gives better return on research time.</li>
+</ul>
+
+<h3>Facilities and campaign operations that are easy to forget</h3>
+<ul class="dense-list">
+<li>Keep the GTS relevant throughout the campaign; late GTS upgrades such as larger infiltrating squads are easy to overlook after the opening months.</li>
+<li>Resistance Ring value rises after SGTs unlock better faction influence/rewards. Early low-value covert actions can consume scarce manpower; later, continuous covert operations become much more attractive.</li>
+<li>Do not send valuable soldiers on weak covert actions while the barracks is shallow. Ambush chance is never literally zero unless the UI says so.</li>
+<li>Templar HQ improves normal healing speed but not Tired recovery. Infirmary/Templar scanning also do not accelerate Will recovery from the Tired state.</li>
+<li><b>Avenger travel timing — Andy observation:</b> Andy’s 1.2.2 notes describe region-to-region flying as far less costly than players often assume because of how the geoscape clock behaves on arrival. Treat this as version-sensitive UI/strategy behavior rather than a precise universal timing rule; verify the current clock if a deadline is tight.</li>
+<li>Keep a campaign journal. Andy explicitly uses it to identify patterns in failed missions, track Troop Ambush timing, and remember when strategic choices created later problems.</li>
+</ul>
+</div></details>
+
+<div class="callout"><b>Troop Ambush global-cap edge case:</b> Casey notes that only <b>two Troop Ambushes can be active globally at once</b>. If a high-Strength region seems overdue for one, check whether two are already active elsewhere before assuming your Intel setup is failing.</div>
+</section>
+<section class="searchable" id="covert">
+<h2>4B. Covert Operations, Chosen clock &amp; Golden Path</h2>
+<h3>When Covert Ops become a real engine</h3>
+<ul><li>Before the Resistance Ring, covert opportunities are limited. Once you have SGTs and better faction influence, the system becomes strategically important.</li>
+<li>At <b>Faction Influence 2</b>, Moderate/Hard actions can include high-value rewards such as <b>Recruit Scientist, Recruit Engineer and Gain Resistance Contact</b>.</li>
+<li>Once your barracks can sustain it, Casey wants the Ring running <b>continuously</b>: rewards, influence, ambush XP and contacts compound.</li>
+<li>Do not send soldiers on low-value faction operations when manpower is scarce. The opportunity cost is an infiltrating squad, officer training or bond training.</li></ul>
+<h3>Chosen Avenger Defense race</h3>
+<div class="callout warn"><b>Three MSGTs are only the first deadline.</b> After reaching three MSGTs you still need the Stronghold-reveal covert action (Casey cites roughly <b>13 days</b>) and Stronghold infiltration (roughly <b>5 days</b>). Counter Chosen Activity can buy time once a Chosen has found the Avenger, but Casey observed later delays becoming much less forgiving.</div>
+<h3>Golden Path operating rule</h3>
+<ol><li>After HQ, start opening the path to the <b>Blacksite immediately</b>.</li><li>Ignore continent bonuses unless they happen to lie on the route.</li><li>Carry a <b>Skulljack Specialist</b> regularly so Skullmining/hack opportunities generate Intel and accelerate strategic progress.</li><li>After Blacksite, Casey prefers <b>Psi Gate before Forge</b>: you keep corpses on Psi Gate and it guarantees a Gatekeeper corpse.</li><li>Most newly contacted havens can work Intel to help fund the next Golden Path contact chain.</li><li>Do not treat the Avatar countdown as free extra time; hidden alien progress can resume immediately after you knock it back.</li></ol>
+<h3>Laboratory decision</h3>
+<p>In Casey's older midgame plan the Lab makes sense once power and staffing can support it, ideally on/near a power-conduit solution. A serious Lab investment wants roughly <b>six Scientists</b> total—four staffing the Lab and two available for other facilities. His 1.2 note raises the Lab's value because Black Market Scientists become more expensive, but the warning remains: research can outrun the supplies/alloys/Elerium needed to buy what you unlock.</p>
+<p class="small">Source: <a href="https://xcom.substack.com/p/lwotc-midlate-game-strategy">Mid/Late Game Strategy</a>, <a href="https://xcom.substack.com/p/lwotc-version-12-notes">v1.2 Notes</a>.</p>
+<div class="card"><h3>Covert-op scheduling rules that are easy to forget</h3><ul class="check">
+<li><b>Do not</b> send soldiers on low-value faction actions until you have a manpower surplus. The hidden cost is a squad that cannot infiltrate, train as an officer, or complete bond training.</li>
+<li>At <b>Faction Influence 2</b>, Moderate/Hard actions can produce Recruit Scientist, Recruit Engineer and Gain Resistance Contact; this is the point where the Ring becomes a genuine campaign engine.</li>
+<li>Once the barracks is deep enough, Casey wants Covert Ops running almost continuously.</li>
+<li>Counter Chosen Activity can delay an assault, but Casey observed the next attempt becoming much less forgiving. Treat it as borrowed time, not a permanent solution.</li>
+</ul></div>
+<h3>Andy’s Golden Path checklist <span class="v6flag">v6</span></h3>
+<p><b>Implant research → Proving Ground → Blacksite → Skulljack Officer → Alien Encryption → Shadow Chamber → Codex Brain / Encrypted Data / Blacksite Vial projects → Psi Gate / Forge → Skulljack Codex → remaining Shadow projects → Network Assault → Final Assault.</b></p>
+<ul><li><b>Blacksite:</b> clear first, stage by evac, then take vial; reinforcements start after pickup while the doom timer itself is generous.</li><li><b>Psi Gate:</b> nominally 10-person but Andy brings about 8 to avoid brutal infiltration; corpses are retained and there is no normal RNF.</li><li><b>Forge:</b> also around 8; Andy expects two Sectopods and notes you do not retain corpses.</li><li><b>Final Assault:</b> after transitioning to the final arena, you can wait out cooldowns before making line of sight with the Avatar. Once Avatar #3 appears, kill it rather than trying to clear infinite supporting spawns.</li><li>Andy argues the finale is comfortably doable with Coil weapons and a senior roster; Plasma completion is useful but not a mandatory excuse to stall forever.</li></ul>
+
+<details class="complete-reference"><summary>Complete Golden Path sequence & mission-specific notes</summary><div class="complete-body">
+<ol class="dense-list">
+<li>Research Alien Biotech/implant line and build the Proving Ground as required by the story chain.</li>
+<li><b>Blacksite:</b> revealed in a distant region, reinforcing why expansion matters. The vial advances the story and starts RNF pressure when picked up; the long doom timer means there is no need to rush natural pods.</li>
+<li><b>Skulljack an Officer</b> to unlock Alien Encryption and spawn the first Codex. Doing this early does not force normal Codex appearances before their normal Force Level.</li>
+<li>Research <b>Alien Encryption</b>, build <b>Shadow Chamber</b>, then perform the Codex Brain / Encrypted Data / Blacksite Vial projects needed to reveal Psi Gate, Codex-skulljack objective and Forge.</li>
+<li>Researching the Blacksite Vial project early is useful even if Psi Gate will be done first because it reveals the Forge region and lets you begin contact expansion.</li>
+<li><b>Psi Gate:</b> large full-salvage story mission. Although the cap is high, Andy commonly takes about eight because ten dramatically increases infiltration. No normal RNF timer; corpse retention makes it attractive before Forge. Completion reduces Avatar progress significantly and may trigger a UFO hunt.</li>
+<li><b>Forge:</b> similarly large; always expect major mechanical resistance including Sectopods. It is not full salvage. Doom RNF timer is so long that ordinary careful play should never trigger it, and picking up the suit itself does not immediately start RNFs.</li>
+<li><b>Skulljack a Codex</b> to spawn the Avatar and advance the Shadow Chamber chain.</li>
+<li>Complete Recovered Stasis Suit / Psionic Gate / other Shadow Chamber projects, upgrade the Chamber as required, then perform <b>Avatar Autopsy</b> once prerequisite projects are finished.</li>
+<li><b>Network Assault:</b> story network mission, not the Liberation Network Tower. Revealed start, no normal RNF, larger squad allowance.</li>
+<li><b>Final Assault:</b> full 12-soldier deployment. After clearing the first area, use the transition downtime to reset cooldowns before establishing line of sight to the final Avatar fight. Mind-controlled units do not transfer. Once the third Avatar dies, the campaign ends—ignore other spawns if the final Avatar can be killed.</li>
+</ol>
+<div class="callout"><b>Endgame pacing:</b> Plasma is nice but not mandatory. Andy notes that a mostly-MSGT squad with Coil can complete the final mission. Do not stall the campaign purely to make every weapon branch perfect unless you are doing so for fun.</div>
+</div></details>
+</section>
+<section class="searchable" id="autopsies">
+<h2>4C. Casey's midgame autopsy priorities</h2>
+<p>These are Casey's own 0–5 ratings from his Mid/Late Strategy guide. Use them as a <b>switch-research trigger</b> when you have enough corpses to exploit the unlock—not as a reason to research something you cannot afford to build.</p>
+<table><tr><th>Rating</th><th>Autopsy</th><th>Main payoff</th></tr>
+<tr><td><b>5</b></td><td>ADVENT Robotics</td><td>Gremlin Mk II, Redscreen rounds / related tech.</td></tr>
+<tr><td><b>5</b></td><td>Purifier</td><td>Incendiary Grenade.</td></tr>
+<tr><td><b>5</b></td><td>Gatekeeper</td><td>Arc Blaster, Alien Psi Amp.</td></tr>
+<tr><td><b>4</b></td><td>Stun Lancer</td><td>Arc Blade/Axe.</td></tr>
+<tr><td><b>4</b></td><td>Archon</td><td>Fusion Blade/Axe.</td></tr>
+<tr><td><b>4</b></td><td>Muton Elite</td><td>Dragon rounds, Carapace, Gauntlet III.</td></tr>
+<tr><td><b>4</b></td><td>Sectopod</td><td>Gremlin Mk III.</td></tr>
+<tr><td><b>4</b></td><td>Alien Rulers</td><td>Unique armors.</td></tr>
+<tr><td><b>3</b></td><td>Turret</td><td>Shredder rounds, Defense Matrix.</td></tr>
+<tr><td><b>3</b></td><td>Andromedon</td><td>Advanced Grenades, Holo Mk III.</td></tr>
+<tr><td><b>3</b></td><td>Chosen weapon tech</td><td>Unique Chosen guns.</td></tr>
+<tr><td><b>2</b></td><td>MEC</td><td>Bluescreen rounds.</td></tr>
+<tr><td><b>2</b></td><td>Muton</td><td>Plasma Grenades.</td></tr>
+<tr><td><b>2</b></td><td>Viper</td><td>Venom rounds, Nanomedikit.</td></tr>
+<tr><td><b>1</b></td><td>Berserker</td><td>Overdrive Serum.</td></tr>
+<tr><td><b>1</b></td><td>Chryssalid</td><td>Chitin Plating.</td></tr>
+<tr><td><b>1</b></td><td>Shieldbearer</td><td>Stasis Vests.</td></tr>
+<tr><td><b>0</b></td><td>Faceless</td><td>Needle rounds / Chameleon suit—Casey says ignore in this route.</td></tr>
+<tr><td><b>0</b></td><td>Priest</td><td>Sustaining Sphere—low priority.</td></tr>
+<tr><td><b>0</b></td><td>Spectre</td><td>Refraction Field—low priority.</td></tr></table>
+</section>
+<section class="searchable" id="warnings">
+<h2>15. Campaign-ending warnings</h2>
+<div class="callout warn"><b>These are the items I would put on a second monitor.</b> Several are direct examples Casey gives of mistakes that killed or nearly killed campaigns.</div>
+<table>
+<tr><th>Warning</th><th>Why it ends campaigns</th><th>Countermeasure</th></tr>
+<tr class="dangerrow"><td>Running Fleche / Run &amp; Gun into unrevealed fog</td><td>Activates the next pod while your close-range killer is already isolated.</td><td>Scan first; use Electroshock/rocket/grenade from range when pod locations are unknown.</td></tr>
+<tr class="dangerrow"><td>Bad Shinobi scouting</td><td>Corner/roof LOS can reveal the scout and activate pods on a flank.</td><td>Slow down; Covert; rooftops only when path is safe; Scanner handles most 1.2 scouting.</td></tr>
+<tr class="dangerrow"><td>Leaving a flank open during prolonged combat</td><td>Incoming pod can get activation shots/crit a key shooter. Casey's Ranger article describes a squad wipe built around this error.</td><td>Use Scanner, map edge, scout or mobile overwatch to protect flank lanes.</td></tr>
+<tr class="dangerrow"><td>Waking the command pod early on HQ</td><td>Turns a controlled endurance battle into multiple simultaneous pods.</td><td>Hold position; do not let enemies pull the squad forward.</td></tr>
+<tr class="dangerrow"><td>Overwatch creeping while RNF is active</td><td>You lose to the clock even if every move is “safe.”</td><td>Take a good ambush and move; risk-managed speed beats guaranteed RNF collapse.</td></tr>
+<tr class="dangerrow"><td>Sewer / blind-corner 2-man stealth mission</td><td>Detection geometry can be brutal and there is no recovery capacity.</td><td>Abort when the map is unsuitable; a skipped reward is cheaper than two dead veterans.</td></tr>
+<tr class="dangerrow"><td>Spending Intel on routine boosts</td><td>You later cannot open the Blacksite/Forge/Psi Gate route.</td><td>Reserve Intel for expansion and truly campaign-critical boosts.</td></tr>
+<tr class="dangerrow"><td>Staying in one region too long</td><td>Vigilance → Strength → poor mission timers and tougher enemies.</td><td>Open the first adjacent region early, before Strength ~5 makes the original region unattractive.</td></tr>
+<tr class="dangerrow"><td>Over-farming the liberation region</td><td>Raises Vigilance/Strength and makes Lib 2/3 harder.</td><td>Prioritize Lib detection; skip mediocre side missions there.</td></tr>
+<tr class="dangerrow"><td>Shallow barracks</td><td>Wounds + covert actions + training can leave no squad able to infiltrate critical missions.</td><td>Buy/recruit depth; use Trial by Fire; sometimes send a SPARK with trainees.</td></tr>
+<tr class="dangerrow"><td>No SGT / MSGT pipeline</td><td>You miss faction/contact/covert unlocks and may fail to reveal Chosen Strongholds before Avenger Defense.</td><td>Power-level SGTs early and three MSGTs later.</td></tr>
+<tr class="dangerrow"><td>Selling the wrong resources</td><td>Creates later research/build bottlenecks.</td><td>Keep key corpses; 1.2: do not sell Muton corpses casually. Stop routine Elerium-core sales by June/July.</td></tr>
+<tr class="dangerrow"><td>Buying every shiny project</td><td>Leaves no supplies/alloys/Intel for armor, weapons, relays and Golden Path.</td><td>Follow a purchase queue; skip Casey's low-priority PG/GTS projects.</td></tr>
+<tr class="dangerrow"><td>No Defense Matrix when Avenger threat is imminent</td><td>Chosen/UFO defense can become a campaign crisis.</td><td>Delay it when safe, but build promptly when a UFO hunt or Chosen discovery is close.</td></tr>
+<tr class="dangerrow"><td>Assuming suppression fully disables ADVENT rocketeers</td><td>Casey's 1.2 notes say they can sometimes run suppression and still rocket.</td><td>Hard-control or kill the rocketeer when the rocket would be catastrophic.</td></tr>
+<tr class="dangerrow"><td>Late-game ADVENT Covering Fire</td><td>Unexpected reaction shots punish routine actions/movement.</td><td>Check enemy abilities before acting; remove/disable the threat first.</td></tr>
+<tr class="dangerrow"><td>Using Long Watch carelessly</td><td>Can activate a distant pod you never intended to engage.</td><td>DFA Sharpshooter should usually steady when not shooting instead.</td></tr>
+</table>
+<h3>Additional red-line warnings restored from Casey</h3>
+<div class="grid">
+<div class="card warn"><b>Chosen Stronghold timing</b><p>Three MSGTs is not “safe.” You still need the reveal covert action and infiltration. Start power-leveling before the Avenger threat bar becomes urgent.</p></div>
+<div class="card warn"><b>Low-value covert actions</b><p>Do not send scarce soldiers away simply because a faction mission exists. An unavailable soldier can cost a better infiltration, officer course or bond upgrade.</p></div>
+<div class="card warn"><b>Strength 8 Hack / Snare</b><p>A routine-looking Hack in a very high-Strength region can become an RNF death spiral. Treat Strength 8+ Hack missions as a special hazard.</p></div>
+<div class="card warn"><b>Fatigue lock</b><p>Officer/bond/trait training freezes Will recovery. Scheduling several trainings at once can quietly collapse your available roster.</p></div>
+<div class="card warn"><b>Reaction-fire dependency</b><p>Casey's Ranger wipe story is a warning against assuming overwatch will solve a prolonged fight. Direct, controllable shots are more reliable when the battle stops following your script.</p></div>
+<div class="card warn"><b>Panic play</b><p>When the fight starts collapsing, speeding up your decision-making compounds errors. Slow down, re-rank threats, and use control/guaranteed damage before gambling.</p></div>
+</div>
+
+<h3>Andy campaign-ending failure patterns <span class="v6flag">v6</span></h3>
+<ul class="check"><li><b>Operating in Strength 8+ regions</b>, especially hack missions that can become Snare traps.</li><li><b>Boosting routine missions until Intel expansion stalls.</b> If boosts feel mandatory, you likely needed more regions earlier.</li><li><b>Taking 7 soldiers to routine Guerrilla Ops.</b> The infiltration opportunity cost can silently destroy campaign tempo.</li><li><b>Chasing every Extract Supplies crate.</b> Crate greed pulls soldiers into fog and away from evac as RNF accelerates.</li><li><b>Assuming a 90–99% action is guaranteed.</b> Build turns with a backup action.</li><li><b>Using melee / point-blank damage into unexplored tiles.</b> Assaults and Shinobis are especially good at tempting this campaign-ending mistake.</li><li><b>Ignoring Defense Matrix before an Avenger assault.</b> LWOTC turrets are real combat assets when upgraded and staffed.</li><li><b>Entering a Ruler fight with other pods alive</b> or spending tiny damage actions that each buy the Ruler another reaction.</li><li><b>Using Andy’s 1.2.2 SPARK build as if it were current 1.2.3 advice.</b> It is explicitly version-invalidated.</li></ul>
+</section>
+<section class="searchable" id="checklists">
+<h2>16. Checklists</h2>
+<div class="grid">
+<div class="card"><h3>Before launching</h3><ul class="check"><li>Is the mission reward worth the roster/infiltration cost?</li><li>Is enemy activity acceptable?</li><li>Does this mission require 100% infiltration for the concealment you expect?</li><li>Scanner / scout?</li><li>Reliable killer?</li><li>At least 1–2 control options?</li><li>Objective Specialist if needed?</li><li>Armor shred / mechanical answer?</li><li>Chosen / Ruler burst plan?</li><li>Plating / vest / medikit?</li><li>RNF start condition understood?</li><li>Evac timing understood?</li></ul></div>
+<div class="card"><h3>When a pod activates</h3><ul class="check"><li>Stop moving.</li><li>Count every active enemy.</li><li>Identify must-kill / must-control / can-ignore.</li><li>Check whether every proposed move reveals fog.</li><li>Use guaranteed control/damage before low-odds hero shots.</li><li>Protect the flank from the next pod.</li><li>Do not hoard the grenade/rocket if this is the hard fight.</li><li>If the situation worsens, slow your decision-making down.</li></ul></div>
+<div class="card"><h3>Monthly strategic review</h3><ul class="check"><li>Do I have a low-Strength region to operate in?</li><li>Is first liberation / next Golden Path step moving?</li><li>Intel reserve sufficient for next contacts?</li><li>Are 3 soldiers being power-leveled toward MSGT?</li><li>Can I field 2–3 squads while training/covert ops continue?</li><li>Am I approaching an alloy / Elerium / core bottleneck?</li><li>Is a Chosen close to locating the Avenger?</li><li>Do I need Defense Matrix now?</li></ul></div>
+</div>
+</section>
+</main>
+<script>
+(function(){
+ const q=document.getElementById('chapterSearch');
+ const clear=document.getElementById('chapterClear');
+ function run(){
+  const term=(q.value||'').trim().toLowerCase();
+  document.querySelectorAll('main section').forEach(sec=>{
+   if(!term){sec.classList.remove('chapter-hidden'); return;}
+   sec.classList.toggle('chapter-hidden',!sec.innerText.toLowerCase().includes(term));
+  });
+  document.querySelectorAll('details').forEach(d=>{
+   if(term && d.innerText.toLowerCase().includes(term)) d.open=true;
+  });
+ }
+ q.addEventListener('input',run);
+ clear.addEventListener('click',()=>{q.value='';run();q.focus();});
+ if(location.hash){const x=document.querySelector(location.hash);if(x)setTimeout(()=>x.scrollIntoView({block:'start'}),50);}
+ const build=document.getElementById('builds'), jumps=document.getElementById('buildJumps');
+ if(build&&jumps&&!jumps.children.length){
+  [...build.querySelectorAll(':scope > details.classbox')].forEach(box=>{
+   const s=box.querySelector('summary'); if(!s)return;
+   const name=(s.innerText||'').split(' — ')[0].trim();
+   if(!box.id)box.id='build-'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+   const a=document.createElement('a');a.href='#'+box.id;a.textContent=name;jumps.appendChild(a);
+  });
+ }
+})();
+</script></body></html>
