@@ -1,15 +1,26 @@
-# LWOTC Campaign Guide
+# LWOTC Complete Campaign Guide v13
 
-Mobile-friendly **Long War of the Chosen** campaign reference combining:
-- Casey's strategy/class guidance
-- Andy's LWOTC 1.2.2 campaign notes
-- Version-sensitive mechanics and practical synthesis
-- Mission decision matrix, campaign timeline, builds, research, equipment, enemies and warnings
+A comprehensive, mobile-friendly **Long War of the Chosen (stable 1.2.3)** reference built from Casey's XCOM Commander's Journal, Andy's LWOTC 1.2.2 notes, current mechanics references, and clearly labelled synthesis.
 
 ## Live site
+
 https://arishboteco.github.io/lwotc-guide/
 
-The site is deployed automatically from `main` using GitHub Pages.
+## Reading options
 
-## Updating
-The source HTML is stored in base64 chunks under `chunks/`. The Pages workflow assembles them into the final `index.html` and verifies its SHA-256 checksum before deployment.
+- `index.html` — canonical all-in-one guide + interactive tools + predictive search
+- `campaign.html` — campaign, research, economy, havens, expansion and Golden Path
+- `missions.html` — mission playbook, tactics, reinforcements, SITREPs and liberation
+- `soldiers.html` — classes, full perk reasoning, equipment, XCOM-row guidance, officers and bonds
+- `enemies.html` — enemy behavior, Chosen, Alien Rulers and legacy edge notes
+- `reference.html` — version model, source coverage, source links and completeness audit
+
+## Completeness standard
+
+The guide does not treat a topic as covered merely because its heading appears. The canonical v13 content preserves substantive mechanics, recommendations, exceptions, failure cases, build reasoning and source disagreements. Repeated ideas are consolidated into one explanation; older/version-sensitive guidance is labelled rather than silently mixed with current advice.
+
+Source prose is paraphrased rather than copied line-for-line.
+
+## Deployment
+
+GitHub Pages deploys automatically from `main`.
