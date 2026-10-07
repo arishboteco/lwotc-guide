@@ -17,7 +17,7 @@ https://arishboteco.github.io/lwotc-guide/
 
 ## Completeness standard
 
-The guide does not treat a topic as covered merely because its heading appears. The canonical v15 content preserves substantive mechanics, recommendations, exceptions, failure cases, build reasoning and source disagreements. Dedicated DerAva tutorial concepts are integrated into the written strategy layer, with older numeric examples translated to current stable mechanics. v15 adds a source-by-source audit of Casey, Andy and DerAva, plus explicit audit limitations where live nested-source retrieval is incomplete. Repeated ideas are consolidated into one explanation; older/version-sensitive guidance is labelled rather than silently mixed with current advice.
+The guide does not treat a topic as covered merely because its heading appears. The canonical v15 content preserves substantive mechanics, recommendations, exceptions, failure cases, build reasoning and source disagreements. Dedicated DerAva tutorial concepts are integrated into the written strategy layer, with older numeric examples translated to current stable mechanics. v15 adds a source-by-source audit of Casey, Andy and DerAva, including DerAva's identifiable class/tutorial sources, plus explicit audit limitations where live nested Notion pages or long-form YouTube transcripts cannot be exhaustively retrieved. Repeated ideas are consolidated into one explanation; older/version-sensitive guidance is labelled rather than silently mixed with current advice.
 
 Source prose is paraphrased rather than copied line-for-line.
 
