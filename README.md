@@ -1,6 +1,6 @@
-# LWOTC Complete Campaign Guide v13
+# LWOTC Complete Campaign Guide v14
 
-A comprehensive, mobile-friendly **Long War of the Chosen (stable 1.2.3)** reference built from Casey's XCOM Commander's Journal, Andy's LWOTC 1.2.2 notes, current mechanics references, and clearly labelled synthesis.
+A comprehensive, mobile-friendly **Long War of the Chosen (stable 1.2.3)** reference built from Casey's XCOM Commander's Journal, Andy's LWOTC 1.2.2 notes, DerAva's dedicated LW2/LWOTC strategy tutorials, current mechanics references, and clearly labelled synthesis.
 
 ## Live site
 
@@ -17,7 +17,7 @@ https://arishboteco.github.io/lwotc-guide/
 
 ## Completeness standard
 
-The guide does not treat a topic as covered merely because its heading appears. The canonical v13 content preserves substantive mechanics, recommendations, exceptions, failure cases, build reasoning and source disagreements. Repeated ideas are consolidated into one explanation; older/version-sensitive guidance is labelled rather than silently mixed with current advice.
+The guide does not treat a topic as covered merely because its heading appears. The canonical v14 content preserves substantive mechanics, recommendations, exceptions, failure cases, build reasoning and source disagreements. Dedicated DerAva tutorial concepts are integrated into the written strategy layer, with older numeric examples version-checked against current stable mechanics. Repeated ideas are consolidated into one explanation; older/version-sensitive guidance is labelled rather than silently mixed with current advice.
 
 Source prose is paraphrased rather than copied line-for-line.
 
