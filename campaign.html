@@ -180,8 +180,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 .read-tool-link{display:block;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0;background:#111a22;text-decoration:none;color:var(--text)}
 @media(max-width:760px){.chapter-shell{padding:10px 10px 70px}.chapter-head-inner{display:block}.chapter-title{display:block;margin-bottom:7px}.chapter-nav{padding-bottom:2px}.chapter-search{grid-template-columns:1fr}}
 </style></head><body>
-<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v14</a><nav class="chapter-nav"><a class="active" href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div><div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
-<main class="chapter-shell"><div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Campaign & Strategy</h1><p>This chapter is generated from the same canonical v14 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div><a class="read-tool-link" href="index.html#tracker"><b>Campaign Tracker / What Next? →</b><br><span class="small">Use the master guide for saved campaign-state tools.</span></a><section class="searchable" id="quick">
+<header class="chapter-head"><div class="chapter-head-inner"><a class="chapter-title" href="index.html">LWOTC Complete Guide v15</a><nav class="chapter-nav"><a class="active" href="campaign.html">Campaign</a><a  href="missions.html">Missions</a><a  href="soldiers.html">Soldiers</a><a  href="enemies.html">Enemies</a><a  href="reference.html">Sources</a><a href="index.html">All-in-one + tools</a></nav></div><div class="chapter-search"><input id="chapterSearch" autocomplete="off" placeholder="Search this chapter…"><button id="chapterClear" type="button">Clear</button></div></header>
+<main class="chapter-shell"><div class="chapter-intro"><span class="pill">COMPREHENSIVE READING VIEW</span><h1>Campaign & Strategy</h1><p>This chapter is generated from the same canonical v15 content as the all-in-one guide. Repeated ideas are consolidated; source disagreements and version caveats remain explicit.</p></div><a class="read-tool-link" href="index.html#tracker"><b>Campaign Tracker / What Next? →</b><br><span class="small">Use the master guide for saved campaign-state tools.</span></a><section class="searchable" id="quick">
 <h2>1. The rules that keep campaigns alive</h2>
 <div class="grid">
 <div class="card"><div class="kpi">1 pod</div><b>Fight one pod at a time.</b><p>Most catastrophic turns begin when a melee move, flank, roof climb or careless scout activates another pod.</p></div>
@@ -227,7 +227,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td><b>LW2 Unofficial Compendium</b></td><td>Legacy compact tips for the original LW2</td><td><span class="status-legacy">LEGACY ONLY</span> — the old Drive resource is currently unavailable and predates LWOTC; do not use it to override current mechanics.</td></tr>
 </tbody></table>
 
-<h3>DerAva tutorial integration — strategy-layer mechanics in practice <span class="v6flag">v14</span></h3>
+<h3>DerAva tutorial integration — strategy-layer mechanics in practice <span class="v6flag">v15 audited</span></h3>
 <div class="callout"><b>How to read this layer:</b> DerAva’s dedicated LW2/LWOTC tutorials are older than stable 1.2.3, so this guide imports their <b>decision logic and conceptual explanations</b>, then defers exact current numbers to UFOpaedia/stable game data. This prevents an old tutorial value from silently overriding current mechanics.</div>
 <div class="grid">
 <div class="card"><h4>Mission &amp; Alien Activity</h4><p>Missions are generated in the background and are not automatically shown to XCOM. Intel work is therefore about <b>detecting opportunities early enough to infiltrate them</b>, not creating the missions. Read the geoscape as a moving war: XCOM activity raises Vigilance, high Vigilance tends to draw ADVENT Strength, and regional Strength then determines how hostile routine operations become. The practical consequence is to keep opening low-Strength regions instead of grinding one hot region forever.</p><p class="small"><a href="https://www.youtube.com/watch?v=LpPi18cv_9M" target="_blank">DerAva — Mission and Alien Activity Tutorial</a></p></div>
@@ -235,6 +235,55 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="card"><h4>Infiltration</h4><p>Baseline activity is tied to regional Strength, while squad size and equipment determine how quickly a team infiltrates. <b>100% is the default planning breakpoint</b>: launching early can sharply increase mission pressure; smaller squads and infiltration-helping equipment can make marginal windows viable; extra infiltration can sometimes reduce activity further. The correct response to an impossible timer is often to skip the mission, not force an under-infiltrated deployment.</p><p class="small"><a href="https://www.youtube.com/watch?v=G6D64hXFt3c" target="_blank">DerAva — Infiltration Tutorial</a></p></div>
 <div class="card"><h4>Quick-and-dirty strategic loop</h4><p>DerAva’s shorter primer is useful as an operating checklist: understand <b>Strength / Vigilance / Force</b>, put enough rebels on Intel to discover worthwhile missions, use the Avenger scan when detection matters, rotate away from regions that have become too hot, and convert liberated territory into reliable income. The guide now embeds that loop directly rather than merely linking to the video.</p><p class="small"><a href="https://www.youtube.com/watch?v=Km1yo6Be2n4" target="_blank">DerAva — Quick and Dirty Strategy Layer Guide</a></p></div>
 </div>
+
+<details class="complete-reference" open><summary>DerAva tutorials — audited against current stable mechanics <span class="v6flag">v15</span></summary><div class="complete-body">
+<p>DerAva's tutorials are excellent explanations of the strategic model, but several were recorded before stable 1.2.3. The guide therefore preserves the <b>concept</b> he teaches and translates old values into the current mechanics below.</p>
+
+<h3>Mission detection — the current version of DerAva's “activity already exists” model</h3>
+<ul class="dense-list">
+<li>Regional missions <b>spawn before XCOM can see them</b>; their expiration clock starts at creation. Intel workers do not create missions — they discover activities that are already running.</li>
+<li>Undiscovered missions receive haven Intel at <b>four updates per day (every six hours)</b>. Each mission has a required-Intel gate; after that threshold is met, excess Intel increases the chance of discovery at each update.</li>
+<li>For the current normalized system, a basic level-0 Intel rebel contributes <b>1 point/day</b>, level-1 contributes 1.5, level-2 contributes 2, and Avenger scanning contributes the equivalent of <b>4 basic Intel rebels</b>. A Scientist liaison multiplies the haven's Intel output by 1.20.</li>
+<li>This is the modern mechanical translation of DerAva's older “detection buckets” explanation: <b>first satisfy the minimum detection requirement, then accumulate probability to reveal the mission early enough to infiltrate it well.</b></li>
+</ul>
+
+<h3>Haven jobs, recruitment, advisers and Faceless</h3>
+<table><thead><tr><th>Mechanic</th><th>Current stable detail</th><th>How to use it</th></tr></thead><tbody>
+<tr><td>Recruit outcomes</td><td>Before the active haven reaches 13 rebels, recruitment is roughly <b>67% haven rebel / 33% recruitable soldier</b>. At 13 active rebels it shifts to roughly <b>20% / 80%</b>. Liberated regions add a <b>3% Scientist + 3% Engineer</b> chance.</td><td>Recruit is most useful while rebuilding or when deliberately fishing for soldiers/staff; normal early active regions still prioritize Intel.</td></tr>
+<tr><td>Active-haven cap</td><td>Up to <b>13</b> personnel can work. Surplus personnel are automatically Hidden and survive retaliations.</td><td>Do not treat rebels above 13 as wasted; they form a protected replacement buffer.</td></tr>
+<tr><td>Job changes</td><td>A rebel changing jobs is ineffective for <b>24 hours</b>.</td><td>Avoid constantly flipping jobs for tiny short-term gains.</td></tr>
+<tr><td>Liaisons</td><td>Soldiers boost Recruit and discover Faceless; higher soldier/officer rank improves effectiveness. Scientists give <b>+20% Intel</b>; Engineers give <b>+20% Supplies</b>. Liaison changes are <b>not</b> subject to the rebel 24-hour job-switch penalty.</td><td>Rotate a soldier liaison out for a mission when necessary, then return them without inventing a nonexistent extra 24-hour liaison cooldown.</td></tr>
+<tr><td>Regional bonuses</td><td>A radio tower and liberation each add <b>+20% job efficiency</b>, and they stack.</td><td>Those bonuses make established/liberated regions better economic engines than raw headcount alone suggests.</td></tr>
+<tr><td>Rebel experience</td><td>Rebels can gain two ranks; each rank adds <b>+50% job effectiveness</b> plus combat perks for haven battles.</td><td>A veteran haven can materially outperform an equally sized fresh haven.</td></tr>
+<tr><td>Faceless chance</td><td>New rebels have a base <b>16%</b> Faceless chance. Each Faceless steals 20% of generated Supplies and reduces Recruit/Intel efficiency. Scanning Protocol, Psi Mind Merge and a Battle Scanner each reduce infiltration chance multiplicatively.</td><td>Unexpected supply loss is a warning. Keep a capable soldier liaison hunting infiltrators; swapping liaisons does not erase existing detection progress.</td></tr>
+</tbody></table>
+
+<h3>Retaliation thresholds — important correction to old shorthand</h3>
+<table><thead><tr><th>Retaliation</th><th>Strength</th><th>Vigilance</th><th>Minimum rebels on duty</th></tr></thead><tbody>
+<tr><td>Full Retaliation</td><td>4</td><td>4</td><td>3 active across jobs; haven population must also be at least 5</td></tr>
+<tr><td>Intel Raid</td><td>3</td><td>2</td><td>3 on Intel</td></tr>
+<tr><td>Supply Raid</td><td>4</td><td>1</td><td>3 on Supply</td></tr>
+<tr><td>Recruit Raid</td><td>4</td><td>2</td><td>6 on Recruit</td></tr>
+</tbody></table>
+<p><b>Do not overgeneralize “two rebels is safe.”</b> Two rebels on a particular job are below that job's normal mini-retaliation threshold, but a <b>Full Retaliation counts active rebels across jobs</b>. Faceless can also reduce job thresholds. Use the actual Strength/Vigilance/job conditions rather than a one-line safety rule.</p>
+
+<h3>Liberated-region economy and invasion</h3>
+<ul class="dense-list">
+<li>Liberation removes up to five local Strength, stops ordinary mission generation/retaliations in that region and gives existing infiltrations a flat +50% before forcing launch/abort.</li>
+<li>Liberated jobs receive +20% effectiveness. Each region has a finite Supply cache of roughly <b>2,000–3,000</b> (starting region 2,500); after it is depleted, Supply production falls to 50% of the original rate.</li>
+<li>An invasion can be generated once at least <b>21 days</b> have passed and ADVENT builds an adjacent region to roughly <b>Strength 8</b>. Intel in the liberated region can detect the preceding Supply Line Raid and let XCOM intercept it.</li>
+</ul>
+
+<h3>Infiltration — preserve DerAva's lesson, use current breakpoints</h3>
+<ul class="dense-list">
+<li>A five-soldier squad uses the baseline squad-size timing; larger squads take longer and smaller squads take less. Equipment covertness and infiltration abilities modify the time further, so loadout is part of strategy-layer tempo.</li>
+<li>Intel boosting currently costs <b>25 Intel</b> on Rookie/Veteran/Commander and <b>30 on Legend</b>, applying a difficulty-dependent speed multiplier.</li>
+<li><b>100% is neutral.</b> Under-infiltration becomes dangerous much faster than over-infiltration becomes beneficial: the effective-Strength modifier is +12 at 0%, +1 at 92%, 0 at 100%, −1 at 125%, −2 at 150% and −3 at 200%.</li>
+<li>That asymmetry explains the practical rule: aim for 100%, use modest over-infiltration when it arrives naturally, and only launch under 100% when the mission value and displayed enemy situation justify the risk.</li>
+<li>Golden Path missions have special infiltration rules; do not assume the normal regional-Strength reduction table applies to them.</li>
+</ul>
+</div></details>
+
 <div class="callout good"><b>1.2 supplement:</b> DerAva’s <a href="https://www.youtube.com/watch?v=lL5YuNrjk80" target="_blank">LWOTC Patch 1.2 overview</a> is retained as an explanatory companion for major 1.2 changes. Current stable mechanics and Casey’s 2026 class revisions remain the authority when a later 1.2.3 change or class-specific article is more precise.</div>
 
 <div class="source-note">Current mechanics: <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">Missions</a>, <a href="https://www.ufopaedia.org/Infiltration_%28LWOTC%29" target="_blank">Infiltration</a>, <a href="https://www.ufopaedia.org/Haven_Management_%28LWOTC%29" target="_blank">Haven Management</a>, <a href="https://www.ufopaedia.org/ADVENT%27s_Agenda_%28LWOTC%29" target="_blank">ADVENT's Agenda</a>, <a href="https://www.ufopaedia.org/Evac_%28LWOTC%29" target="_blank">Evac</a>. Andy source: <a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a>. Mechanics explainer: <a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot guide</a>.</div>
