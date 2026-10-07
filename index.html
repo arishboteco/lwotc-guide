@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy Reference v13</title>
+<title>LWOTC Stable 1.2.3 Campaign Guide — Casey + Andy + DerAva Reference v15</title>
 <style>
 :root{
   --bg:#0f1318; --panel:#171d24; --panel2:#202833; --text:#edf2f7; --muted:#aab5c3;
@@ -424,7 +424,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td><b>LW2 Unofficial Compendium</b></td><td>Legacy compact tips for the original LW2</td><td><span class="status-legacy">LEGACY ONLY</span> — the old Drive resource is currently unavailable and predates LWOTC; do not use it to override current mechanics.</td></tr>
 </tbody></table>
 
-<h3>DerAva tutorial integration — strategy-layer mechanics in practice <span class="v6flag">v14</span></h3>
+<h3>DerAva tutorial integration — strategy-layer mechanics in practice <span class="v6flag">v15 audited</span></h3>
 <div class="callout"><b>How to read this layer:</b> DerAva’s dedicated LW2/LWOTC tutorials are older than stable 1.2.3, so this guide imports their <b>decision logic and conceptual explanations</b>, then defers exact current numbers to UFOpaedia/stable game data. This prevents an old tutorial value from silently overriding current mechanics.</div>
 <div class="grid">
 <div class="card"><h4>Mission &amp; Alien Activity</h4><p>Missions are generated in the background and are not automatically shown to XCOM. Intel work is therefore about <b>detecting opportunities early enough to infiltrate them</b>, not creating the missions. Read the geoscape as a moving war: XCOM activity raises Vigilance, high Vigilance tends to draw ADVENT Strength, and regional Strength then determines how hostile routine operations become. The practical consequence is to keep opening low-Strength regions instead of grinding one hot region forever.</p><p class="small"><a href="https://www.youtube.com/watch?v=LpPi18cv_9M" target="_blank">DerAva — Mission and Alien Activity Tutorial</a></p></div>
@@ -432,6 +432,55 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <div class="card"><h4>Infiltration</h4><p>Baseline activity is tied to regional Strength, while squad size and equipment determine how quickly a team infiltrates. <b>100% is the default planning breakpoint</b>: launching early can sharply increase mission pressure; smaller squads and infiltration-helping equipment can make marginal windows viable; extra infiltration can sometimes reduce activity further. The correct response to an impossible timer is often to skip the mission, not force an under-infiltrated deployment.</p><p class="small"><a href="https://www.youtube.com/watch?v=G6D64hXFt3c" target="_blank">DerAva — Infiltration Tutorial</a></p></div>
 <div class="card"><h4>Quick-and-dirty strategic loop</h4><p>DerAva’s shorter primer is useful as an operating checklist: understand <b>Strength / Vigilance / Force</b>, put enough rebels on Intel to discover worthwhile missions, use the Avenger scan when detection matters, rotate away from regions that have become too hot, and convert liberated territory into reliable income. The guide now embeds that loop directly rather than merely linking to the video.</p><p class="small"><a href="https://www.youtube.com/watch?v=Km1yo6Be2n4" target="_blank">DerAva — Quick and Dirty Strategy Layer Guide</a></p></div>
 </div>
+
+<details class="complete-reference" open><summary>DerAva tutorials — audited against current stable mechanics <span class="v6flag">v15</span></summary><div class="complete-body">
+<p>DerAva's tutorials are excellent explanations of the strategic model, but several were recorded before stable 1.2.3. The guide therefore preserves the <b>concept</b> he teaches and translates old values into the current mechanics below.</p>
+
+<h3>Mission detection — the current version of DerAva's “activity already exists” model</h3>
+<ul class="dense-list">
+<li>Regional missions <b>spawn before XCOM can see them</b>; their expiration clock starts at creation. Intel workers do not create missions — they discover activities that are already running.</li>
+<li>Undiscovered missions receive haven Intel at <b>four updates per day (every six hours)</b>. Each mission has a required-Intel gate; after that threshold is met, excess Intel increases the chance of discovery at each update.</li>
+<li>For the current normalized system, a basic level-0 Intel rebel contributes <b>1 point/day</b>, level-1 contributes 1.5, level-2 contributes 2, and Avenger scanning contributes the equivalent of <b>4 basic Intel rebels</b>. A Scientist liaison multiplies the haven's Intel output by 1.20.</li>
+<li>This is the modern mechanical translation of DerAva's older “detection buckets” explanation: <b>first satisfy the minimum detection requirement, then accumulate probability to reveal the mission early enough to infiltrate it well.</b></li>
+</ul>
+
+<h3>Haven jobs, recruitment, advisers and Faceless</h3>
+<table><thead><tr><th>Mechanic</th><th>Current stable detail</th><th>How to use it</th></tr></thead><tbody>
+<tr><td>Recruit outcomes</td><td>Before the active haven reaches 13 rebels, recruitment is roughly <b>67% haven rebel / 33% recruitable soldier</b>. At 13 active rebels it shifts to roughly <b>20% / 80%</b>. Liberated regions add a <b>3% Scientist + 3% Engineer</b> chance.</td><td>Recruit is most useful while rebuilding or when deliberately fishing for soldiers/staff; normal early active regions still prioritize Intel.</td></tr>
+<tr><td>Active-haven cap</td><td>Up to <b>13</b> personnel can work. Surplus personnel are automatically Hidden and survive retaliations.</td><td>Do not treat rebels above 13 as wasted; they form a protected replacement buffer.</td></tr>
+<tr><td>Job changes</td><td>A rebel changing jobs is ineffective for <b>24 hours</b>.</td><td>Avoid constantly flipping jobs for tiny short-term gains.</td></tr>
+<tr><td>Liaisons</td><td>Soldiers boost Recruit and discover Faceless; higher soldier/officer rank improves effectiveness. Scientists give <b>+20% Intel</b>; Engineers give <b>+20% Supplies</b>. Liaison changes are <b>not</b> subject to the rebel 24-hour job-switch penalty.</td><td>Rotate a soldier liaison out for a mission when necessary, then return them without inventing a nonexistent extra 24-hour liaison cooldown.</td></tr>
+<tr><td>Regional bonuses</td><td>A radio tower and liberation each add <b>+20% job efficiency</b>, and they stack.</td><td>Those bonuses make established/liberated regions better economic engines than raw headcount alone suggests.</td></tr>
+<tr><td>Rebel experience</td><td>Rebels can gain two ranks; each rank adds <b>+50% job effectiveness</b> plus combat perks for haven battles.</td><td>A veteran haven can materially outperform an equally sized fresh haven.</td></tr>
+<tr><td>Faceless chance</td><td>New rebels have a base <b>16%</b> Faceless chance. Each Faceless steals 20% of generated Supplies and reduces Recruit/Intel efficiency. Scanning Protocol, Psi Mind Merge and a Battle Scanner each reduce infiltration chance multiplicatively.</td><td>Unexpected supply loss is a warning. Keep a capable soldier liaison hunting infiltrators; swapping liaisons does not erase existing detection progress.</td></tr>
+</tbody></table>
+
+<h3>Retaliation thresholds — important correction to old shorthand</h3>
+<table><thead><tr><th>Retaliation</th><th>Strength</th><th>Vigilance</th><th>Minimum rebels on duty</th></tr></thead><tbody>
+<tr><td>Full Retaliation</td><td>4</td><td>4</td><td>3 active across jobs; haven population must also be at least 5</td></tr>
+<tr><td>Intel Raid</td><td>3</td><td>2</td><td>3 on Intel</td></tr>
+<tr><td>Supply Raid</td><td>4</td><td>1</td><td>3 on Supply</td></tr>
+<tr><td>Recruit Raid</td><td>4</td><td>2</td><td>6 on Recruit</td></tr>
+</tbody></table>
+<p><b>Do not overgeneralize “two rebels is safe.”</b> Two rebels on a particular job are below that job's normal mini-retaliation threshold, but a <b>Full Retaliation counts active rebels across jobs</b>. Faceless can also reduce job thresholds. Use the actual Strength/Vigilance/job conditions rather than a one-line safety rule.</p>
+
+<h3>Liberated-region economy and invasion</h3>
+<ul class="dense-list">
+<li>Liberation removes up to five local Strength, stops ordinary mission generation/retaliations in that region and gives existing infiltrations a flat +50% before forcing launch/abort.</li>
+<li>Liberated jobs receive +20% effectiveness. Each region has a finite Supply cache of roughly <b>2,000–3,000</b> (starting region 2,500); after it is depleted, Supply production falls to 50% of the original rate.</li>
+<li>An invasion can be generated once at least <b>21 days</b> have passed and ADVENT builds an adjacent region to roughly <b>Strength 8</b>. Intel in the liberated region can detect the preceding Supply Line Raid and let XCOM intercept it.</li>
+</ul>
+
+<h3>Infiltration — preserve DerAva's lesson, use current breakpoints</h3>
+<ul class="dense-list">
+<li>A five-soldier squad uses the baseline squad-size timing; larger squads take longer and smaller squads take less. Equipment covertness and infiltration abilities modify the time further, so loadout is part of strategy-layer tempo.</li>
+<li>Intel boosting currently costs <b>25 Intel</b> on Rookie/Veteran/Commander and <b>30 on Legend</b>, applying a difficulty-dependent speed multiplier.</li>
+<li><b>100% is neutral.</b> Under-infiltration becomes dangerous much faster than over-infiltration becomes beneficial: the effective-Strength modifier is +12 at 0%, +1 at 92%, 0 at 100%, −1 at 125%, −2 at 150% and −3 at 200%.</li>
+<li>That asymmetry explains the practical rule: aim for 100%, use modest over-infiltration when it arrives naturally, and only launch under 100% when the mission value and displayed enemy situation justify the risk.</li>
+<li>Golden Path missions have special infiltration rules; do not assume the normal regional-Strength reduction table applies to them.</li>
+</ul>
+</div></details>
+
 <div class="callout good"><b>1.2 supplement:</b> DerAva’s <a href="https://www.youtube.com/watch?v=lL5YuNrjk80" target="_blank">LWOTC Patch 1.2 overview</a> is retained as an explanatory companion for major 1.2 changes. Current stable mechanics and Casey’s 2026 class revisions remain the authority when a later 1.2.3 change or class-specific article is more precise.</div>
 
 <div class="source-note">Current mechanics: <a href="https://www.ufopaedia.org/Missions_%28LWOTC%29" target="_blank">Missions</a>, <a href="https://www.ufopaedia.org/Infiltration_%28LWOTC%29" target="_blank">Infiltration</a>, <a href="https://www.ufopaedia.org/Haven_Management_%28LWOTC%29" target="_blank">Haven Management</a>, <a href="https://www.ufopaedia.org/ADVENT%27s_Agenda_%28LWOTC%29" target="_blank">ADVENT's Agenda</a>, <a href="https://www.ufopaedia.org/Evac_%28LWOTC%29" target="_blank">Evac</a>. Andy source: <a href="https://app.notion.com/p/2c7e7e2beea382dd8f7c812f096b5e82" target="_blank">New Player Info</a>. Mechanics explainer: <a href="https://docs.google.com/document/d/1SaR9exRogsQWM01uIowyckFS8NsS8E5rU_SG3Xu8s1w/edit" target="_blank">inukealot guide</a>.</div>
@@ -884,7 +933,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </section>
 <section class="searchable" id="personnel">
 <h2>4A. Stats, class selection, fatigue &amp; promotion tempo</h2>
-<div class="callout gold"><b>Not Created Equally — source evolution:</b> Casey's older Early Game Strategy preferred turning NCE <b>off</b> for a more standardized roster. His 2026 v1.2 campaign deliberately left NCE <b>on</b> and then developed the stat-triage rules below. Treat this as a changed preference, not a contradiction to hide: the modern advice is how to exploit random stats <i>if you play with NCE enabled</i>, without allowing stat optimization to paralyze the barracks.</div>
+<div class="callout gold"><b>Not Created Equally — source evolution:</b> Casey's older Early Game Strategy preferred turning NCE <b>off</b> for a more standardized roster and pointed to <b>Choose My Class</b> as a legacy alternative for controlling rookie class assignment. His 2026 v1.2 campaign deliberately left NCE <b>on</b> and then developed the stat-triage rules below. Treat this as a changed preference, not a contradiction to hide: the modern advice is how to exploit random stats <i>if you play with NCE enabled</i>, while the older NCE-off / Choose-My-Class route remains a labelled legacy option.</div>
 <h3>Rookie triage</h3>
 <table><tr><th>Step</th><th>Casey rule</th><th>Why</th></tr>
 <tr><td>1</td><td>Build the <b>GTS immediately</b>.</td><td>Officer training is arguably the bigger reason, but class selection also prevents wasting rare stat profiles.</td></tr>
@@ -1509,7 +1558,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <details class="classbox searchable"><summary>Grenadier — Control <span class="tag green">1.2 revised</span></summary><div class="body"><div class="merged-build-meta"><div class="andy-inline"><span class="src-badge src-andy">ANDY 1.2.2</span><b>Needle Grenades → Bombardier → Bluescreen Bombs → Tandem HEAT Warheads → Sting Grenades → Volatile Mix → Shockwave.</b><p>Casey and Andy are essentially aligned on the control build.</p></div><div class="equipment-inline"><span class="search-type">EQUIPMENT</span><p>SMG + plating + grenade-heavy utility. Prioritize Incendiary/Sting payloads and launcher upgrades; EXO can add long-mission endurance. Shooting mods are low priority; Mobility/defensive PCS usually matter more.</p></div></div>
 <p><b>Build:</b> Needle Grenades → Bombardier → Bluescreen Bombs → Tandem HEAT Warheads → Sting Grenades → Volatile Mix → Shockwave.</p>
 <ul>
-<li>1.2 moved extra grenade capacity from perks into upgraded launchers.</li>
+<li><b>1.2 tree change:</b> <b>Heavy Ordnance</b> and <b>Full Kit</b> were removed from the Grenadier tree; their extra grenade capacity moved into upgraded grenade launchers. The practical effect is that the control build keeps its ordinance depth without spending rank picks on those old capacity perks.</li>
 <li><b>Needle Grenades:</b> improves early guaranteed damage; Sapper remains a very strong alternative if you want reliable cover destruction.</li>
 <li><b>Bombardier:</b> Casey values the extra two tiles because range determines whether an Incendiary/Sting grenade can solve the actual priority target.</li>
 <li><b>Bluescreen Bombs:</b> often moves Specialist hack viability up roughly one mechanical tier; pairs beautifully with Sting.</li>
@@ -1625,7 +1674,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <p><b>Build:</b> Fire in the Hole → Concussion Rocket → Biggest Booms → Javelin Rockets → EMP Rocket → Salvo → Bunker Buster.</p>
 <ul>
 <li>1.2 gives Technicals more ordinance and lower rocket scatter, so they no longer fall off as badly late.</li>
-<li><b>Fire in the Hole:</b> enables useful one-action rockets; also changes bond economy because the Technical can donate/receive actions more effectively.</li>
+<li><b>Fire in the Hole:</b> enables useful one-action rockets, reduces scatter and in Casey's 1.2 revision adds <b>+2 damage to all rockets</b>; it also changes bond economy because the Technical can donate/receive actions more effectively.</li>
 <li><b>Concussion Rocket:</b> ranged disorient with stun chance, excellent against enemies neutered by disorient.</li>
 <li><b>Biggest Booms:</b> early extra damage matters because it converts wounds into kills; late it is less important but applies across many rockets.</li>
 <li><b>Javelin:</b> increases the number of situations where the rocket can solve a target without dangerous movement.</li>
@@ -1740,6 +1789,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <ul>
 <li>Ranger is Casey's early-game finisher: many shots, flexible target splitting, excellent cleanup.</li>
 <li><b>Ever Vigilant:</b> keeps pace on timed missions while protecting against activation fire; doors/reload/loot can cancel it.</li>
+<li><b>Covering Fire 1.2 alternative:</b> Casey notes that it can trigger on hostile actions and reduces the target's cover defense by roughly <b>66%</b>. It is a much more serious overwatch option than older versions, but the mobile-shooter baseline still prefers Locked On for proactive repeatable damage.</li>
 <li><b>Locked On:</b> excellent with repeated attacks and Rapid Fire.</li>
 <li><b>Center Mass:</b> repeated +damage pays because rifles are lower base damage but fire often.</li>
 <li><b>Executioner:</b> reinforces finisher identity against already-wounded targets.</li>
@@ -2479,8 +2529,57 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 </div>
 </section>
 <section class="searchable" id="coverage"><h2>17. Casey + Andy + DerAva source coverage — completion audit</h2>
-<div class="callout good"><b>v14 completeness standard:</b> coverage is no longer counted because a topic name appears once. Each source subsection is expected to have its substantive mechanics, recommendations, exceptions, failure cases and disagreements represented in the canonical guide section. Repeated ideas are merged; source-specific differences are retained and labelled. Source prose is paraphrased rather than reproduced verbatim.</div>
-<h3>Andy Notion coverage</h3>
+<div class="callout good"><b>v15 completeness standard:</b> coverage is not counted because a topic name appears once. Each source is audited for substantive mechanics, recommendations, exceptions, failure cases and disagreements. Repeated ideas are merged; source-specific differences are retained and labelled. Source prose is paraphrased rather than reproduced verbatim.</div>
+
+<h3>v15 source audit — 7 October 2026</h3>
+<div class="callout good"><b>Audit method:</b> each source was checked for mechanics, recommendations, exceptions, warnings, failure cases and author-specific disagreements — not merely for matching headings. Repeated material is intentionally consolidated. Source wording is paraphrased rather than reproduced.</div>
+
+<h4>Casey / XCOM Commander's Journal</h4>
+<table><thead><tr><th>Source</th><th>Audit result</th><th>Disposition</th></tr></thead><tbody>
+<tr><td>LWOTC Version 1.2 Notes</td><td class="audit-ok">AUDITED</td><td>Personnel, staffing gates, Will/fatigue, mission quirks, equipment changes, Chosen changes and 1.2 edge cases are represented.</td></tr>
+<tr><td>Early Game Strategy</td><td class="audit-ok">AUDITED</td><td>Facility/research order, economy arithmetic, haven routine, expansion, Troop Ambush timing and legacy NCE/Choose-My-Class preference retained.</td></tr>
+<tr><td>Early Game Tactics</td><td class="audit-ok">AUDITED</td><td>Five tactical phases, RNF timing, stealth-map abort logic, Yellow Alert, move order, sound/LOS scouting, consumable doctrine and crisis sequencing represented.</td></tr>
+<tr><td>Mid/Late Game Strategy</td><td class="audit-ok">AUDITED</td><td>Facility order, lab staffing, resource bottlenecks, covert-op engine, Chosen clock, Golden Path, autopsy/PG skips and late research represented.</td></tr>
+<tr><td>Mid/Late Game Tactics</td><td class="audit-ok">AUDITED</td><td>Control progression, enemy-specific counters, late status interactions, equipment/cover logic and squad execution represented.</td></tr>
+<tr><td>Liberation Guide</td><td class="audit-ok">AUDITED</td><td>Detection, dots/UI refresh, Lib 1–3 modifiers, Tower, HQ and Invasion sequence represented.</td></tr>
+<tr><td>Squad Composition / Officers / Bondmates</td><td class="audit-ok">AUDITED</td><td>Role coverage, officer progression, Command, bond-role pairings and campaign roster logic represented.</td></tr>
+<tr><td>Chosen &amp; Alien Rulers</td><td class="audit-ok">AUDITED</td><td>Chosen micro, search/positioning, Strongholds and Ruler reaction/control sequence represented.</td></tr>
+<tr><td>Specialist 1.2</td><td class="audit-ok">AUDITED</td><td>Current tree, scanning, hacking/healing, officer shift, equipment and XCOM-row impact represented.</td></tr>
+<tr><td>Grenadier 1.2</td><td class="audit-ok">AUDITED / PATCHED v15</td><td>Explicitly restored the 1.2 removal of Heavy Ordnance + Full Kit and their capacity migration into launcher upgrades.</td></tr>
+<tr><td>Gunner 1.2</td><td class="audit-ok">AUDITED</td><td>Directed-fire baseline, suppression alternative, shred/boss packages and XCOM-row implications represented.</td></tr>
+<tr><td>Technical 1.2</td><td class="audit-ok">AUDITED / PATCHED v15</td><td>Fire in the Hole now explicitly records reduced scatter, one-action use and Casey's +2 damage-to-rockets change.</td></tr>
+<tr><td>Shinobi 1.2</td><td class="audit-ok">AUDITED</td><td>Sword baseline, scouting-role shift, Combatives edge cases, equipment and XCOM-row implications represented.</td></tr>
+<tr><td>Ranger 1.2</td><td class="audit-ok">AUDITED / PATCHED v15</td><td>Mobile-shooter baseline retained; 1.2 Covering Fire hostile-action trigger / ~66% cover-defense reduction is now explicit.</td></tr>
+<tr><td>Assault / Sharpshooter / SPARK / Psi / Skirmisher / Reaper legacy class pages</td><td class="audit-ok">PRESERVED / LABELLED</td><td>Useful build reasoning is retained as legacy where Casey has not republished a current 1.2 class page; current mechanics override obsolete details.</td></tr>
+<tr><td>LW2 Quick Start / Reinforcement guide / LWOTC v1.1 notes</td><td class="audit-ok">CONCEPTS + EDGE CASES</td><td>Still-useful infiltration/RNF/legacy warnings are retained with explicit version caveats.</td></tr>
+</tbody></table>
+
+<h4>Andy — LWotC Notes &amp; Guide 1.2.2</h4>
+<table><thead><tr><th>Source page</th><th>Audit result</th><th>Disposition</th></tr></thead><tbody>
+<tr><td>Main guide / notes</td><td class="audit-ok">LIVE-VERIFIED</td><td>Legend/Honestman framing, control-oriented philosophy and 1.2.3 SPARK caveat represented.</td></tr>
+<tr><td>New Player Info</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Mission choice, infiltration, havens, evac, difficulty/onboarding and Honestman practices represented.</td></tr>
+<tr><td>Class Guide 1.2.2</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>All class trees, equipment doctrine, XCOM-row reasoning, officer and bond notes represented; SPARK is labelled version-sensitive.</td></tr>
+<tr><td>Strategy Layer</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Regions, expansion, economy, facilities, Black Market and campaign-tempo routines represented.</td></tr>
+<tr><td>Research / Proving Ground</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Research route, autopsy logic, project costs/priorities and skips represented.</td></tr>
+<tr><td>Liberation Info</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Lib sequence, Tower, HQ and Invasion execution represented.</td></tr>
+<tr><td>Golden Path</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Story sequence, Blacksite/Forge/Psi Gate and final progression represented.</td></tr>
+<tr><td>Tactics Layer</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Probability, stealth, action sequencing, equipment, hacks and tactical micro represented.</td></tr>
+<tr><td>Mission Types / SITREPs / Reinforcements</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Mission playbooks, squad sizing, RNF, Lost/Miranda and retaliation variants represented.</td></tr>
+<tr><td>Enemy Notes</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Threat-assessment method, enemy AI/behavior notes and Ruler handling represented.</td></tr>
+<tr><td>Chosen</td><td class="audit-ok">CHECKLIST-VERIFIED</td><td>Chosen micro and Stronghold damage-race execution represented.</td></tr>
+</tbody></table>
+<div class="callout warn"><b>Andy audit limitation:</b> the current public main Notion page is directly crawlable, but the retrieval interface does not currently expose every nested live Notion page as a complete text document. Those nested pages were audited against the preserved source-derived extraction/checklist used to build the earlier merged guide, then checked for the signature mechanics above. This is strong coverage evidence, but it is not the same as a fresh byte-for-byte crawl of every nested page.</div>
+
+<h4>DerAva tutorials</h4>
+<table><thead><tr><th>Source</th><th>Audit result</th><th>Disposition</th></tr></thead><tbody>
+<tr><td>Haven Management</td><td class="audit-ok">DEEP-AUDITED / PATCHED v15</td><td>Jobs, recruitment mix, 13-rebel cap, 24-hour switches, liaison bonuses, Faceless, retaliation thresholds, liberated economy and invasion logic are now represented with current 1.2.3 values.</td></tr>
+<tr><td>Infiltration</td><td class="audit-ok">DEEP-AUDITED / CURRENT-MAPPED</td><td>Squad size, equipment covertness, Intel boost, 100% breakpoint and over/under-infiltration asymmetry are represented using current mechanics.</td></tr>
+<tr><td>Mission &amp; Alien Activity</td><td class="audit-ok">DEEP-AUDITED / CURRENT-MAPPED</td><td>Hidden mission generation, detection gating/probability, Strength/Vigilance/Force and regional operating rhythm represented.</td></tr>
+<tr><td>Quick and Dirty Strategy Layer</td><td class="audit-ok">INTEGRATED</td><td>Strategic operating loop is merged into the new-player and region/haven sections.</td></tr>
+<tr><td>LWOTC Patch 1.2 overview</td><td class="audit-ok">SUPPLEMENTAL</td><td>Used for 1.2 change context; stable 1.2.3 mechanics and later Casey revisions take precedence.</td></tr>
+</tbody></table>
+
+<h3>Andy Notion coverage — compact mapping</h3>
 <table><tr><th>Andy page</th><th>Status</th><th>Where it is used</th></tr>
 <tr><td>Main guide / notes</td><td><span class="audit-ok">INTEGRATED</span></td><td>Version model, Honestman, general 1.2.2→1.2.3 caveats, mod warnings</td></tr>
 <tr><td>New Player Info</td><td><span class="audit-ok">INTEGRATED</span></td><td>Mission choice, infiltration, havens, evac, Honestman</td></tr>
@@ -2528,8 +2627,8 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>v1.1 ambush / Ruler / Miranda / Full Override edge notes</td><td class="audit-ok">INCLUDED</td><td><a href="#legacy-notes">v1.1 notes</a></td></tr>
 <tr><td>Original Casey inline images</td><td class="audit-limit">EXTERNAL-ONLY</td><td><a href="#images">Source Images</a> — original article links retained; CDN assets cannot be reliably enumerated from the available retrieval interface.</td></tr>
 </tbody></table>
-<div class="callout good"><b>Textual gap status:</b> The prior audit used a topic-presence standard and overstated completeness. v14 preserves that stricter standard with source-subsection coverage and exhaustive reference layers. The remaining limitation is bulk duplication of Casey's original embedded images.</div>
-<h3>v14 source-by-source completeness matrix</h3>
+<div class="callout good"><b>v15 textual audit result:</b> no known substantive gameplay-text gap remains in the audited Casey source set after the v15 precision fixes. DerAva's dedicated strategy tutorials are now mapped to current 1.2.3 mechanics rather than only summarized. Andy's nested Notion pages remain the one textual verification limitation because the current retrieval interface cannot fresh-crawl every nested page end-to-end; their preserved source extraction/checklist was re-audited against the live guide. Original embedded source images remain external rather than copied.</div>
+<h3>v15 compact source-by-source completeness matrix</h3>
 <table><thead><tr><th>Source set</th><th>Status</th><th>Where the detail lives</th></tr></thead><tbody>
 <tr><td>Andy — New Player Info</td><td class="audit-ok">MERGED</td><td>New-player essentials + Strategy + Missions</td></tr>
 <tr><td>Andy — Class Guide 1.2.2</td><td class="audit-ok">MERGED</td><td>Combined Soldier Builds + Squads/Bonds + Officers</td></tr>
@@ -2547,7 +2646,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.91rem}th,td{b
 <tr><td>Casey — 1.2 class revisions</td><td class="audit-ok">MERGED</td><td>Combined Soldier Builds</td></tr>
 <tr><td>Casey — legacy class guides</td><td class="audit-ok">PRESERVED / LABELLED</td><td>Combined Soldier Builds; legacy where not republished for 1.2</td></tr>
 <tr><td>Casey — Liberation / Squads / Chosen & Rulers</td><td class="audit-ok">MERGED</td><td>Liberation + Squads/Bonds + Chosen/Rulers</td></tr>
-<tr><td>DerAva — Haven Management Tutorial</td><td class="audit-ok">MERGED / VERSION-CHECKED</td><td>New-player essentials + Regions &amp; Havens</td></tr>
+<tr><td>DerAva — Haven Management Tutorial</td><td class="audit-ok">DEEP-AUDITED / CURRENT-MAPPED</td><td>New-player essentials + Regions &amp; Havens</td></tr>
 <tr><td>DerAva — Infiltration Tutorial</td><td class="audit-ok">MERGED / VERSION-CHECKED</td><td>New-player essentials + Mission decision + Reinforcements/Evac</td></tr>
 <tr><td>DerAva — Mission &amp; Alien Activity Tutorial</td><td class="audit-ok">MERGED / VERSION-CHECKED</td><td>Mission detection + Strength/Vigilance/Force + expansion logic</td></tr>
 <tr><td>DerAva — Quick and Dirty Strategy Layer Guide</td><td class="audit-ok">MERGED / VERSION-CHECKED</td><td>New-player strategic operating loop</td></tr>
